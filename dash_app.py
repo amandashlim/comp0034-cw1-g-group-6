@@ -10,6 +10,7 @@ import plotly.express as px
 from dash import dcc
 from dash import html
 
+# Define a list of one or more stylesheets here
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -23,6 +24,7 @@ df = pd.DataFrame({
 
 fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
+# Define what is on the webpage
 app.layout = html.Div(children=[
     html.H1(children='Hello Dash'),
 
