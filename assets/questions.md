@@ -9,6 +9,6 @@ Using the dataset we have been provided with, we will ask ourselves the followin
 The types of graphs for each question:
 
 1 - histogram with the counts of reported crimes for each month over the 2 years
-2 - 
-3 - 
+2 - barplot with counts for each major class of crime 
+3 - line graph
 4 - chloropleth map to show which area has most/ less crime
