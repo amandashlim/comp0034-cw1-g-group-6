@@ -1,3 +1,11 @@
+from pathlib import Path
+
+data = Path("data")
+csv_1 = "population.csv"
+
+pd.read_csv(data/csv_1)
+
+
 import pandas as pd
 import json
 import plotly.express as px
@@ -5,16 +13,24 @@ import plotly.express as px
 
 class VisualMap:
     def __init__ (self):
-        self.df = pd.read_csv("crime_data.csv")
-        self.geo = json.load(open("london_boroughs.json"))
+        self.df = pd.DataFrame()
+        self.population = pd.DataFrame
+        self.daytime_population = pd.DataFrame()
+        #self.geo = json.load(open("london_boroughs.json"))
+        self.get_data()
+        self.reformat()
 
-    def reformat(self, df):
-        df = df.drop(["Unnamed: 0"], axis=1).melt(id_vars=["Borough","Major Class Description"])
-        df = df.pivot_table(values="value", index=["Borough", "variable"],
+    def get_data(self):
+        datafolder = Path('data')
+        csvfile = "crime_data.csv"
+        self.df = pd.read_csv(datafolder/csvfile)
+
+    def reformat(self):
+        self.df = self.df.drop(["Unnamed: 0"], axis=1).melt(id_vars=["Borough","Major Class Description"])
+        self.df = self.df.pivot_table(values="value", index=["Borough", "variable"],
                             columns="Major Class Description").reset_index()
-        df = df.rename({"variable": "Date"}, axis=1)
-        df["Total Crime"] = df.iloc[:,2:].sum(axis=1)
-        return (df)
+        self.df = self.df.rename({"variable": "Date"}, axis=1)
+        self.df["Total Crime"] = self.df.iloc[:,2:].sum(axis=1)
 
     def borough_list(self):
         return(self.df["Borough"].unique())
