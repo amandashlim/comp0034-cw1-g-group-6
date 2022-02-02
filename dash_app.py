@@ -9,34 +9,32 @@ import pandas as pd
 import plotly.express as px
 from dash import dcc
 from dash import html
+import visualization as v
 
 # Define a list of one or more stylesheets here
+v = v.VisualMap()
+data = v.df
+
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
-df = pd.DataFrame({
-    "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
-    "Amount": [4, 1, 2, 2, 4, 5],
-    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
-})
-
-fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
-
-# Define what is on the webpage
 app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
+    dbc.Row(children = [
+        html.H1(children='London Crime Rate'),
+        html.Div(children='''
+        WebApp showcasing the reported crime rates in London
+    ''')]),
+    dbc.Row([
+        dbc.Col(width=3, children=[
+            html.P("Paragraph 1")]),
 
-    html.Div(children='''
-        Dash: A web application framework for Python.
-    '''),
-
-    dcc.Graph(
-        id='example-graph',
-        figure=fig
-    )
+        dbc.Col(width=9, children=[
+            html.H2("Chart"),
+            dcc.Graph(id="map", figure = v.map())
+        ])
+    ])
 ])
-
 if __name__ == '__main__':
     app.run_server(debug=True)
