@@ -20,4 +20,5 @@ Page navigation:
 
 - One page, can change the view of that one page (change the visual shown)
 - Interactive
-- One side is the maps, the other side is for statistics
+- One side is the maps, the other side is for statistics that are linked to the map
+- You can select which chart you want to show from a dropdown, and then when selected the map and statistics will update
