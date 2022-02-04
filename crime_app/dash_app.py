@@ -10,8 +10,8 @@ from dash import html
 import visualization as v
 
 # Define a list of one or more stylesheets here
-v = v.VisualMap()
-data = v.df
+v = v.all()
+data = v.pop2020_df_r
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
@@ -19,18 +19,30 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 app.layout = html.Div(children=[
-    dbc.Row(children = [
+    dbc.Row(children=[
         html.H1(children='London Crime Rate'),
         html.Div(children='''
         WebApp showcasing the reported crime rates in London
     ''')]),
     dbc.Row([
-        dbc.Col(width=3, children=[
-            html.P("Paragraph 1")]),
-
-        dbc.Col(width=9, children=[
-            html.H2("Chart"),
-            dcc.Graph(id="map", figure = v.map())
+        dbc.Col([
+            html.H2("Map Chart"),
+            dcc.Graph(id="map",
+                      figure=v.map(crime=v.crime_list[1], df=v.pop2020_df_r)),
+        ]),
+        dbc.Col([
+            dbc.Row([
+                html.H2("Histogram"),
+                dcc.Graph(id="hist",
+                          figure=v.hist(date="202109",
+                                        df=v.pop2020_df, borough="Camden"))
+            ]),
+            dbc.Row([
+                html.H2("Line Chart"),
+                dcc.Graph(id="line",
+                          figure=v.line(crime="Drugs",
+                                        df=v.pop2020_df_r, borough="Camden"))
+            ])
         ])
     ])
 ])
