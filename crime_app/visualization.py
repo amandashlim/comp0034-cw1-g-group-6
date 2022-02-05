@@ -56,9 +56,8 @@ class all:
     def get_data(self):
         datafile = Path('data')
         self.df = pd.read_csv(datafile / "crime_data.csv")
-        self.df.loc[(self.df.Borough == "Aviation Security(SO18)"), "Borough"] = "City of London1"
+        self.df = self.df[self.df["Borough"] != "Aviation Security(SO18)"]
         self.df = self.df.drop(["Unnamed: 0"], axis=1)
-        # self.df["Total Crime"] = self.df.iloc[:, 2:len(self.df.columns) - 4].sum(axis=1)
         self.population = pd.read_csv(datafile / "population.csv")
         self.daytime_population = pd.read_csv(datafile / "daytime_population.csv")
         self.geo = json.load(open(datafile / "london_boroughs.json"))
@@ -66,16 +65,16 @@ class all:
     def true_rate(self):
         df = self.df.merge(self.population, on="Borough")
         df = df.merge(self.daytime_population, on="Borough")
-        self.workday_df = df.iloc[:, 3:len(df.columns) - 4]. \
+        self.workday_df = df.iloc[:, 2:len(df.columns) - 4]. \
             divide(df.loc[:, "Workday Population"].divide(1000), axis="index"). \
             join(df[["Borough", "Major Class Description"]])
-        self.daytime_df = df.iloc[:, 3:len(df.columns) - 4]. \
+        self.daytime_df = df.iloc[:, 2:len(df.columns) - 4]. \
             divide(df.loc[:, "Total Daytime Population"].divide(1000), axis="index"). \
             join(df[["Borough", "Major Class Description"]])
-        self.pop2011_df = df.iloc[:, 3:len(df.columns) - 4]. \
+        self.pop2011_df = df.iloc[:, 2:len(df.columns) - 4]. \
             divide(df.loc[:, "Population - 2011 Census"].divide(1000), axis="index"). \
             join(df[["Borough", "Major Class Description"]])
-        self.pop2020_df = df.iloc[:, 3:len(df.columns) - 4]. \
+        self.pop2020_df = df.iloc[:, 2:len(df.columns) - 4]. \
             divide(df.loc[:, "Population - 2020 GLA Estimate"].divide(1000), axis="index"). \
             join(df[["Borough", "Major Class Description"]])
 
