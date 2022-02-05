@@ -45,17 +45,20 @@ app.layout = html.Div(children=[
     dbc.Row([
         dbc.Col([
             dbc.Row(id="chart_select_row", children=[
+                # Selecting which dataset will be used to display the data
                 dcc.RadioItems(id="data_select",
                                options=["Raw", "Population - 2020 GLA Estimate",
                                         "Population - 2011 Census",
                                         "Workday Population", "Total Daytime Population"],
                                value="Raw", inline=True),
+                # Selecting which chart will be displayed
                 dcc.Dropdown(id="chart_select",
                              options=["Map", "Histogram", "Line"],
                              value="Map")
             ]),
 
             dbc.Row(id="map_row", children=[
+                # Dropdown to select which crime to show a map for
                 dcc.Dropdown(id="crime_select",
                              options=[{"label": x, "value": x} for x in v.crime_list],
                              value="Total Crime"),
@@ -64,17 +67,23 @@ app.layout = html.Div(children=[
                           figure=v.map_2_layer(df=v.pop2020_df_r,
                                                selections=selections,
                                                crime="Total Crime")),
+                # Slider to select the showcased year
+                dcc.Slider(id="map_slider",
+                           min=0, max=len(v.date_list) - 1, step=1,
+                           marks=date_slider_dict)
             ]),
             dbc.Row(id="hist_row", children=[
                 html.H2("Histogram"),
+                # Checklist to select the Borough
                 dcc.Checklist(id="hist_checklist",
                               options=v.borough_list,
                               value=["Camden"]),
                 dcc.Graph(id="hist",
                           figure=v.hist(date="202109",
                                         df=v.pop2020_df, borough=["Camden"])),
+                # Slider to select the time frame
                 dcc.RangeSlider(id="hist_slider",
-                                min=0, max=len(v.date_list)-1, step=1,
+                                min=0, max=len(v.date_list) - 1, step=1,
                                 marks=date_slider_dict)
             ]),
             dbc.Row(id="line_row", children=[
@@ -87,25 +96,9 @@ app.layout = html.Div(children=[
     ])
 ])
 
-'''
-@app.callback(
-    Output("hist", "figure"),
-    [Input("map", "clickData")])
-def update_histogram(clickData):
-    if clickData is not None:
-        location = clickData['points'][0]['location']
-
-        if location not in selections:
-            selections.add(location)
-        else:
-            selections.remove(location)
-
-    fig = v.hist(date="202109", df=v.pop2020_df, borough="Camden")
-    return fig
-'''
-
 
 @app.callback(
+    # Show/Hide different charts
     Output("map_row", "style"),
     Output("hist_row", "style"),
     Output("line_row", "style"),
@@ -121,17 +114,18 @@ def hide(chart_select):
 
 
 @app.callback(
+    # Interactivity for histogram (data, borough, timeframe)
     Output("hist", "figure"),
     Input("data_select", "value"),
     Input("hist_checklist", "value"),
     Input("hist_slider", "value")
 )
 def update_data(data_select, hist_checklist, hist_slider):
-    print(hist_slider)
+    # print(hist_slider)
     if hist_slider is not None:
         if hist_slider[0] != hist_slider[1]:
             fig = v.hist(df=data[data_select],
-                         date=[date_slider_dict[i]["label"] for i in list(range(hist_slider[0], hist_slider[1]+1))],
+                         date=[date_slider_dict[i]["label"] for i in list(range(hist_slider[0], hist_slider[1] + 1))],
                          borough=hist_checklist)
         else:
             fig = v.hist(df=data[data_select],
@@ -145,12 +139,14 @@ def update_data(data_select, hist_checklist, hist_slider):
 
 
 @app.callback(
+    # Update map (select areas and highlight - useful for statistics later, select data, select crime)
     Output("map", "figure"),
     [Input("map", "clickData")],
     Input("crime_select", "value"),
-    Input("data_select", "value")
+    Input("data_select", "value"),
+    Input("map_slider", "value")
 )
-def update_figure(clickData, crime_select, data_select):
+def update_figure(clickData, crime_select, data_select, map_slider):
     if clickData is not None:
         location = clickData['points'][0]['location']
 
@@ -159,9 +155,17 @@ def update_figure(clickData, crime_select, data_select):
         else:
             selections.remove(location)
         # print(selections)
-    fig = v.map_2_layer(df=v.reformat(data[data_select]),
-                        selections=selections,
-                        crime=crime_select)
+    print(map_slider)
+    if map_slider is not None:
+        fig = v.map_2_layer(df=v.reformat(
+            data[data_select])[v.reformat(data[data_select])["Date"]==date_slider_dict[map_slider]["label"]],
+                            selections=selections,
+                            crime=crime_select)
+    else:
+        fig = v.map_2_layer(df=v.reformat(
+            data[data_select])[v.reformat(data[data_select])["Date"]==date_slider_dict[0]["label"]],
+                            selections=selections,
+                            crime=crime_select)
     return fig
 
 
