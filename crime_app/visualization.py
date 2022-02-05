@@ -3,6 +3,15 @@ from pathlib import Path
 import pandas as pd
 import json
 import plotly.express as px
+import time
+
+'''
+TODO:
+add statistics
+add 2nd selectable layer to map chart
+add forecast
+colors
+'''
 
 
 class all:
@@ -15,6 +24,7 @@ class all:
 
         # Starting Functions
         self.get_data()
+        self.district_lookup = {feature['properties']['name']: feature for feature in self.geo['features']}
 
         # Updated Data
         self.workday_df = pd.DataFrame()
@@ -33,6 +43,7 @@ class all:
         # Lists
         self.borough_list = []
         self.crime_list = []
+        self.date_list = []
 
         # Statistics
         self.compare_to_total_crimes = 0
@@ -40,6 +51,7 @@ class all:
         # Functions
         self.boroughs()
         self.crimes()
+        self.dates()
 
     def get_data(self):
         datafile = Path('data')
@@ -82,6 +94,48 @@ class all:
     def crimes(self):
         self.crime_list = self.df["Major Class Description"].unique()
 
+    def dates(self):
+        self.date_list = self.df_r["Date"].unique()
+
+    def get_highlights(self, selections):
+        geo_highlight = dict()
+        for k in self.geo.keys():
+            if k != "features":
+                geo_highlight[k] = self.geo[k]
+            else:
+                geo_highlight[k] = [self.district_lookup[selection] for selection in selections]
+        return geo_highlight
+
+    def map_2_layer(self, df, selections, crime):
+
+        fig = px.choropleth_mapbox(df, geojson=self.geo,
+                                   color=crime,
+                                   locations="Borough",
+                                   featureidkey="properties.name",
+                                   opacity=0.5)
+
+        # Second layer - Highlights ----------#
+        if len(selections) > 0:
+            # highlights contain the geojson information for only
+            # the selected districts
+            highlights = self.get_highlights(selections)
+
+            fig.add_trace(
+                px.choropleth_mapbox(df, geojson=highlights,
+                                     color=crime,
+                                     locations="Borough",
+                                     featureidkey="properties.name",
+                                     opacity=1).data[0]
+            )
+
+        # ------------------------------------#
+        fig.update_layout(mapbox_style="carto-positron",
+                          mapbox_zoom=8.5,
+                          mapbox_center={"lat": 51.5072, "lon": -0.1076},
+                          margin={"r": 0, "t": 0, "l": 0, "b": 0},
+                          uirevision='constant')
+        return fig
+
     def map(self, crime, df):
         fig = px.choropleth(data_frame=df,
                             geojson=self.geo,
@@ -103,7 +157,7 @@ class all:
         return fig
 
     def hist(self, date, df, borough):
-        fig = px.histogram(df[df["Borough"] == borough],
+        fig = px.histogram(df[df["Borough"].isin(borough)],
                            y="Major Class Description", x=date). \
             update_yaxes(categoryorder="total ascending")
         return fig
