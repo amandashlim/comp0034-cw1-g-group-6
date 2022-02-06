@@ -15,10 +15,11 @@ import pandas as pd
 TODO:
 add interactivity (multiple selectable dropdown, checkbox, dropdown)
 figure out how to get data from map on selected year
-reformat UI layout
+reformat UI layout - Amanda
 responsive design - changes the display on phone vs. web vs. changing window size
 statistics view?
 ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
+Make map max zoom out - Matic
 '''
 
 # Define a list of one or more stylesheets here
@@ -45,11 +46,12 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 app.layout = html.Div(children=[
-    # Top header with met police logo and web app title
+    # Top row
     dbc.Row(children=[
-        dbc.Col(html.Img(src=app.get_asset_url('met_logo.jpeg')),
-                # TODO: Fix imaage sizing. Make it change with the window
-                style={'height':'10%', 'width':'10%'}),
+        # Met Logo
+        # TODO: Fix imaage sizing. Make it change with the window
+        dbc.Col(html.Img(src=app.get_asset_url('met_logo.jpeg')), width="auto"),
+        # Web app header
         dbc.Col(html.H1(children='London Crime Rate'), width="auto")
         ]),
     # Chart selection row
@@ -74,7 +76,6 @@ app.layout = html.Div(children=[
                              }
                              )
             ]),
-
             dbc.Row(id="map_row", children=[
                 # Dropdown to select which crime to show a map for
                 dcc.Dropdown(id="crime_select",
