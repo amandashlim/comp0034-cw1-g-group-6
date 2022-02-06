@@ -15,6 +15,7 @@ TODO:
 add interactivity (multiple selectable dropdown, checkbox, dropdown)
 figure out how to get data from map on selected year
 reformat UI layout
+responsive design
 '''
 
 # Define a list of one or more stylesheets here
