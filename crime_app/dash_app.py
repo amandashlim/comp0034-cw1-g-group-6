@@ -22,7 +22,7 @@ ask TA/Sarah -- what is meant to be in index.html if the HTML elements and forma
 Make map max zoom out - Matic
 '''
 
-# Define a list of one or more stylesheets here
+# Define list of data sources
 v = v.all()
 data = {"Raw": v.df,
         "Population - 2020 GLA Estimate": v.pop2020_df,
@@ -30,10 +30,8 @@ data = {"Raw": v.df,
         "Workday Population": v.workday_df,
         "Total Daytime Population": v.daytime_df}
 
+# Specify stylesheet
 external_stylesheets = [dbc.themes.BOOTSTRAP]
-
-# Define path to assets folder
-assetspath = Path("../assets")
 
 # Define date slider items
 date_slider_dict = {}
@@ -49,8 +47,7 @@ app.layout = html.Div(children=[
     # Top row
     dbc.Row(children=[
         # Met Logo
-        # TODO: Fix imaage sizing. Make it change with the window
-        dbc.Col(html.Img(src=app.get_asset_url('met_logo.jpeg')), width="auto"),
+        dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'), width="100%"), width=1),
         # Web app header
         dbc.Col(html.H1(children='London Crime Rate'), width="auto")
         ]),
