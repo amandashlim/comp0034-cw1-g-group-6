@@ -56,7 +56,7 @@ app.layout = html.Div(children=[
                                         "Workday Population", "Total Daytime Population"],
                                value="Raw",
                                inline=True,
-                               inputStyle={"margin-right": "20px"}),
+                               inputStyle={"margin-left": "20px"}),
                 # Selecting which chart will be displayed
                 dcc.Dropdown(id="chart_select",
                              options=["Map", "Histogram", "Line"],
