@@ -16,6 +16,7 @@ add interactivity (multiple selectable dropdown, checkbox, dropdown)
 figure out how to get data from map on selected year
 reformat UI layout
 responsive design
+ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
 '''
 
 # Define a list of one or more stylesheets here
@@ -38,11 +39,11 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 app.layout = html.Div(children=[
+    # Top header
     dbc.Row(children=[
-        html.H1(children='London Crime Rate'),
-        html.Div(children='''
-        WebApp showcasing the reported crime rates in London
-    ''')]),
+        html.H1(children='London Crime Rate')
+        ]),
+    # Chart selection row
     dbc.Row([
         dbc.Col([
             dbc.Row(id="chart_select_row", children=[
