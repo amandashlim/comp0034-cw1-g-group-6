@@ -8,6 +8,7 @@ import dash_bootstrap_components as dbc
 from dash import dcc, Output, Input
 from dash import html
 import visualization as v
+from pathlib import Path
 import pandas as pd
 
 '''
@@ -30,6 +31,10 @@ data = {"Raw": v.df,
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
+# Define path to assets folder
+assetspath = Path("../assets")
+
+# Define date slider items
 date_slider_dict = {}
 for i in range(0, len(v.date_list)):
     date_slider_dict[i] = {"label": v.date_list[i], "style": {"transform": "rotate(45deg)"}}
@@ -42,7 +47,8 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(children=[
     # Top header with met police logo and web app title
     dbc.Row(children=[
-        dbc.Col(html.Img(src="assets/met_logo.jpeg"), width=1),  # The image isn't loading yet :( Help
+        # TODO: Fix image path
+        dbc.Col(html.Img(src="/assets/met_logo.jpeg"), width=1),
         dbc.Col(html.H1(children='London Crime Rate'), width="auto")
         ]),
     # Chart selection row
@@ -56,11 +62,12 @@ app.layout = html.Div(children=[
                                         "Workday Population", "Total Daytime Population"],
                                value="Raw",
                                inline=True,
+                               # TODO: fix so that no left margin on first checkbox
                                inputStyle={"margin-left": "20px"}),
                 # Selecting which chart will be displayed
                 dcc.Dropdown(id="chart_select",
                              options=["Map", "Histogram", "Line"],
-                             value="Select Map Type...",
+                             value="Map",
                              style={
                                  'width': '50%'
                              }
@@ -71,7 +78,8 @@ app.layout = html.Div(children=[
                 # Dropdown to select which crime to show a map for
                 dcc.Dropdown(id="crime_select",
                              options=[{"label": x, "value": x} for x in v.crime_list],
-                             value="Select Crime to Display...",
+                             # TODO: Add dropdown preview text on the button
+                             value="Burglary",
                              style={
                                  'width': '50%'
                              }
