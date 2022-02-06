@@ -16,7 +16,7 @@ TODO:
 add interactivity (multiple selectable dropdown, checkbox, dropdown)
 figure out how to get data from map on selected year
 reformat UI layout
-responsive design
+responsive design - changes the display on phone vs. web vs. changing window size
 statistics view?
 ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
 '''
@@ -47,8 +47,9 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.layout = html.Div(children=[
     # Top header with met police logo and web app title
     dbc.Row(children=[
-        # TODO: Fix image path
-        dbc.Col(html.Img(src="/assets/met_logo.jpeg"), width=1),
+        dbc.Col(html.Img(src=app.get_asset_url('met_logo.jpeg')),
+                # TODO: Fix imaage sizing. Make it change with the window
+                style={'height':'10%', 'width':'10%'}),
         dbc.Col(html.H1(children='London Crime Rate'), width="auto")
         ]),
     # Chart selection row
