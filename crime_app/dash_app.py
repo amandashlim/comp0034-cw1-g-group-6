@@ -16,6 +16,7 @@ add interactivity (multiple selectable dropdown, checkbox, dropdown)
 figure out how to get data from map on selected year
 reformat UI layout
 responsive design
+statistics view?
 ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
 '''
 
@@ -39,9 +40,10 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 app.layout = html.Div(children=[
-    # Top header
+    # Top header with met police logo and web app title
     dbc.Row(children=[
-        html.H1(children='London Crime Rate')
+        dbc.Col(html.Img(src="assets/met_logo.jpeg"), width=1),  # The image isn't loading yet :( Help
+        dbc.Col(html.H1(children='London Crime Rate'), width="auto")
         ]),
     # Chart selection row
     dbc.Row([
@@ -52,19 +54,29 @@ app.layout = html.Div(children=[
                                options=["Raw", "Population - 2020 GLA Estimate",
                                         "Population - 2011 Census",
                                         "Workday Population", "Total Daytime Population"],
-                               value="Raw", inline=True),
+                               value="Raw",
+                               inline=True,
+                               inputStyle={"margin-right": "20px"}),
                 # Selecting which chart will be displayed
                 dcc.Dropdown(id="chart_select",
                              options=["Map", "Histogram", "Line"],
-                             value="Map")
+                             value="Select Map Type...",
+                             style={
+                                 'width': '50%'
+                             }
+                             )
             ]),
 
             dbc.Row(id="map_row", children=[
                 # Dropdown to select which crime to show a map for
                 dcc.Dropdown(id="crime_select",
                              options=[{"label": x, "value": x} for x in v.crime_list],
-                             value="Total Crime"),
-                html.H2("Map Chart"),
+                             value="Select Crime to Display...",
+                             style={
+                                 'width': '50%'
+                             }
+                             ),
+                html.H2("Map"),
                 dcc.Graph(id="map",
                           figure=v.map_2_layer(df=v.pop2020_df_r,
                                                selections=selections,
