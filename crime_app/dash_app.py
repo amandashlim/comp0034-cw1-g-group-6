@@ -30,7 +30,7 @@ data = {"Raw": v.df,
         "Workday Population": v.workday_df,
         "Total Daytime Population": v.daytime_df}
 
-# Specify stylesheet
+# Specify stylesheets
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
 # Define date slider items
@@ -43,7 +43,7 @@ selections = set()
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
-app.layout = html.Div(children=[
+app.layout = html.Div(id="layout", children=[
     # Top row
     dbc.Row(children=[
         # Met Logo
