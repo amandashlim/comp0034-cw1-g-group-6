@@ -47,10 +47,23 @@ app.layout = html.Div(children=[
     # Top row
     dbc.Row(children=[
         # Met Logo
-        dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'), width="100%"), width=1),
+        dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
+                         style={"height": "100%"}),
+                style={"height": "10vh"},
+                width="auto"),
         # Web app header
-        dbc.Col(html.H1(children='London Crime Rate'), width="auto")
-        ]),
+        # TODO: Fix responsive design for H1
+        dbc.Col(html.H1(children='London Crime Rate Dashboard',
+                        style={"color": "white",
+                               "height": "100%"}),
+                style={"height": "10vh"},
+                width="auto"
+                )
+        ],
+        # Background of the entire row; same colour blue as met police logo
+        style={"background-color": "#0032A1",
+               "height": "10vh"},
+    ),
     # Chart selection row
     dbc.Row([
         dbc.Col([
