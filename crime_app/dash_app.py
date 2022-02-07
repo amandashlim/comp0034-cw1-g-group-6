@@ -15,14 +15,13 @@ import pandas as pd
 TODO:
 add interactivity (multiple selectable dropdown, checkbox, dropdown)
 figure out how to get data from map on selected year
-reformat UI layout - Amanda
-responsive design - changes the display on phone vs. web vs. changing window size
+reformat UI layout
+responsive design
 statistics view?
 ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
-Make map max zoom out - Matic
 '''
 
-# Define list of data sources
+# Define a list of one or more stylesheets here
 v = v.all()
 data = {"Raw": v.df,
         "Population - 2020 GLA Estimate": v.pop2020_df,
@@ -30,8 +29,10 @@ data = {"Raw": v.df,
         "Workday Population": v.workday_df,
         "Total Daytime Population": v.daytime_df}
 
-# Specify stylesheets
 external_stylesheets = [dbc.themes.BOOTSTRAP]
+
+# Define path to assets folder
+assetspath = Path("../assets")
 
 # Define date slider items
 date_slider_dict = {}
@@ -43,69 +44,47 @@ selections = set()
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
-app.layout = html.Div(className="layout", children=[
-    # Top row
+app.layout = html.Div(children=[
+    # Top header with met police logo and web app title
     dbc.Row(children=[
-        # Met Logo
-        dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
-                         style={"height": "100%"}),
-                style={"height": "10vh"},
-                width="auto"),
-        # Web app header
-        # TODO: Fix responsive design for H1
-        dbc.Col(html.H1(children='London Crime Rate Dashboard',
-                        style={"color": "white",
-                               "height": "100%"}),
-                style={"height": "10vh"},
-                width="auto"
-                )
-        ],
-        # Background of the entire row; same colour blue as met police logo
-        style={"background-color": "#0032A1",
-               "height": "10vh"},
-    ),
-    # Everything else row (main web app content)
-    dbc.Row(className="app_content", children=[
-        # Display Settings Column
-        dbc.Col(className="display_settings_col", children=[
-            html.H3("Display Settings"),
-            html.Br(),
+        # TODO: Fix image path
+        dbc.Col(html.Img(src="/assets/met_logo.jpeg"), width=1),
+        dbc.Col(html.H1(children='London Crime Rate'), width="auto")
+    ]),
+    # Chart selection row
+    dbc.Row([
+        dbc.Col([
+            dbc.Row(id="chart_select_row", children=[
+                # Selecting which dataset will be used to display the data
+                dcc.RadioItems(id="data_select",
+                               options=["Raw", "Population - 2020 GLA Estimate",
+                                        "Population - 2011 Census",
+                                        "Workday Population", "Total Daytime Population"],
+                               value="Raw",
+                               inline=True,
+                               # TODO: fix so that no left margin on first checkbox
+                               inputStyle={"margin-left": "20px"}),
+                # Selecting which chart will be displayed
+                dcc.Dropdown(id="chart_select",
+                             options=["Map", "Histogram", "Line"],
+                             value="Map",
+                             style={
+                                 'width': '50%'
+                             }
+                             )
+            ]),
 
-            # Selecting which dataset will be used to display the data
-            html.P("Select Data"),
-            # TODO: make radio items vertical stack (if you expand page, it is still horizontal)
-            dcc.RadioItems(id="data_select",
-                           options=["Raw", "Population - 2020 GLA Estimate",
-                                    "Population - 2011 Census",
-                                    "Workday Population", "Total Daytime Population"],
-                           value="Raw",
-                           inline=True,
-                           inputStyle={"margin-left": "20px"},
-                           style={"font-size": "1vw"}),
-            html.Br(),
-
-            # Dropdown to select which type of chart will be displayed
-            html.P("Select Chart Type"),
-            dcc.Dropdown(id="chart_select",
-                         options=["Map", "Histogram", "Line"],
-                         value="Map",
-                         ),
-            html.Br(),
-
-            # Dropdown to select which crime to show a map for
-            html.P("Select Crime to Display"),
-            dcc.Dropdown(id="crime_select",
-                         options=[{"label": x, "value": x} for x in v.crime_list],
-                         # TODO: Add dropdown preview text on the button
-                         value="Burglary",
-                         )
-        ], width=3),
-
-        # Visualization Columns (only one will show at a time)
-        dbc.Col(children=[
-            html.H3("Visualization"),
-            # Map
             dbc.Row(id="map_row", children=[
+                # Dropdown to select which crime to show a map for
+                dcc.Dropdown(id="crime_select",
+                             options=[{"label": x, "value": x} for x in v.crime_list],
+                             # TODO: Add dropdown preview text on the button
+                             value="Burglary",
+                             style={
+                                 'width': '50%'
+                             }
+                             ),
+                html.H2("Map"),
                 dcc.Graph(id="map",
                           figure=v.map_2_layer(df=v.pop2020_df_r,
                                                selections=selections,
@@ -115,7 +94,6 @@ app.layout = html.Div(className="layout", children=[
                            min=0, max=len(v.date_list) - 1, step=1,
                            marks=date_slider_dict)
             ]),
-            # Histogram
             dbc.Row(id="hist_row", children=[
                 html.H2("Histogram"),
                 # Checklist to select the Borough
@@ -124,27 +102,25 @@ app.layout = html.Div(className="layout", children=[
                               value=["Camden"]),
                 dcc.Graph(id="hist",
                           figure=v.hist(date="202109",
-                                        df=v.pop2020_df, borough=["Camden"])),
+                                        df=v.df, borough=["Camden"])),
                 # Slider to select the time frame
                 dcc.RangeSlider(id="hist_slider",
                                 min=0, max=len(v.date_list) - 1, step=1,
                                 marks=date_slider_dict)
             ]),
-            # Line Chart
             dbc.Row(id="line_row", children=[
                 html.H2("Line Chart"),
+                dcc.Dropdown(id="line_dropdown",
+                             options=v.crime_list,
+                             value=["Drugs"]),
+                dcc.Checklist(id="line_checklist",
+                              options=v.borough_list,
+                              value=["Camden"]),
                 dcc.Graph(id="line",
                           figure=v.line(crime="Drugs",
-                                        df=v.pop2020_df_r, borough="Camden"))
+                                        df=v.df_r, borough=["Camden"]))
             ])
-            ],
-            width=6,
-        ),
-
-        # Statistics Column
-        dbc.Col(id="stats_col",
-                children=[html.H3("Statistics")],
-                width=3,)
+        ])
     ])
 ])
 
@@ -156,7 +132,7 @@ app.layout = html.Div(className="layout", children=[
     Output("line_row", "style"),
     Input("chart_select", "value")
 )
-def hide(chart_select):
+def update_data(chart_select):
     if chart_select == "Map":
         return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}
     if chart_select == "Histogram":
@@ -172,7 +148,7 @@ def hide(chart_select):
     Input("hist_checklist", "value"),
     Input("hist_slider", "value")
 )
-def update_data(data_select, hist_checklist, hist_slider):
+def update_hist(data_select, hist_checklist, hist_slider):
     # print(hist_slider)
     if hist_slider is not None:
         if hist_slider[0] != hist_slider[1]:
@@ -191,6 +167,20 @@ def update_data(data_select, hist_checklist, hist_slider):
 
 
 @app.callback(
+    # Update line graph (select the crime to show)
+    # TODO: add forecast
+    Output("line", "figure"),
+    Input("line_dropdown", "value"),
+    Input("data_select", "value"),
+    Input("line_checklist", "value")
+)
+def update_line(line_dropdown, data_select, line_checklist):
+    fig = v.line(df=v.reformat(data[data_select]),
+                 crime=line_dropdown,
+                 borough=line_checklist)
+    return fig
+
+@app.callback(
     # Update map (select areas and highlight - useful for statistics later, select data, select crime)
     Output("map", "figure"),
     [Input("map", "clickData")],
@@ -198,7 +188,7 @@ def update_data(data_select, hist_checklist, hist_slider):
     Input("data_select", "value"),
     Input("map_slider", "value")
 )
-def update_figure(clickData, crime_select, data_select, map_slider):
+def update_map(clickData, crime_select, data_select, map_slider):
     if clickData is not None:
         location = clickData['points'][0]['location']
 
@@ -210,12 +200,12 @@ def update_figure(clickData, crime_select, data_select, map_slider):
     print(map_slider)
     if map_slider is not None:
         fig = v.map_2_layer(df=v.reformat(
-            data[data_select])[v.reformat(data[data_select])["Date"]==date_slider_dict[map_slider]["label"]],
+            data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[map_slider]["label"]],
                             selections=selections,
                             crime=crime_select)
     else:
         fig = v.map_2_layer(df=v.reformat(
-            data[data_select])[v.reformat(data[data_select])["Date"]==date_slider_dict[0]["label"]],
+            data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[0]["label"]],
                             selections=selections,
                             crime=crime_select)
     return fig
