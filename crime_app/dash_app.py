@@ -139,7 +139,7 @@ app.layout = html.Div(className="layout", children=[
                 html.H2("Line Chart"),
                 dcc.Graph(id="line",
                           figure=v.line(crime="Drugs",
-                                        df=v.pop2020_df_r, borough="Camden"))
+                                        df=v.pop2020_df_r, borough=["Camden"]))
             ])
             ],
             width=6,
