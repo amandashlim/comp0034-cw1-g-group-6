@@ -94,8 +94,8 @@ app.layout = html.Div(className="web_app", children=[
                          ),
             html.Br(),
             # Dropdown multi select to select the Borough (Histogram only)
-
-            html.P("Select Borough(s) to Display", id="hist_checklist_title"),
+            html.P("Select Borough(s) to Display"),
+            # TODO: Matic pls help; hide this section if map is shown
             dcc.Dropdown(id="hist_checklist",
                          options=v.borough_list,
                          multi=True, # Can choose multiple boroughs to display at once
@@ -149,18 +149,15 @@ app.layout = html.Div(className="web_app", children=[
     Output("map_row", "style"),
     Output("hist_row", "style"),
     Output("line_row", "style"),
-    Output("hist_checklist", "style"),
-    Output("hist_checklist_title", "style"),
     Input("chart_select", "value")
 )
-
 def hide(chart_select):
     if chart_select == "Map":
-        return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}
+        return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}
     if chart_select == "Histogram":
-        return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}
+        return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}
     if chart_select == "Line":
-        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'none'}
+        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}
 
 
 @app.callback(
