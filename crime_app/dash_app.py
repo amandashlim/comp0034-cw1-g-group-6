@@ -41,19 +41,17 @@ for i in range(0, len(v.date_list)):
 
 selections = set()
 
+
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 app.layout = html.Div(className="web_app", children=[
     # Top row
     dbc.Row(className="header", children=[
-        # Blank Column
-        dbc.Col(width="3vw"),
         # Met Logo
         dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
-                         style={"height": "100%"}),
-                style={"height": "5vh"},
-                width="auto"),
+                         style={"height": "9vh"}),
+                width="auto"), # The width changes
         # Title of the web app
         dbc.Col(html.H2("Crime in London Overview Dashboard"), width=8)
         ],
