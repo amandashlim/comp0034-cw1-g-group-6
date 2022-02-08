@@ -20,6 +20,7 @@ responsive design - changes the display on phone vs. web vs. changing window siz
 statistics view?
 ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
 Make map max zoom out - Matic
+ask TA/Sarah -- Window size vw with padding messed up. Header spacing too.
 '''
 
 # Define list of data sources
@@ -45,16 +46,18 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 app.layout = html.Div(className="web_app", children=[
     # Top row
-    dbc.Row(children=[
+    dbc.Row(className="header", children=[
+        # Blank Column
+        dbc.Col(width="3vw"),
         # Met Logo
         dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
                          style={"height": "100%"}),
                 style={"height": "5vh"},
                 width="auto"),
-        dbc.Col(html.H2("Crime in London Overview Dashboard"))
+        # Title of the web app
+        dbc.Col(html.H2("Crime in London Overview Dashboard"), width=8)
         ],
-        # Background of the entire row; same colour blue as met police logo
-        style={"height": "6vh"},
+        align="center" # Vertically center the elements within this row
     ),
     # Everything else row (main web app content)
     dbc.Row(className="main_content", children=[
