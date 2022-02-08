@@ -1,13 +1,17 @@
-/*Everything except the top header*/
-.top_header {
-    background-color: #0032A1;
-    height: 10vh;
+.header {
+    height: 9vh;
+    background-color: #20206A;
+    color: white;
 }
 
-.layout {
-    padding-top: 25px;
-    padding-right: 25px;
-    padding-bottom: 25px;
-    padding-left: 25px;
-    background-color: whitesmoke;
+/*Content within the app, excluding top header*/
+.container {
+    border-style: outset;
+    background-color: white;
+    padding: 2%;
+    /* margin: 1vw; */
+}
+
+.main_content {
+    background-color: #F4F4F3;
 }
