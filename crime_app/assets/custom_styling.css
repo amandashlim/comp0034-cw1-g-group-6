@@ -1,16 +1,13 @@
-p  {
-    font-weight: bold;
+/*Everything except the top header*/
+.top_header {
+    background-color: #0032A1;
+    height: 10vh;
 }
 
-.layout  {
-    background-color: grey;
-}
-
-/*Content within the app, excluding top header*/
-.app_content  {
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    background-color: white;
+.layout {
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    background-color: whitesmoke;
 }
