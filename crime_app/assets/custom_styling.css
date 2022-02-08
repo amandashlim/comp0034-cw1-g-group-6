@@ -1,16 +1,10 @@
-p  {
-    font-weight: bold;
-}
-
-.layout  {
-    background-color: grey;
-}
-
 /*Content within the app, excluding top header*/
-.app_content  {
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
+.container {
+    border-style: outset;
     background-color: white;
+    padding: 2%;
+    margin: 1vw;
+}
+.main_content {
+    background-color: #F4F4F3;
 }

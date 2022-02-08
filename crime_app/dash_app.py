@@ -43,31 +43,23 @@ selections = set()
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
-app.layout = html.Div(className="layout", children=[
+app.layout = html.Div(className="web_app", children=[
     # Top row
     dbc.Row(children=[
         # Met Logo
         dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
                          style={"height": "100%"}),
-                style={"height": "10vh"},
+                style={"height": "5vh"},
                 width="auto"),
-        # Web app header
-        # TODO: Fix responsive design for H1
-        dbc.Col(html.H1(children='London Crime Rate Dashboard',
-                        style={"color": "white",
-                               "height": "100%"}),
-                style={"height": "10vh"},
-                width="auto"
-                )
+        dbc.Col(html.H2("Crime in London Overview Dashboard"))
         ],
         # Background of the entire row; same colour blue as met police logo
-        style={"background-color": "#0032A1",
-               "height": "10vh"},
+        style={"height": "6vh"},
     ),
     # Everything else row (main web app content)
-    dbc.Row(className="app_content", children=[
+    dbc.Row(className="main_content", children=[
         # Display Settings Column
-        dbc.Col(className="display_settings_col", children=[
+        dbc.Col(className="container", children=[
             html.H3("Display Settings"),
             html.Br(),
 
@@ -98,14 +90,22 @@ app.layout = html.Div(className="layout", children=[
                          options=[{"label": x, "value": x} for x in v.crime_list],
                          # TODO: Add dropdown preview text on the button
                          value="Burglary",
-                         )
-        ], width=3),
+                         ),
+            html.Br(),
+            # Dropdown multi select to select the Borough (Histogram only)
+            html.P("Select Borough(s) to Display"),
+            # TODO: Matic pls help; hide this section if map is shown
+            dcc.Dropdown(id="hist_checklist",
+                         options=v.borough_list,
+                         multi=True, # Can choose multiple boroughs to display at once
+                         value=["Camden"]),
+        ], width=3, style={"background-color": "#F9F8F9"}),
 
         # Visualization Columns (only one will show at a time)
-        dbc.Col(children=[
-            html.H3("Visualization"),
+        dbc.Col(className="container", children=[
             # Map
             dbc.Row(id="map_row", children=[
+                html.H2("Map"),
                 dcc.Graph(id="map",
                           figure=v.map_2_layer(df=v.pop2020_df_r,
                                                selections=selections,
@@ -118,10 +118,6 @@ app.layout = html.Div(className="layout", children=[
             # Histogram
             dbc.Row(id="hist_row", children=[
                 html.H2("Histogram"),
-                # Checklist to select the Borough
-                dcc.Checklist(id="hist_checklist",
-                              options=v.borough_list,
-                              value=["Camden"]),
                 dcc.Graph(id="hist",
                           figure=v.hist(date="202109",
                                         df=v.pop2020_df, borough=["Camden"])),
@@ -137,14 +133,12 @@ app.layout = html.Div(className="layout", children=[
                           figure=v.line(crime="Drugs",
                                         df=v.pop2020_df_r, borough="Camden"))
             ])
-            ],
-            width=6,
+                ], width=6
         ),
 
         # Statistics Column
-        dbc.Col(id="stats_col",
-                children=[html.H3("Statistics")],
-                width=3,)
+        dbc.Col(className= "container", children=[html.H3("statistics go here")],
+                width=3)
     ])
 ])
 
