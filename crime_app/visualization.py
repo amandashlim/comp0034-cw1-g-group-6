@@ -4,8 +4,8 @@ import pandas as pd
 import json
 import plotly.express as px
 import plotly.graph_objects as go
-import pystan
 
+# import pystan
 
 # Pycharm show plotly plots in browser
 # import plotly.io as pio
@@ -57,7 +57,6 @@ class all:
         self.compare_to_last_month = 0
         self.compare_to_last_year_average = 0
         self.correlation = 0
-
 
         # Functions
         self.boroughs()
@@ -183,7 +182,7 @@ class all:
         fig.add_trace(go.Scatter(x=df["Date"].unique(), y=df.groupby(["Date"]).mean()[crime].tolist(),
                                  mode='lines',
                                  name=f"Average {crime} Crimes",
-                                 line=dict(color="darkgray",width=3,dash="dash")
+                                 line=dict(color="darkgray", width=3, dash="dash")
                                  ))
         fig.update_layout()
         return fig
@@ -201,11 +200,18 @@ class all:
         # Map: compare to last month for selected areas, compare to last year average
         # Hist: correlation between selected boroughs and selected in year range
         # Line: show predicted values with confidence intervals for next month/average 3months/average year given boroughs/crime
+        compare_to_last_month = []
+        if month == "201910":
+            return "No data for previous months please select a different date"
+        else:
+            for i in selected_areas:
+                a = (df[(df["Date"] == str(int(month))) & (df["Borough"] == i)][crime].tolist()[0] -
+                     df[(df["Date"] == str(int(month) - 1)) & (df["Borough"] == i)][crime].tolist()[0]) / \
+                    df[(df["Date"] == str(int(month) - 1)) & (df["Borough"] == i)][crime].tolist()[0]
+                compare_to_last_month.append(a)
+            return compare_to_last_month
 
-        self.compare_to_last_month = (df[df["Date"] == (month.int-1).str & df["Borough"].isin(selected_areas)][crime] -
-                                      df[df["Date"] == month][crime]) / \
-                                     df[df["Date"] == month][crime]
-        # last_month - this_month / this_month
+        # this_month - last_month / last_month
 
         def statistics_hist(self, df, borough, date_range):
             pass
