@@ -5,7 +5,7 @@ import json
 import plotly.express as px
 import plotly.graph_objects as go
 import pystan
-import fbprophet
+import prophet
 
 # Pycharm show plotly plots in browser
 # import plotly.io as pio
