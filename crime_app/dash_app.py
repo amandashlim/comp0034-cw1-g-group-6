@@ -20,6 +20,7 @@ responsive design - changes the display on phone vs. web vs. changing window siz
 statistics view?
 ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
 Make map max zoom out - Matic
+ask TA/Sarah -- Window size vw with padding messed up. Header spacing too.
 '''
 
 # Define list of data sources
@@ -40,34 +41,26 @@ for i in range(0, len(v.date_list)):
 
 selections = set()
 
+
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
-app.layout = html.Div(className="layout", children=[
+app.layout = html.Div(className="web_app", children=[
     # Top row
-    dbc.Row(children=[
+    dbc.Row(className="header", children=[
         # Met Logo
         dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
-                         style={"height": "100%"}),
-                style={"height": "10vh"},
-                width="auto"),
-        # Web app header
-        # TODO: Fix responsive design for H1
-        dbc.Col(html.H1(children='London Crime Rate Dashboard',
-                        style={"color": "white",
-                               "height": "100%"}),
-                style={"height": "10vh"},
-                width="auto"
-                )
+                         style={"height": "9vh"}),
+                width="auto"), # The width changes
+        # Title of the web app
+        dbc.Col(html.H2("Crime in London Overview Dashboard"), width=8)
         ],
-        # Background of the entire row; same colour blue as met police logo
-        style={"background-color": "#0032A1",
-               "height": "10vh"},
+        align="center" # Vertically center the elements within this row
     ),
     # Everything else row (main web app content)
-    dbc.Row(className="app_content", children=[
+    dbc.Row(className="main_content", children=[
         # Display Settings Column
-        dbc.Col(className="display_settings_col", children=[
+        dbc.Col(className="container", children=[
             html.H3("Display Settings"),
             html.Br(),
 
@@ -107,13 +100,13 @@ app.layout = html.Div(className="layout", children=[
                          options=v.borough_list,
                          multi=True, # Can choose multiple boroughs to display at once
                          value=["Camden"]),
-        ], width=3),
+        ], width=3, style={"background-color": "#F9F8F9"}),
 
         # Visualization Columns (only one will show at a time)
-        dbc.Col(children=[
-            html.H3("Visualization"),
+        dbc.Col(className="container", children=[
             # Map
             dbc.Row(id="map_row", children=[
+                html.H2("Map"),
                 dcc.Graph(id="map",
                           figure=v.map_2_layer(df=v.pop2020_df_r,
                                                selections=selections,
@@ -141,14 +134,12 @@ app.layout = html.Div(className="layout", children=[
                           figure=v.line(crime="Drugs",
                                         df=v.pop2020_df_r, borough=["Camden"]))
             ])
-            ],
-            width=6,
+                ], width=6
         ),
 
         # Statistics Column
-        dbc.Col(id="stats_col",
-                children=[html.H3("Statistics")],
-                width=3,)
+        dbc.Col(className= "container", children=[html.H3("statistics go here")],
+                width=3)
     ])
 ])
 
