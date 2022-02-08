@@ -15,13 +15,14 @@ import pandas as pd
 TODO:
 add interactivity (multiple selectable dropdown, checkbox, dropdown)
 figure out how to get data from map on selected year
-reformat UI layout
-responsive design
+reformat UI layout - Amanda
+responsive design - changes the display on phone vs. web vs. changing window size
 statistics view?
 ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
+Make map max zoom out - Matic
 '''
 
-# Define a list of one or more stylesheets here
+# Define list of data sources
 v = v.all()
 data = {"Raw": v.df,
         "Population - 2020 GLA Estimate": v.pop2020_df,
@@ -29,10 +30,8 @@ data = {"Raw": v.df,
         "Workday Population": v.workday_df,
         "Total Daytime Population": v.daytime_df}
 
+# Specify stylesheets
 external_stylesheets = [dbc.themes.BOOTSTRAP]
-
-# Define path to assets folder
-assetspath = Path("../assets")
 
 # Define date slider items
 date_slider_dict = {}
@@ -44,47 +43,77 @@ selections = set()
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
-app.layout = html.Div(children=[
-    # Top header with met police logo and web app title
+app.layout = html.Div(className="layout", children=[
+    # Top row
     dbc.Row(children=[
-        # TODO: Fix image path
-        dbc.Col(html.Img(src="/assets/met_logo.jpeg"), width=1),
-        dbc.Col(html.H1(children='London Crime Rate'), width="auto")
-        ]),
-    # Chart selection row
-    dbc.Row([
-        dbc.Col([
-            dbc.Row(id="chart_select_row", children=[
-                # Selecting which dataset will be used to display the data
-                dcc.RadioItems(id="data_select",
-                               options=["Raw", "Population - 2020 GLA Estimate",
-                                        "Population - 2011 Census",
-                                        "Workday Population", "Total Daytime Population"],
-                               value="Raw",
-                               inline=True,
-                               # TODO: fix so that no left margin on first checkbox
-                               inputStyle={"margin-left": "20px"}),
-                # Selecting which chart will be displayed
-                dcc.Dropdown(id="chart_select",
-                             options=["Map", "Histogram", "Line"],
-                             value="Map",
-                             style={
-                                 'width': '50%'
-                             }
-                             )
-            ]),
+        # Met Logo
+        dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
+                         style={"height": "100%"}),
+                style={"height": "10vh"},
+                width="auto"),
+        # Web app header
+        # TODO: Fix responsive design for H1
+        dbc.Col(html.H1(children='London Crime Rate Dashboard',
+                        style={"color": "white",
+                               "height": "100%"}),
+                style={"height": "10vh"},
+                width="auto"
+                )
+        ],
+        # Background of the entire row; same colour blue as met police logo
+        style={"background-color": "#0032A1",
+               "height": "10vh"},
+    ),
+    # Everything else row (main web app content)
+    dbc.Row(className="app_content", children=[
+        # Display Settings Column
+        dbc.Col(className="display_settings_col", children=[
+            html.H3("Display Settings"),
+            html.Br(),
 
+            # Selecting which dataset will be used to display the data
+            html.P("Select Data"),
+            # TODO: make radio items vertical stack (if you expand page, it is still horizontal)
+            dcc.RadioItems(id="data_select",
+                           options=["Raw", "Population - 2020 GLA Estimate",
+                                    "Population - 2011 Census",
+                                    "Workday Population", "Total Daytime Population"],
+                           value="Raw",
+                           inline=True,
+                           inputStyle={"margin-left": "20px"},
+                           style={"font-size": "1vw"}),
+            html.Br(),
+
+            # Dropdown to select which type of chart will be displayed
+            html.P("Select Chart Type"),
+            dcc.Dropdown(id="chart_select",
+                         options=["Map", "Histogram", "Line"],
+                         value="Map",
+                         ),
+            html.Br(),
+
+            # Dropdown to select which crime to show a map for
+            html.P("Select Crime to Display"),
+            dcc.Dropdown(id="crime_select",
+                         options=[{"label": x, "value": x} for x in v.crime_list],
+                         # TODO: Add dropdown preview text on the button
+                         value="Burglary",
+                         ),
+            html.Br(),
+            # Dropdown multi select to select the Borough (Histogram only)
+            html.P("Select Borough(s) to Display"),
+            # TODO: Matic pls help; hide this section if map is shown
+            dcc.Dropdown(id="hist_checklist",
+                         options=v.borough_list,
+                         multi=True, # Can choose multiple boroughs to display at once
+                         value=["Camden"]),
+        ], width=3),
+
+        # Visualization Columns (only one will show at a time)
+        dbc.Col(children=[
+            html.H3("Visualization"),
+            # Map
             dbc.Row(id="map_row", children=[
-                # Dropdown to select which crime to show a map for
-                dcc.Dropdown(id="crime_select",
-                             options=[{"label": x, "value": x} for x in v.crime_list],
-                             # TODO: Add dropdown preview text on the button
-                             value="Burglary",
-                             style={
-                                 'width': '50%'
-                             }
-                             ),
-                html.H2("Map"),
                 dcc.Graph(id="map",
                           figure=v.map_2_layer(df=v.pop2020_df_r,
                                                selections=selections,
@@ -94,12 +123,9 @@ app.layout = html.Div(children=[
                            min=0, max=len(v.date_list) - 1, step=1,
                            marks=date_slider_dict)
             ]),
+            # Histogram
             dbc.Row(id="hist_row", children=[
                 html.H2("Histogram"),
-                # Checklist to select the Borough
-                dcc.Checklist(id="hist_checklist",
-                              options=v.borough_list,
-                              value=["Camden"]),
                 dcc.Graph(id="hist",
                           figure=v.hist(date="202109",
                                         df=v.pop2020_df, borough=["Camden"])),
@@ -108,13 +134,21 @@ app.layout = html.Div(children=[
                                 min=0, max=len(v.date_list) - 1, step=1,
                                 marks=date_slider_dict)
             ]),
+            # Line Chart
             dbc.Row(id="line_row", children=[
                 html.H2("Line Chart"),
                 dcc.Graph(id="line",
                           figure=v.line(crime="Drugs",
                                         df=v.pop2020_df_r, borough="Camden"))
             ])
-        ])
+            ],
+            width=6,
+        ),
+
+        # Statistics Column
+        dbc.Col(id="stats_col",
+                children=[html.H3("Statistics")],
+                width=3,)
     ])
 ])
 

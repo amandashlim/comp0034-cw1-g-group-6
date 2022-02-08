@@ -1,0 +1,13 @@
+/*Everything except the top header*/
+.top_header {
+    background-color: #0032A1;
+    height: 10vh;
+}
+
+.layout {
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    background-color: whitesmoke;
+}
