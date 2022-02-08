@@ -3,7 +3,13 @@ from pathlib import Path
 import pandas as pd
 import json
 import plotly.express as px
-import time
+import plotly.graph_objects as go
+import pystan
+import fbprophet
+
+# Pycharm show plotly plots in browser
+# import plotly.io as pio
+# pio.renderers.default = "browser"
 
 '''
 TODO:
@@ -150,9 +156,31 @@ class all:
         return fig
 
     def line(self, crime, df, borough):
-        fig = px.line(df[df["Borough"] == borough],
-                      x="Date", y=[crime, "Average Crime"],
-                      title='Seasonal Crime Data - per 1000 population')
+        fig = px.line(df[df["Borough"].isin(borough)],
+                      x=df["Date"].unique(), y=[list(df[df["Borough"] == i][crime]) for i in borough] +
+                                               [df.groupby(["Date"]).mean()[crime].tolist()],
+                      title='Seasonal Crime Data - per 1000 population',
+                      markers=True)
+        return fig
+
+    def line_2(self, crime, df, borough):
+        title = "Seasonal Crime Data - per 1000 population"
+        # labels = borough + ["Average Selected Crime"]
+
+        fig = go.Figure()
+        for i in range(0, len(borough)):
+            fig.add_trace(go.Scatter(x=df["Date"].unique(), y=list(df[df["Borough"] == borough[i]][crime]),
+                                     mode='lines',
+                                     name=borough[i],
+                                     line=dict(width=1.5),
+                                     # connectgaps=True,
+                                     ))
+        fig.add_trace(go.Scatter(x=df["Date"].unique(), y=df.groupby(["Date"]).mean()[crime].tolist(),
+                                 mode='lines',
+                                 name=f"Average {crime} Crimes",
+                                 line=dict(color="darkgray",width=3,dash="dash")
+                                 ))
+        fig.update_layout()
         return fig
 
     def hist(self, date, df, borough):
