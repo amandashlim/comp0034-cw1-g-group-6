@@ -6,3 +6,5 @@ pytest
 dash-bootstrap-components
 selenium~=4.1.0
 plotly~=5.3.1
+pystan~=2.19.1.1
+prophet
