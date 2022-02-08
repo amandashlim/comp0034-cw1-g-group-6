@@ -5,7 +5,7 @@ import json
 import plotly.express as px
 import plotly.graph_objects as go
 import pystan
-import prophet
+
 
 # Pycharm show plotly plots in browser
 # import plotly.io as pio
@@ -53,6 +53,11 @@ class all:
 
         # Statistics
         self.compare_to_total_crimes = 0
+        self.year_to_year_change = 0
+        self.compare_to_last_month = 0
+        self.compare_to_last_year_average = 0
+        self.correlation = 0
+
 
         # Functions
         self.boroughs()
@@ -189,8 +194,18 @@ class all:
             update_yaxes(categoryorder="total ascending")
         return fig
 
-    def statistics(self):
+    def statistics_map(self, df, month, selected_areas, crime):
         # showcase statistics for selected area and selected year (year to year change, % change compared to
         # total, create linear regression (facebooks prophet seasonal mode, or annova seasonal with confidence
         # intervals) to showcase forecast for next few months
-        pass
+        # Map: compare to last month for selected areas, compare to last year average
+        # Hist: correlation between selected boroughs and selected in year range
+        # Line: show predicted values with confidence intervals for next month/average 3months/average year given boroughs/crime
+
+        self.compare_to_last_month = (df[df["Date"] == (month.int-1).str & df["Borough"].isin(selected_areas)][crime] -
+                                      df[df["Date"] == month][crime]) / \
+                                     df[df["Date"] == month][crime]
+        # last_month - this_month / this_month
+
+        def statistics_hist(self, df, borough, date_range):
+            pass
