@@ -208,4 +208,4 @@ class all:
         # last_month - this_month / this_month
 
         def statistics_hist(self, df, borough, date_range):
-        pass
+            pass
