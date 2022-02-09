@@ -41,11 +41,11 @@ for i in range(0, len(v.date_list)):
 
 selections = set()
 
-
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 app.layout = html.Div(className="web_app", children=[
+    dcc.Store("selections"),
     # Top row
     dbc.Row(className="header", children=[
         # Met Logo
@@ -54,9 +54,9 @@ app.layout = html.Div(className="web_app", children=[
                 width="auto"),  # The width changes
         # Title of the web app
         dbc.Col(html.H2("Crime in London Overview Dashboard"), width=8)
-        ],
-        align="center" # Vertically center the elements within this row
-    ),
+    ],
+            align="center"  # Vertically center the elements within this row
+            ),
     # Everything else row (main web app content)
     dbc.Row(className="main_content", children=[
         # Display Settings Column
@@ -96,24 +96,37 @@ app.layout = html.Div(className="web_app", children=[
             html.P("Select Borough(s) to Display", id="hist_checklist_title"),
             dcc.Dropdown(id="hist_checklist",
                          options=v.borough_list,
-                         multi=True, # Can choose multiple boroughs to display at once
+                         multi=True,  # Can choose multiple boroughs to display at once
                          value=["Camden"])
 
         ], width=3, style={"background-color": "#F6F6F6"}),
 
         # Visualization Columns (only one will show at a time)
-        dbc.Col(className="container", children=[
+        dbc.Col(children=[
             # Map
-            dbc.Row(id="map_row", children=[
-                html.H2("Map"),
-                dcc.Graph(id="map",
-                          figure=v.map_2_layer(df=v.pop2020_df_r,
-                                               selections=selections,
-                                               crime="Total Crime")),
-                # Slider to select the showcased year
-                dcc.Slider(id="map_slider",
-                           min=0, max=len(v.date_list) - 1, step=1,
-                           marks=date_slider_dict)
+            dbc.Row(className="main_content",id="map_row", children=[
+                dbc.Col(id="map_main", className="container", children=[
+                    html.H2("Map"),
+                    dcc.Graph(id="map",
+                              figure=v.map_2_layer(df=v.pop2020_df_r,
+                                                   selections=selections,
+                                                   crime="Total Crime")),
+                    # Slider to select the showcased year
+                    dcc.Slider(id="map_slider",
+                               min=0, max=len(v.date_list) - 1, step=1,
+                               marks=date_slider_dict)
+                ],width=6),
+                dbc.Col(id="map_statistics", className="container", children=[
+                    html.H4("Statistics"),
+                    html.H5("Changes for selected boroughs:"),
+                    html.H6("Change from last month:"),
+                    html.H4(id="map_last_month"),
+                    html.H6("Change from last 3-months average:"),
+                    html.H4(id="map_3_months"),
+                    html.H6("Change from last year:"),
+                    html.H4(id="map_year"),
+                    html.Br()
+                ],width=3)
             ]),
             # Histogram
             dbc.Row(id="hist_row", children=[
@@ -133,12 +146,37 @@ app.layout = html.Div(className="web_app", children=[
                           figure=v.line(crime="Drugs",
                                         df=v.pop2020_df_r, borough=["Camden"]))
             ])
-                ], width=6
-        ),
+        ], width=9),
 
         # Statistics Column
-        dbc.Col(className= "container", children=[html.H4("statistics go here")],
-                width=3)
+        '''
+        dbc.Col(className="container", children=[
+            dbc.Row(id="map_statistics", children=[
+                html.H4("Statistics"),
+                html.P(""),
+                html.Br(),
+                html.H5("Changes for selected boroughs:"),
+                html.P(""),
+                html.Br(),
+                html.H6("Change from last month:"),
+                html.H4("{:,.0f}%".format(0)),
+                html.P(""),
+                html.Br(),
+                html.H6("Change from last 3-months average:".format(15)),
+                html.H4("{:,.0f}%".format(0)),
+                html.P(""),
+                html.Br(),
+                html.H6("Change from last year:", className="card-title"),
+                html.H4("{:,.0f}%".format(0)),
+                html.Br()
+            ]),
+            dbc.Row(id="hist_statistics",children=[
+                html.H4("Test Hist")
+            ]),
+            dbc.Row(id="line_statistics",children=[
+                html.H4("Test Line")
+            ])],
+                width=3)'''
     ])
 ])
 
@@ -152,16 +190,45 @@ app.layout = html.Div(className="web_app", children=[
     Output("hist_checklist_title", "style"),
     Output("crime_select", "style"),
     Output("crime_select_text", "style"),
+    #Output("map_statistics", "style"),
+    #Output("hist_statistics", "style"),
+    #Output("line_statistics", "style"),
     Input("chart_select", "value")
 )
-
 def hide(chart_select):
     if chart_select == "Map":
-        return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}
+        return {'display': 'block'}, \
+               {'display': 'none'}, \
+               {'display': 'none'}, \
+               {'display': 'none'}, \
+               {'display': 'none'}, \
+               {'display': 'block'}, \
+               {'display': 'block'}, \
+               #{'display': 'block'}, \
+               #{'display': 'none'}, \
+               #{'display': 'none'}
     if chart_select == "Histogram":
-        return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, {'display': 'none'}, {'display': 'none'}
+        return {'display': 'none'}, \
+               {'display': 'block'}, \
+               {'display': 'none'}, \
+               {'display': 'block'}, \
+               {'display': 'block'}, \
+               {'display': 'none'}, \
+               {'display': 'none'}, \
+               #{'display': 'none'}, \
+               #{'display': 'block'}, \
+               #{'display': 'none'}
     if chart_select == "Line":
-        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}
+        return {'display': 'none'}, \
+               {'display': 'none'}, \
+               {'display': 'block'}, \
+               {'display': 'none'}, \
+               {'display': 'none'}, \
+               {'display': 'block'}, \
+               {'display': 'block'}, \
+               #{'display': 'none'}, \
+               #{'display': 'none'}, \
+               #{'display': 'block'}
 
 
 @app.callback(
@@ -188,10 +255,98 @@ def update_data(data_select, hist_checklist, hist_slider):
                      borough=hist_checklist)
     return fig
 
+@app.callback(
+    Output("selections","data"),
+    [Input("map","clickData")]
+)
+def selections_data(clickData):
+    if clickData is not None:
+        location = clickData['points'][0]['location']
+
+        if location not in selections:
+            selections.add(location)
+        else:
+            selections.remove(location)
+    #print (selections)
+    return list(selections)
+
+@app.callback(
+    Output("map_statistics","children"),
+    Input("selections","data"),
+    Input("crime_select","value"),
+    Input("data_select","value"),
+    Input("map_slider","value")
+)
+def update_map_stats(boroughs,crime_select, data_select,map_slider):
+    selections_list = list(boroughs)
+    if map_slider is not None:
+        selected_month = date_slider_dict[map_slider]["label"]
+    else:
+        selected_month = "201910"
+    #print(type(year))
+    last_month = v.statistics_map(df=data_select,
+                                  month="202107",
+                                  crime=crime_select,
+                                  selected_areas=selections_list,
+                                  m=1)
+    print(last_month)
+    last_three_months = v.statistics_map(df=data_select,
+                                         month="202107",
+                                         crime=crime_select,
+                                         selected_areas=selections_list,
+                                         mmm=1)
+    last_year = v.statistics_map(df=data_select,
+                                 month="202107",
+                                 crime=crime_select,
+                                 selected_areas=selections_list,
+                                 y=1)
+    for i in selections_list:
+        print(i)
+        return html.Div([
+            html.H5(f"Changes for {i}:"),
+            html.H6("Change from last month:"),
+            html.H4(last_month[i]),
+            html.H6("Change from last 3-months average:"),
+            html.H4(last_three_months[i]),
+            html.H6("Change from last year:"),
+            html.H4(last_year[i]),
+        ])
 
 @app.callback(
     # Update map (select areas and highlight - useful for statistics later, select data, select crime)
     Output("map", "figure"),
+    Input("selections","data"),
+    #[Input("map", "clickData")],
+    Input("crime_select", "value"),
+    Input("data_select", "value"),
+    Input("map_slider", "value")
+)
+def update_figure(data_1, crime_select, data_select, map_slider):
+    #if clickData is not None:
+    #    location = clickData['points'][0]['location']
+    #
+    #    if location not in selections:
+    #        selections.add(location)
+    #    else:
+    #        selections.remove(location)
+    #print(map_slider)
+    selections = data_1
+    if map_slider is not None:
+        fig = v.map_2_layer(df=v.reformat(
+            data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[map_slider]["label"]],
+                            selections=selections,
+                            crime=crime_select)
+    else:
+        fig = v.map_2_layer(df=v.reformat(
+            data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[0]["label"]],
+                            selections=selections,
+                            crime=crime_select)
+    return fig
+'''
+
+@app.callback(
+    # Update map (select areas and highlight - useful for statistics later, select data, select crime)
+    Output("map_row", "children"),
     [Input("map", "clickData")],
     Input("crime_select", "value"),
     Input("data_select", "value"),
@@ -205,20 +360,62 @@ def update_figure(clickData, crime_select, data_select, map_slider):
             selections.add(location)
         else:
             selections.remove(location)
-        # print(selections)
-    print(map_slider)
+
     if map_slider is not None:
         fig = v.map_2_layer(df=v.reformat(
-            data[data_select])[v.reformat(data[data_select])["Date"]==date_slider_dict[map_slider]["label"]],
+            data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[map_slider]["label"]],
                             selections=selections,
                             crime=crime_select)
     else:
         fig = v.map_2_layer(df=v.reformat(
-            data[data_select])[v.reformat(data[data_select])["Date"]==date_slider_dict[0]["label"]],
+            data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[0]["label"]],
                             selections=selections,
                             crime=crime_select)
-    return fig
-
+    selections_list = list(selections)
+    last_month = v.statistics_map(df=data_select,
+                                  month=map_slider,
+                                  crime=crime_select,
+                                  selected_areas=selections_list,
+                                  m=1)
+    last_three_months = v.statistics_map(df=data_select,
+                                  month=map_slider,
+                                  crime=crime_select,
+                                  selected_areas=selections_list,
+                                  mmm=1)
+    last_year = v.statistics_map(df=data_select,
+                                  month=map_slider,
+                                  crime=crime_select,
+                                  selected_areas=selections_list,
+                                  y=1)
+    return (dbc.Col(id="map_main", className="container", children=[
+                    html.H2("Map"),
+                    dcc.Graph(id="map",
+                              figure=fig),
+                    # Slider to select the showcased year
+                    dcc.Slider(id="map_slider",
+                               min=0, max=len(v.date_list) - 1, step=1,
+                               marks=date_slider_dict)
+                ],width=6),
+            dbc.Col(id="map_statistics", className="container", children=[
+                    html.H4("Statistics"),
+                    html.P(""),
+                    html.Br(),
+                    html.H5("Changes for selected boroughs:"),
+                    html.P(""),
+                    html.Br(),
+                    html.H6("Change from last month:"),
+                    html.H4("{:,.0f}%".format(last_month)),
+                    html.P(""),
+                    html.Br(),
+                    html.H6("Change from last 3-months average:".format(15)),
+                    html.H4("{:,.0f}%".format(last_three_months)),
+                    html.P(""),
+                    html.Br(),
+                    html.H6("Change from last year:", className="card-title"),
+                    html.H4("{:,.0f}%".format(last_year)),
+                    html.Br()
+                ],width=3))
+'''
 
 if __name__ == '__main__':
     app.run_server(debug=True)
