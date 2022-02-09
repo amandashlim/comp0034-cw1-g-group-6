@@ -4,7 +4,9 @@ import pandas as pd
 import json
 import plotly.express as px
 import plotly.graph_objects as go
-import pystan
+import statistics
+
+# import pystan
 
 
 # Pycharm show plotly plots in browser
@@ -57,7 +59,6 @@ class all:
         self.compare_to_last_month = 0
         self.compare_to_last_year_average = 0
         self.correlation = 0
-
 
         # Functions
         self.boroughs()
@@ -183,7 +184,7 @@ class all:
         fig.add_trace(go.Scatter(x=df["Date"].unique(), y=df.groupby(["Date"]).mean()[crime].tolist(),
                                  mode='lines',
                                  name=f"Average {crime} Crimes",
-                                 line=dict(color="darkgray",width=3,dash="dash")
+                                 line=dict(color="darkgray", width=3, dash="dash")
                                  ))
         fig.update_layout()
         return fig
@@ -194,18 +195,74 @@ class all:
             update_yaxes(categoryorder="total ascending")
         return fig
 
-    def statistics_map(self, df, month, selected_areas, crime):
-        # showcase statistics for selected area and selected year (year to year change, % change compared to
-        # total, create linear regression (facebooks prophet seasonal mode, or annova seasonal with confidence
-        # intervals) to showcase forecast for next few months
-        # Map: compare to last month for selected areas, compare to last year average
-        # Hist: correlation between selected boroughs and selected in year range
-        # Line: show predicted values with confidence intervals for next month/average 3months/average year given boroughs/crime
+    def statistics_map(self, df, month, selected_areas, crime, m=0, mmm=0, y=0):
 
-        self.compare_to_last_month = (df[df["Date"] == (month.int-1).str & df["Borough"].isin(selected_areas)][crime] -
-                                      df[df["Date"] == month][crime]) / \
-                                     df[df["Date"] == month][crime]
-        # last_month - this_month / this_month
+        # Percent change from last month
+        if m == 1:
+            compare_to_last_month = {}
+            if month == "201910":
+                for i in selected_areas:
+                    compare_to_last_month[i] = "No data for previous months please select a different date"
+                return compare_to_last_month
+            else:
+                for i in selected_areas:
+                    if df[(df["Date"] == self.date_list[self.date_list.tolist().index(month) - 1]) & (
+                            df["Borough"] == i)][crime].tolist()[0] == 0:
+                        a = 0
+                    else:
+                        a = ((df[(df["Date"] == self.date_list[self.date_list.tolist().index(month)]) & (
+                                df["Borough"] == i)][crime].tolist()[0] -
+                              df[(df["Date"] == self.date_list[self.date_list.tolist().index(month) - 1]) & (
+                                      df["Borough"] == i)][crime].tolist()[0]) / \
+                             df[(df["Date"] == self.date_list[self.date_list.tolist().index(month) - 1]) & (
+                                     df["Borough"] == i)][crime].tolist()[0])
+                    compare_to_last_month[i] = a
+                return compare_to_last_month
 
-        def statistics_hist(self, df, borough, date_range):
-            pass
+        # Percent change from last three months
+        if mmm == 1:
+            compare_to_last_three_months = {}
+            if month in self.date_list.tolist()[:self.date_list.tolist().index("202001")]:
+                for i in selected_areas:
+                    compare_to_last_three_months[i] = "No data for previous months please select a different date"
+                return compare_to_last_three_months
+            else:
+                for i in selected_areas:
+                    if statistics.mean(df[(df["Date"].isin(self.date_list[self.date_list.tolist().index(
+                            month) - 3:self.date_list.tolist().index(month)].tolist())) & (df["Borough"] == i)][
+                                           crime].tolist()) == 0:
+                        a = 0
+                    else:
+                        a = ((df[(df["Date"] == str(int(month))) & (df["Borough"] == i)][crime].tolist()[0] -
+                              statistics.mean(df[(df["Date"].isin(self.date_list[self.date_list.tolist().index(
+                                  month) - 3:self.date_list.tolist().index(month)].tolist())) & (df["Borough"] == i)][
+                                                  crime].tolist())) / \
+                             statistics.mean(df[(df["Date"].isin(self.date_list[self.date_list.tolist().index(
+                                 month) - 3:self.date_list.tolist().index(month)].tolist())) & (df["Borough"] == i)][
+                                                 crime].tolist()))
+                    compare_to_last_three_months[i] = a
+                return compare_to_last_three_months
+
+        # Percent change from last year
+        if y == 1:
+            compare_to_last_year = {}
+            if month in self.date_list.tolist()[:self.date_list.tolist().index("202010")]:
+                for i in selected_areas:
+                    compare_to_last_year[i] = "No data for previous months please select a different date"
+                return compare_to_last_year
+            else:
+                for i in selected_areas:
+                    if statistics.mean(df[(df["Date"].isin(self.date_list[self.date_list.tolist().index(
+                            month) - 12:self.date_list.tolist().index(month)].tolist())) & (df["Borough"] == i)][
+                                           crime].tolist()) == 0:
+                        a = 0
+                    else:
+                        a = ((df[(df["Date"] == str(int(month))) & (df["Borough"] == i)][crime].tolist()[0] -
+                              statistics.mean(df[(df["Date"].isin(self.date_list[self.date_list.tolist().index(
+                                  month) - 12:self.date_list.tolist().index(month)].tolist())) & (df["Borough"] == i)][
+                                                  crime].tolist())) / \
+                             statistics.mean(df[(df["Date"].isin(self.date_list[self.date_list.tolist().index(
+                                 month) - 12:self.date_list.tolist().index(month)].tolist())) & (df["Borough"] == i)][
+                                                 crime].tolist()))
+                    compare_to_last_year[i] = a
+                return compare_to_last_year
