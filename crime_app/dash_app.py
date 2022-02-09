@@ -50,8 +50,8 @@ app.layout = html.Div(className="web_app", children=[
     dbc.Row(className="header", children=[
         # Met Logo
         dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
-                         style={"height": "9vh"}),
-                width="auto"), # The width changes
+                         style={"height": "5vh"}),
+                width="auto"),  # The width changes
         # Title of the web app
         dbc.Col(html.H2("Crime in London Overview Dashboard"), width=8)
         ],
@@ -61,12 +61,11 @@ app.layout = html.Div(className="web_app", children=[
     dbc.Row(className="main_content", children=[
         # Display Settings Column
         dbc.Col(className="container", children=[
-            html.H3("Display Settings"),
-            html.Br(),
+            html.H4("Display Settings"),
 
-            # Selecting which dataset will be used to display the data
+            # Selecting which dataset will be used to display the data (Always show)
+            html.Br(),
             html.P("Select Data"),
-            # TODO: make radio items vertical stack (if you expand page, it is still horizontal)
             dcc.RadioItems(id="data_select",
                            options=["Raw", "Population - 2020 GLA Estimate",
                                     "Population - 2011 Census",
@@ -75,32 +74,32 @@ app.layout = html.Div(className="web_app", children=[
                            inline=True,
                            inputStyle={"margin-left": "20px"},
                            style={"font-size": "1vw"}),
-            html.Br(),
 
-            # Dropdown to select which type of chart will be displayed
+            # Dropdown to select which type of chart will be displayed (Always show)
+            html.Br(),
             html.P("Select Chart Type"),
             dcc.Dropdown(id="chart_select",
                          options=["Map", "Histogram", "Line"],
                          value="Map",
                          ),
-            html.Br(),
 
-            # Dropdown to select which crime to show a map for
-            html.P("Select Crime to Display"),
+            # Dropdown to select which crime to show a map for (Map and Line only)
+            html.Br(),
+            html.P("Select Crime to Display", id="crime_select_text"),
             dcc.Dropdown(id="crime_select",
                          options=[{"label": x, "value": x} for x in v.crime_list],
                          # TODO: Add dropdown preview text on the button
                          value="Burglary",
                          ),
-            html.Br(),
-            # Dropdown multi select to select the Borough (Histogram only)
 
+            # Dropdown multi select to select the Borough (Histogram only)
             html.P("Select Borough(s) to Display", id="hist_checklist_title"),
             dcc.Dropdown(id="hist_checklist",
                          options=v.borough_list,
                          multi=True, # Can choose multiple boroughs to display at once
-                         value=["Camden"]),
-        ], width=3, style={"background-color": "#F9F8F9"}),
+                         value=["Camden"])
+
+        ], width=3, style={"background-color": "#F6F6F6"}),
 
         # Visualization Columns (only one will show at a time)
         dbc.Col(className="container", children=[
@@ -138,7 +137,7 @@ app.layout = html.Div(className="web_app", children=[
         ),
 
         # Statistics Column
-        dbc.Col(className= "container", children=[html.H3("statistics go here")],
+        dbc.Col(className= "container", children=[html.H4("statistics go here")],
                 width=3)
     ])
 ])
@@ -151,16 +150,18 @@ app.layout = html.Div(className="web_app", children=[
     Output("line_row", "style"),
     Output("hist_checklist", "style"),
     Output("hist_checklist_title", "style"),
+    Output("crime_select", "style"),
+    Output("crime_select_text", "style"),
     Input("chart_select", "value")
 )
 
 def hide(chart_select):
     if chart_select == "Map":
-        return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}
+        return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}
     if chart_select == "Histogram":
-        return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}
+        return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, {'display': 'none'}, {'display': 'none'}
     if chart_select == "Line":
-        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'none'}
+        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}
 
 
 @app.callback(

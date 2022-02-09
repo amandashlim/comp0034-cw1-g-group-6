@@ -1,17 +1,26 @@
+/*The entire web app*/
+.web_app{
+
+}
+
+/*Just the blue top header*/
 .header {
     height: 9vh;
     background-color: #20206A;
     color: white;
+    padding-left: 2%;
 }
 
 /*Content within the app, excluding top header*/
+.main_content {
+    background-color: lightgrey;
+    padding: 2%;
+}
+
+/*The individual "boxes"/columns inside the main_content*/
 .container {
-    border-style: outset;
+    border-style: groove;
     background-color: white;
     padding: 2%;
     /* margin: 1vw; */
-}
-
-.main_content {
-    background-color: #F4F4F3;
 }
