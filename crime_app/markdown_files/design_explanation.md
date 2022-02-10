@@ -21,13 +21,13 @@ Before explaining the design of our visualisations, let's remind ourselves of ou
 
 ### 1. Target Audience
 
-![Persona](crime_app/assets/persona.png)
+![Persona](../assets/persona.png)
 
 Our target audience for the webapp, would be university students who are new to London and looking for accommodation.
 Since our target audience is assumed to not know London, the webapp would be useful as it would allow them to be informed on the crime rates associated with each London borough.
 Moreover, based on personal preferences, they would be able to tailor their searches to the crimes they are more concerned about.
 
-### 2. Visualisation 1: The Chloropleth Map
+### 2. Visualisation 1: The Map
 
 ADD LINK TO FIRST
 
