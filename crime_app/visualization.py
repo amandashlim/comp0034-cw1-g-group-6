@@ -6,8 +6,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import statistics
 
-# import pystan
-
 
 # Pycharm show plotly plots in browser
 # import plotly.io as pio
