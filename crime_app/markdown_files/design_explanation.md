@@ -29,15 +29,15 @@ Moreover, based on personal preferences, they would be able to tailor their sear
 
 ### 2. Visualisation 1: The Map
 
-ADD LINK TO FIRST
+[Visualisation 1: Link to design explanation and evaluation](../markdown_files/visualisation_1.md)
 
 ### 3. Visualisation 2: The Histogram
 
-ADD LINK TO SECOND 
+[Visualisation 2: Link to design explanation and evaluation](../markdown_files/visualisation_2.md)
 
 ### 4. Visualisation 3: The Line Chart
 
-ADD LINK TO THIRD
+[Visualisation 3: Link to design explanation and evaluation](../markdown_files/visualisation_3.md)
 
 
 
