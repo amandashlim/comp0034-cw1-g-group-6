@@ -14,7 +14,7 @@ To answer these questions, we decided to create three visualisations which inclu
     2. A histogram
     3. A line chart
 
-Each of these visualisations are able to answer each of the four questions the target audience may ask. However, some of the visualisations more adapted to answer specific questions thanks to their format.
+Each of these visualisations are able to answer one or multiple questions of the four the target audience may ask. 
 
 
 Before explaining the design of our visualisations, let's remind ourselves of our target audience.
