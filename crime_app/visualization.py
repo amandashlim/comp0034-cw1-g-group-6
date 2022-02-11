@@ -7,6 +7,8 @@ import plotly.graph_objects as go
 import statistics
 
 
+
+
 # Pycharm show plotly plots in browser
 # import plotly.io as pio
 # pio.renderers.default = "browser"
@@ -167,10 +169,27 @@ class all:
                       markers=True)
         return fig
 
+    def get_forecast(self,data, crime, borough):
+        path = Path("data/forecast")
+        pepe = pd.read_json(path / data)
+        pepe_final = pd.DataFrame(eval(pepe[crime][borough]))
+        pepe_final["ds"] = pd.dt.strftime("%Y%m")
+        return pepe_final
+
     def line_2(self, crime, df, borough):
         title = "Seasonal Crime Data - per 1000 population"
-        # labels = borough + ["Average Selected Crime"]
+        if df.iloc[6, 3] == self.df_r.iloc[6, 3]:
+            forecast_df = "df_r.json"
+        if df.iloc[6, 3] == self.pop2020_df_r.iloc[6, 3]:
+            forecast_df = "pop2020_df_r.json"
+        if df.iloc[6, 3] == self.pop2011_df_r.iloc[6, 3]:
+            forecast_df = "pop2011_df_r.json"
+        if df.iloc[6, 3] == self.workday_df_r.iloc[6, 3]:
+            forecast_df = "workday_df_r.json"
+        if df.iloc[6, 3] == self.daytime_df_r.iloc[6, 3]:
+            forecast_df = "daytime_df_r.json"
 
+        # labels = borough + ["Average Selected Crime"]
         fig = go.Figure()
         for i in range(0, len(borough)):
             fig.add_trace(go.Scatter(x=df["Date"].unique(), y=list(df[df["Borough"] == borough[i]][crime]),
@@ -179,12 +198,40 @@ class all:
                                      line=dict(width=1.5),
                                      # connectgaps=True,
                                      ))
+            forecast = self.get_forecast(data=forecast_df, crime=crime, borough=borough[i])
+            forecast["ds"] = ["202110", "202111", "202112", "202201", "202202", "202203"]
+
+            fig.add_trace(go.Scatter(name="Forecast",
+                                     x=forecast["ds"],
+                                     y=forecast["yhat"],
+                                     mode="lines",
+                                     showlegend=False))
+            fig.add_trace(go.Scatter(
+                name='Upper Bound',
+                x=forecast["ds"],
+                y=forecast['yhat_upper'],
+                mode='lines',
+                marker=dict(color="#444"),
+                line=dict(width=0),
+                showlegend=False
+            ))
+            fig.add_trace(go.Scatter(
+                name='Lower Bound',
+                x=forecast['ds'],
+                y=forecast["yhat_lower"],
+                marker=dict(color="#444"),
+                line=dict(width=0),
+                mode='lines',
+                fillcolor='rgba(68, 68, 68, 0.3)',
+                fill='tonexty',
+                showlegend=False
+            ))
         fig.add_trace(go.Scatter(x=df["Date"].unique(), y=df.groupby(["Date"]).mean()[crime].tolist(),
                                  mode='lines',
                                  name=f"Average {crime} Crimes",
                                  line=dict(color="darkgray", width=3, dash="dash")
                                  ))
-        fig.update_layout()
+        fig.update_layout(legend={"orientation": "h", "font": {"size": 10}, "bgcolor": 'rgba(0,0,0,0)'})
         return fig
 
     def hist(self, date, df, borough):
