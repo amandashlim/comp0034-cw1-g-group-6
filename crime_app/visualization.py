@@ -173,7 +173,7 @@ class all:
         path = Path("data/forecast")
         pepe = pd.read_json(path / data)
         pepe_final = pd.DataFrame(eval(pepe[crime][borough]))
-        pepe_final["ds"] = pd.dt.strftime("%Y%m")
+        pepe_final["ds"] = pd.to_datetime(pepe_final["ds"]).dt.strftime("%Y%m")
         return pepe_final
 
     def line_2(self, crime, df, borough):
