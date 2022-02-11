@@ -231,6 +231,7 @@ class all:
                                  name=f"Average {crime} Crimes",
                                  line=dict(color="darkgray", width=3, dash="dash")
                                  ))
+        fig.update_xaxes(tickangle=45,tickfont = {"size":10})
         fig.update_layout(legend={"orientation": "h", "font": {"size": 10}, "bgcolor": 'rgba(0,0,0,0)'})
         return fig
 
