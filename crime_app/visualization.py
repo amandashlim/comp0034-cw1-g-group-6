@@ -6,9 +6,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import statistics
 
-
-
-
 # Pycharm show plotly plots in browser
 # import plotly.io as pio
 # pio.renderers.default = "browser"
@@ -169,7 +166,7 @@ class all:
                       markers=True)
         return fig
 
-    def get_forecast(self,data, crime, borough):
+    def get_forecast(self, data, crime, borough):
         path = Path("data/forecast")
         pepe = pd.read_json(path / data)
         pepe_final = pd.DataFrame(eval(pepe[crime][borough]))
@@ -189,22 +186,30 @@ class all:
         if df.iloc[6, 3] == self.daytime_df_r.iloc[6, 3]:
             forecast_df = "daytime_df_r.json"
 
+        color_list = ["#ba1414","#eb7d2f","#222138","#3db00c","#167f94","#d669cd","#3a4a8c","#a3e6a9","#73c8d9","#32d990","#8ab00c",
+                      "#8200e6","#8f8000","#3b2691","#222138","#FF5CCD","#ed7bde","#111f5c","#d6697d","#e3d452","#390661","#6e1727",
+                      "#cc18bd","#f78383","#17362e","#b95eff","#8a76db","#031a05","#08264a","#59693e","#111a03","#c0e87d"]
+
         # labels = borough + ["Average Selected Crime"]
         fig = go.Figure()
         for i in range(0, len(borough)):
             fig.add_trace(go.Scatter(x=df["Date"].unique(), y=list(df[df["Borough"] == borough[i]][crime]),
                                      mode='lines',
                                      name=borough[i],
-                                     line=dict(width=1.5),
+                                     line=dict(width=1.5, color = color_list[i]),
                                      # connectgaps=True,
                                      ))
             forecast = self.get_forecast(data=forecast_df, crime=crime, borough=borough[i])
             forecast["ds"] = ["202110", "202111", "202112", "202201", "202202", "202203"]
-
+            last = df[(df["Borough"] == borough[i]) & (df["Date"] == "202109")][crime].iloc[0]
+            forecast.loc[-1] = ["202109", last, last, last]
+            forecast.index = forecast.index + 1
+            forecast.sort_index(inplace=True)
             fig.add_trace(go.Scatter(name="Forecast",
                                      x=forecast["ds"],
                                      y=forecast["yhat"],
                                      mode="lines",
+                                     line = dict(color=color_list[i]),
                                      showlegend=False))
             fig.add_trace(go.Scatter(
                 name='Upper Bound',
@@ -222,7 +227,7 @@ class all:
                 marker=dict(color="#444"),
                 line=dict(width=0),
                 mode='lines',
-                fillcolor='rgba(68, 68, 68, 0.3)',
+                fillcolor='rgba(138, 138, 138, 0.3)',
                 fill='tonexty',
                 showlegend=False
             ))
@@ -231,8 +236,10 @@ class all:
                                  name=f"Average {crime} Crimes",
                                  line=dict(color="darkgray", width=3, dash="dash")
                                  ))
-        fig.update_xaxes(tickangle=45,tickfont = {"size":10})
-        fig.update_layout(legend={"orientation": "h", "font": {"size": 10}, "bgcolor": 'rgba(0,0,0,0)'})
+        fig.update_xaxes(tickangle=45, tickfont={"size": 10})
+        fig.update_layout(legend={"orientation": "h", "font": {"size": 10},
+                                  "bgcolor": 'rgba(0,0,0,0)',
+                                  "itemclick":False, "itemdoubleclick":False})
         return fig
 
     def hist(self, date, df, borough):
