@@ -97,7 +97,7 @@ app.layout = html.Div(className="web_app", children=[
             dcc.Dropdown(id="hist_checklist",
                          options=v.borough_list,
                          multi=True,  # Can choose multiple boroughs to display at once
-                         value=["Camden"])
+                         value=["Camden"]),
 
         ], width=3, style={"background-color": "#F6F6F6"}),
 
@@ -130,23 +130,18 @@ app.layout = html.Div(className="web_app", children=[
             dbc.Row(id="line_row", children=[
                 html.H2("Line Chart"),
                 dcc.Graph(id="line",
-                          figure=v.line(crime="Drugs",
-                                        df=v.pop2020_df_r, borough=["Camden"]))
+                          figure=v.line_2(crime="Drugs",
+                                        df=v.df_r, borough=["Camden"]))
             ])
         ], width=6
                 ),
 
         # Statistics Column
         dbc.Col(className="container", children=[
-            html.H4("Statistics"),
+            html.H2("Statistics"),
+            html.P(""),
             dbc.Row(id="map_statistics", children=[
-                html.H5("Changes for selected boroughs:"),
-                html.H6("Change from last month:"),
-                html.H4(id="map_last_month"),
-                html.H6("Change from last 3-months average:"),
-                html.H4(id="map_3_months"),
-                html.H6("Change from last year:"),
-                html.H4(id="map_year"),
+                html.H5("Please select boroughs and month"),
             ]),
             dbc.Row(id="hist_statistics", children=[
                 html.H4("Test Hist")
@@ -168,18 +163,24 @@ app.layout = html.Div(className="web_app", children=[
     Output("hist_checklist_title", "style"),
     Output("crime_select", "style"),
     Output("crime_select_text", "style"),
+    Output("map_statistics","style"),
+    Output("hist_statistics","style"),
+    Output("line_statistics","style"),
     Input("chart_select", "value")
 )
 def hide(chart_select):
     if chart_select == "Map":
-        return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, {
-            'display': 'none'}, {'display': 'block'}, {'display': 'block'}
+        return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, \
+               {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, \
+               {'display': 'block'},{'display': 'none'},{'display': 'none'}
     if chart_select == "Histogram":
         return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'block'}, {
-            'display': 'block'}, {'display': 'none'}, {'display': 'none'}
+            'display': 'block'}, {'display': 'none'}, {'display': 'none'},\
+               {'display': 'none'},{'display': 'block'},{'display': 'none'}
     if chart_select == "Line":
-        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {
-            'display': 'none'}, {'display': 'block'}, {'display': 'block'}
+        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, {
+            'display': 'block'}, {'display': 'block'}, {'display': 'block'},\
+               {'display': 'none'},{'display': 'none'},{'display': 'block'}
 
 
 @app.callback(
@@ -208,6 +209,7 @@ def update_data(data_select, hist_checklist, hist_slider):
 
 
 @app.callback(
+    # Get selections
     Output("selections", "data"),
     [Input("map", "clickData")]
 )
@@ -312,8 +314,17 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
 
         stat_list.append(html.Br())
         # print(stat_list)
-    return html.Div(stat_list)
+    return html.Div(stat_list,style={"maxHeight":"500px","overflow":"scroll"})
 
+@app.callback(
+    Output("line","figure"),
+    Input("crime_select","value"),
+    Input("data_select","value"),
+    Input("hist_checklist","value")
+)
+def update_line(crime,data_select,borough):
+    fig = v.line_2(crime=crime, df = v.reformat(data[data_select]), borough=borough)
+    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
