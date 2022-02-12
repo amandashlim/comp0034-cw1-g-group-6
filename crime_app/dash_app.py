@@ -8,16 +8,12 @@ import dash_bootstrap_components as dbc
 from dash import dcc, Output, Input
 from dash import html
 import visualization as v
-from pathlib import Path
-import pandas as pd
+
 
 '''
 TODO:
-add interactivity (multiple selectable dropdown, checkbox, dropdown)
-figure out how to get data from map on selected year
 reformat UI layout - Amanda
 responsive design - changes the display on phone vs. web vs. changing window size
-statistics view?
 ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
 Make map max zoom out - Matic
 ask TA/Sarah -- Window size vw with padding messed up. Header spacing too.
