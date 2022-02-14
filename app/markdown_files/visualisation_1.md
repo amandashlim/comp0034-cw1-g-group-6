@@ -15,8 +15,8 @@ We chose to create a map as it is an effective visualisation for our webapp user
 Simply reading the data in numeric form would make it difficult for users to grasp a true visual understanding of the crime rates in different boroughs as users would not understand the context of each measurement of crime as part of a whole picture in london.
 A map allows users to compare the crime rates using a colour spectrum system, where the colour purple signifies a low crime rate and the colour yellow signifies a high crime rate.
 
-We also decided to provide our users with a slider, allowing them to see how the crime rates have evolved over the recorded months.
-Therefore, if they are looking at a specific borough they are interested in, they can see the colour change and find out if the crime rate in that area has increased or decreased over the months.
+We added functionality by providing users with a slider, allowing them to see how the crime rates have evolved over the recorded months.
+Therefore, for specific boroughs, users will notice the colour change and gain isight into how crime rate in that area has increased or decreased over a decided time period.
 
 Finally, on the left-hand side of the dashboard, we can see that there is a section enabling users to select filters in relation to the types of crime.
 These filters allow our webapp users to tailor their map to their preferences.
