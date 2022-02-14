@@ -57,7 +57,7 @@ app.layout = html.Div(className="web_app", children=[
     dbc.Row(className="main_content", children=[
         # Display Settings Column
         dbc.Col(className="container", children=[
-            html.H4("Display Settings"),
+            html.H4("Display Settings", id="display_settings"),
 
             # Selecting which dataset will be used to display the data (Always show)
             html.Br(),
