@@ -46,7 +46,7 @@ The second test is that given the app is running, when we access the homepage, t
 
 ** will there be a third???
 
-[Link to tests with selenium](../test_crime.py)
+[Link to tests with selenium](tests/test_crime.py)
 
 We also came up with unit tests. 
 

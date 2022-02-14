@@ -9,7 +9,7 @@ The map visualisation is intended to address are the following questions:
 
 ![Map](../assets/map.png)
 
-### 1. Explaining the design
+### *1. Explaining the design*
 
 We chose to create a map as it is an effective visualisation for our webapp users to compare the London boroughs' crime rates. This is because a map is intuitive and fit for interactivity. 
 Simply reading the data in numeric form would make it difficult for users to grasp a true visual understanding of the crime rates in different boroughs as users would not understand the context of each measurement of crime as part of a whole picture in london.
@@ -21,12 +21,19 @@ Therefore, if they are looking at a specific borough they are interested in, the
 Finally, on the left-hand side of the dashboard, we can see that there is a section enabling users to select filters in relation to the types of crime.
 These filters allow our webapp users to tailor their map to their preferences.
 
-### 2. Evaluating our visualisation
+### *2. Evaluating our visualisation*
 
-need to add:
+To create the map, we used multiple datasets; the main datasets used were the Metropolitan police dataset (crime_data.csv) and a London Borough dataset (london_boroughs.json) so that we could create the map.
+We also used multiple other datasets so that users could look at the map through different data on the population as we can see in the filters on the left-hand side of the dashboard.
+The other datasets used were for raw data (population.csv) and total daytime population (daytime_population.csv). 
 
-    => what data for the dataset is needed to answer the question (idk if we should add this above before 1. or here)
-    => visual aspects of the design (should we put here or in 1.?)
-    => How well does the visualisation you created meet with the design choices you made?
-    => What are the strengths and weaknesses of the design with respect to the target audience and the question you were intending to answer?
-    => If relevant, suggest any ways in which your visualisation design could be improved.
+For the map, we used all the data from each dataset listed above to answer the questions.
+
+The map is extremely useful to the users, as it is the simplest and most interactive way for them to learn about the crime rates in each London borough.
+We decided to add a feature where users can hover their mouse over a borough and provide them with **condensed?? idk what word to use** information on the borough which is the borough name and the amount of crime for the type selected by the user.
+If the user wishes to get more **longer???** data on the borough or boroughs selected, they simply need to click on the borough(s) they are interested in and statistics on the selected borough(s) will show on the right-hand side of the borough.
+These features are all strengths of the webapp as it allows the user to be provided with global data, which is easy to understand. However, if they wish to have more in depth data, they simply need to click on the borough to see it. 
+
+A weakness of the map is that we are unable to provide users with a map where the date selected is "Today", as we are not provided with the data.
+If were able to have access to this data, we would try to improve the map by enabling it to fetch data in real-time and update the map constantly so that users would have access to the latest crime data in the London boroughs.
+Moreover, it would have been interesting to be able to compare the London data to other locations within the UK, so that webapp users can have a broader understanding on the crime data to better determine whether the crime rates should be considered as low or high in relation to areas outside of London.
