@@ -7,7 +7,7 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, Output, Input
 from dash import html
-import visualization as v
+from crime_app.visualization import all
 
 
 '''
@@ -20,7 +20,7 @@ ask TA/Sarah -- Window size vw with padding messed up. Header spacing too.
 '''
 
 # Define list of data sources
-v = v.all()
+v = all()
 data = {"Raw": v.df,
         "Population - 2020 GLA Estimate": v.pop2020_df,
         "Population - 2011 Census": v.pop2011_df,
