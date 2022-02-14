@@ -26,11 +26,16 @@ The other datasets used were for raw data (population.csv), population - 2020 GL
 
 We used all the data from each dataset listed above to answer the questions.
 
+Webapp users are able to select a form of crime as well as one or multiple boroughs.
+For each form of crime, we added a line which shows the average crime rate for the corresponding form of crime.
+Then, for each form of crime we have a personalised line which shows the counts of crime over the months recorded.
+However, in the dataset provided, there were missing counts for some of the most recent months. 
+We overcame this obstacle by forecasting the data for the more recent months by also adding upper and lower bounds.
+This visualisation is the optimal one to answer the questions is relation to measure the evolution of crime over the recorded months as it shows the webapp users the fluctuation of the crime count.
+On the right-hand side of the dashboard we also included statistics showing the boroughs with the highest and lowest average and recorded crime rates for the form of crime selected by the user. 
+This is useful as it allows users to compare the boroughs they selected with the extremes of the form of crime selected.
 
-
-
-
-    => what data from the dataset is needed to answer the question (idk if we should add this above before 1. or here)
-    => How well does the visualisation you created meet with the design choices you made?
-    => What are the strengths and weaknesses of the design with respect to the target audience and the question you were intending to answer?
-    => If relevant, suggest any ways in which your visualisation design could be improved.
+Although the feature where users are able to add multiple boroughs is useful for them to compare the crime rates across the timeline, adding multiple boroughs to the line chart makes it a lot messier and confusing. 
+Our solution to this weakness of the visualisation would probably be to limit the number of boroughs users can select to three. 
+Another weakness would be that we didn't create the option to look at the line chart data seasonally. 
+By providing a simple line chart in addition to the one we created with a timeline which only shows the average data across the four seasons would allow for the users to see whether the seasons have an impact on crime rates.
