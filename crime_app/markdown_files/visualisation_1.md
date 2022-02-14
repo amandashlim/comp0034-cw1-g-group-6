@@ -1,6 +1,6 @@
 # Visualisation 1: The Map
 
-The target audience for our map visualisation is anyone who is either moving to or living in London, who is interested in learning about and comparing the crime rates for each form of crime in the different london boroughs.
+The target audience for our map visualisation is anyone who is either moving to or living in London and hence, is looking for somewhere to live. who is interested in learning about and comparing the crime rates for each form of crime in the different london boroughs.
 
 The questions that this visualisation is intended to address are the following:
 
