@@ -64,7 +64,7 @@ class all:
         self.dates()
 
     def get_data(self):
-        datafile = Path('data')
+        datafile = Path("data")
         self.df = pd.read_csv(datafile / "crime_data.csv")
         self.df = self.df[self.df["Borough"] != "Aviation Security(SO18)"]
         self.df = self.df.drop(["Unnamed: 0"], axis=1)

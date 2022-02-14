@@ -7,7 +7,7 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, Output, Input
 from dash import html
-from crime_app.visualization import all
+from app.visualization import all
 
 
 '''
