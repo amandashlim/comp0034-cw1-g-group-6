@@ -64,7 +64,7 @@ class all:
         self.dates()
 
     def get_data(self):
-        datafile = Path("data")
+        datafile = Path(__file__).parent.joinpath("data")
         self.df = pd.read_csv(datafile / "crime_data.csv")
         self.df = self.df[self.df["Borough"] != "Aviation Security(SO18)"]
         self.df = self.df.drop(["Unnamed: 0"], axis=1)
@@ -165,7 +165,7 @@ class all:
         return fig
 
     def get_forecast(self, data, crime, borough):
-        path = Path("data/forecast")
+        path = Path(__file__).parent.joinpath("data/forecast")
         pepe = pd.read_json(path / data)
         pepe_final = pd.DataFrame(eval(pepe[crime][borough]))
         pepe_final["ds"] = pd.to_datetime(pepe_final["ds"]).dt.strftime("%Y%m")
