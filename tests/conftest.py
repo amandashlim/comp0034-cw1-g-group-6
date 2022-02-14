@@ -9,8 +9,9 @@ def pytest_setup_options():
     options.add_argument('--disable-gpu')
     #options.add_argument('--headless')
     return options
-
+'''
 @pytest.fixture(scope='function')
 def run_crime_app(dash_duo):
     app = import_app("app.crime_app")
     yield dash_duo.start_server(app)
+'''
