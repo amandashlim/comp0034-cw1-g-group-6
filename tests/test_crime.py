@@ -1,3 +1,4 @@
+'''
 from dash.testing.application_runners import import_app
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -38,7 +39,7 @@ def test_crda003_default_crime(dash_duo):
     WebDriverWait(dash_duo.driver, 3)
     default_crime = dash_duo.find_element(By.XPATH, "/html/body/div/div/div/div[3]/div[1]/div/div/div[2]/div[1]/div[3]/div/div/div/div[1]").text
     assert default_crime.text() == 'Burglary'.text()
-
+'''
 
 
 
