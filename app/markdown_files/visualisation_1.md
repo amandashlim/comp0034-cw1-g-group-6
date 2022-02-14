@@ -25,7 +25,7 @@ These filters allow our webapp users to tailor their map to their preferences.
 
 To create the map, we used multiple datasets; the main datasets used were the Metropolitan police dataset (crime_data.csv) and a London Borough dataset (london_boroughs.json) so that we could create the map.
 We also used multiple other datasets so that users could look at the map through different data on the population as we can see in the filters on the left-hand side of the dashboard.
-The other datasets used were for raw data (population.csv), population - 2020 GLA estimate (pop2020_df_r.json), population - 2011 Census (pop2011_df_r.json), workday population (workday_df_r.json) and total daytime population (daytime_df_r.json and daytime_population.csv). 
+The other datasets used were for raw data (population.csv) and total daytime population (daytime_population.csv). 
 
 For the map, we used all the data from each dataset listed above to answer the questions.
 

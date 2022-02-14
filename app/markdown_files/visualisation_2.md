@@ -23,7 +23,7 @@ This allows them to either look at the crime counts for a specific borough they 
 
 To create the histogram, we used multiple datasets; the main dataset used was the Metropolitan police dataset (crime_data.csv).
 We also used multiple other datasets so that users could look at the histogram through different data on the population as we can see in the filters on the left-hand side of the dashboard.
-The other datasets used were for raw data (population.csv), population - 2020 GLA estimate (pop2020_df_r.json), population - 2011 Census (pop2011_df_r.json), workday population (workday_df_r.json) and total daytime population (daytime_df_r.json and daytime_population.csv). 
+The other datasets used were for raw data (population.csv) and total daytime population (daytime_population.csv). 
 
 We used all the data from each dataset listed above to answer the question.
 
