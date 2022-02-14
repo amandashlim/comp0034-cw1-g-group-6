@@ -52,7 +52,6 @@ def test_correct_statistics_for_selected_borough_time_crime (dash_duo):
     time.sleep(3)
     dash_duo.click_at_coord_fractions("#visual_charts", 0.3, 0.3)
     dash_duo.click_at_coord_fractions("#visual_charts", 0.5, 0.5)
-    #dash_duo.click_at_coord_fractions("#visual_charts", 0.6, 0.6)
     time.sleep(3)
     dash_duo.click_at_coord_fractions("#map_slider",0.5,0.5)
     time.sleep(5)
