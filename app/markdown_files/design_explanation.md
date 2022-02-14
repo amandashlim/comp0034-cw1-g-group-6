@@ -38,6 +38,19 @@ Moreover, based on personal preferences, they would be able to tailor their sear
 
 [Visualisation 3: Link to design explanation and evaluation](../markdown_files/visualisation_3.md)
 
+### 5. Testing the Dash App
+
+To test the dash app, we came up with 2 separate tests using selenium.
+The first test, checks to see that, given the app is running, when we access the homepage, the H1 heading of the webapp is "London Crime Rates".
+The second test is that given the app is running, when we access the homepage, then there should be written "Select Chart Type".
+
+** will there be a third???
+
+[Link to tests with selenium](../test_crime.py)
+
+We also came up with unit tests. 
+
+
 
 
 
