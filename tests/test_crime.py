@@ -1,3 +1,4 @@
+'''
 from dash.testing.application_runners import import_app
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -41,7 +42,7 @@ def test_crda003_default_crime(dash_duo):
 
 
 # /html/body/div/div/div/div[4]/div[1]/div/div/div[2]/div[1]/div[3]/div/div/div - path to enter in type of crime (i think)
-
+'''
 
 
 
