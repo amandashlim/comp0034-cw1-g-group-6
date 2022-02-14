@@ -36,5 +36,5 @@ We decided to add this feature into our dashboard so that our users can have mor
 
 One of the weaknesses of our histogram is that if the user selects a large timeframe (i.e.: more than 6 months) it becomes hard for them to compare the months, especially for the forms of crime which have a lower count.
 This is why we decided that this visualisation would not be able to answer the questions 1. and 3. stated in the design_explanation.md [(Click to see the questions in the main markdown)](../markdown_files/design_explanation.md).
-To would improve the visualisation by solving this issue. To solve the issue we would probably allow users to click on the histogram itself for it to take up the whole page of the webapp. 
+To solve the issue and improve our visualisation, we would probably allow users to click on the histogram itself for it to take up the whole page of the webapp. 
 This means that they would be able to better compare the months as the histogram would be larger and therefore allowing them to select a larger timeframe.
