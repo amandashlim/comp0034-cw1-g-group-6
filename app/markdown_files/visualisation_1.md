@@ -12,8 +12,8 @@ The map visualisation is intended to address are the following questions:
 ### 1. Explaining the design
 
 We chose to create a map as it is an effective visualisation for our webapp users to compare the London boroughs' crime rates. This is because a map is intuitive and fit for interactivity. 
-Simply reading the data in numeric form would not allow users to grasp an informed understanding on the crime rates as they would not be able to figure out whether the numbers given are supposed to be considered as high or low.
-A map allows them to compare the crime rates where on the low end of the spectrum, which is in purple, means that there is a low crime rate and on the high end of the spectrum, which is in yellow, which means that there is a high crime rate.
+Simply reading the data in numeric form would make it difficult for users to grasp a true visual understanding of the crime rates in different boroughs as users would not understand the context of each measurement of crime as part of a whole picture in london.
+A map allows users to compare the crime rates where the colour purple , means that there is a low crime rate and on the high end of the spectrum, which is in yellow, which means that there is a high crime rate.
 
 We also decided to provide our users with a slider, allowing them to see how the crime rates have evolved over the recorded months.
 Therefore, if they are looking at a specific borough they are interested in, they can see the colour change and find out if the crime rate in that area has increased or decreased over the months.
