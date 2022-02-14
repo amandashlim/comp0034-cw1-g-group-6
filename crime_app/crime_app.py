@@ -1,7 +1,7 @@
 # Copied from the Dash tutorial documentation at https://dash.plotly.com/layout on 24/05/2021
 # Import section modified 10/10/2021 to comply with changes in the Dash library.
 
-# Run this app with `python dash_app.py` and visit http://127.0.0.1:8050/ in your web browser.
+# Run this app with `python crime_app.py` and visit http://127.0.0.1:8050/ in your web browser.
 
 import dash
 import dash_bootstrap_components as dbc
@@ -14,7 +14,7 @@ import visualization as v
 TODO:
 reformat UI layout - Amanda
 responsive design - changes the display on phone vs. web vs. changing window size
-ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in dash_app.py?
+ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in crime_app.py?
 Make map max zoom out - Matic
 ask TA/Sarah -- Window size vw with padding messed up. Header spacing too.
 '''
