@@ -9,7 +9,6 @@ from dash import dcc, Output, Input
 from dash import html
 from app.visualization import all
 
-
 '''
 TODO:
 reformat UI layout - Amanda
@@ -41,7 +40,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
 app.layout = html.Div(className="web_app", children=[
-    dcc.Store("selections"),
+    dcc.Store(id="selections"),
     # Top row
     dbc.Row(className="header", children=[
         # Met Logo
@@ -49,15 +48,16 @@ app.layout = html.Div(className="web_app", children=[
                          style={"height": "5vh"}),
                 width="auto"),  # The width changes
         # Title of the web app
-        dbc.Col(html.H2("Crime in London Overview Dashboard"), width=8)
+        dbc.Col(html.H2("Crime in London Overview Dashboard", id="main_header"), width=8)
     ],
             align="center"  # Vertically center the elements within this row
             ),
     # Everything else row (main web app content)
     dbc.Row(className="main_content", children=[
+
         # Display Settings Column
-        dbc.Col(className="container", children=[
-            html.H4("Display Settings", id="display_settings"),
+        dbc.Col(className="container", id="display_settings", children=[
+            html.H4("Display Settings"),
 
             # Selecting which dataset will be used to display the data (Always show)
             html.Br(),
@@ -99,7 +99,7 @@ app.layout = html.Div(className="web_app", children=[
         ], width=3, style={"background-color": "#F6F6F6"}),
 
         # Visualization Columns (only one will show at a time)
-        dbc.Col(className="container", children=[
+        dbc.Col(className="container", id="visual_charts", children=[
             # Map
             dbc.Row(id="map_row", children=[
                 html.H2("Map"),
@@ -134,7 +134,7 @@ app.layout = html.Div(className="web_app", children=[
                 ),
 
         # Statistics Column
-        dbc.Col(className="container", children=[
+        dbc.Col(className="container", id="statistics", children=[
             html.H2("Statistics"),
             html.P(""),
             dbc.Row(id="map_statistics", children=[
@@ -332,23 +332,22 @@ def update_line_stats(crime, data_select):
                                                                    df=v.reformat(data[data_select]))
     stats_list_bad = [
         html.H5(f"Borough with the highest average {crime} rate:"),
-        html.P(f'{worst_average_borough}, with rate: {round(average_bad,3)}', style={"font-weight":"bold"}),
+        html.P(f'{worst_average_borough}, with rate: {round(average_bad, 3)}', style={"font-weight": "bold"}),
         html.H5(f"Borough with the highest recorded {crime} rate:"),
-        html.P(f'{worst_instance_borough}, with rate: {round(max,3)}',style={"font-weight":"bold"}),
+        html.P(f'{worst_instance_borough}, with rate: {round(max, 3)}', style={"font-weight": "bold"}),
         html.P(f'Recorded on date: {year_max[4:]}/{year_max[0:4]}'),
         html.Br()]
-    stats_list_good=[
+    stats_list_good = [
         html.H5(f"Borough with the lowest average {crime} rate:"),
-        html.P(f'{best_average_borough}, with rate: {round(average_good,3)}',style={"font-weight":"bold"}),
+        html.P(f'{best_average_borough}, with rate: {round(average_good, 3)}', style={"font-weight": "bold"}),
         html.H5(f"Borough with the lowest recorded {crime} rate:"),
-        html.P(f'{best_borough}, with rate: {round(min,3)}',style={"font-weight":"bold"}),
+        html.P(f'{best_borough}, with rate: {round(min, 3)}', style={"font-weight": "bold"}),
         html.P(f'Recorded on date: {year_min[4:]}/{year_min[0:4]}'),
         html.Br()]
     return html.Div(children=[
-        dbc.Row(className="container",children=stats_list_bad),
-        dbc.Row(className="container",children=stats_list_good)
+        dbc.Row(className="container", children=stats_list_bad),
+        dbc.Row(className="container", children=stats_list_good)
     ])
-
 
 
 @app.callback(
