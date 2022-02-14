@@ -5,9 +5,7 @@ import json
 import plotly.express as px
 import plotly.graph_objects as go
 import statistics
-
-
-
+import numpy as np
 
 # Pycharm show plotly plots in browser
 # import plotly.io as pio
@@ -109,6 +107,7 @@ class all:
         self.date_list = self.df_r["Date"].unique()
 
     def get_highlights(self, selections):
+        # Returns the filtered geojson for selected areas
         geo_highlight = dict()
         for k in self.geo.keys():
             if k != "features":
@@ -118,33 +117,29 @@ class all:
         return geo_highlight
 
     def map_2_layer(self, df, selections, crime):
-
+        # Default layer
         fig = px.choropleth_mapbox(df, geojson=self.geo,
                                    color=crime,
                                    locations="Borough",
                                    featureidkey="properties.name",
                                    opacity=0.5)
 
-        # Second layer - Highlights ----------#
+        # Selectable layer
         if len(selections) > 0:
-            # highlights contain the geojson information for only
-            # the selected districts
             highlights = self.get_highlights(selections)
-
             fig.add_trace(
                 px.choropleth_mapbox(df, geojson=highlights,
                                      color=crime,
                                      locations="Borough",
                                      featureidkey="properties.name",
-                                     opacity=1).data[0]
-            )
+                                     opacity=1).data[0])
 
-        # ------------------------------------#
         fig.update_layout(mapbox_style="carto-positron",
                           mapbox_zoom=8.5,
                           mapbox_center={"lat": 51.5072, "lon": -0.1076},
                           margin={"r": 0, "t": 0, "l": 0, "b": 0},
                           uirevision='constant')
+        fig.update_geos(scope="europe", fitbounds="geojson")
         return fig
 
     def map(self, crime, df):
@@ -169,7 +164,7 @@ class all:
                       markers=True)
         return fig
 
-    def get_forecast(self,data, crime, borough):
+    def get_forecast(self, data, crime, borough):
         path = Path("data/forecast")
         pepe = pd.read_json(path / data)
         pepe_final = pd.DataFrame(eval(pepe[crime][borough]))
@@ -189,22 +184,33 @@ class all:
         if df.iloc[6, 3] == self.daytime_df_r.iloc[6, 3]:
             forecast_df = "daytime_df_r.json"
 
+        color_list = ["#ba1414", "#eb7d2f", "#222138", "#3db00c", "#167f94", "#d669cd", "#3a4a8c", "#a3e6a9", "#73c8d9",
+                      "#32d990", "#8ab00c",
+                      "#8200e6", "#8f8000", "#3b2691", "#222138", "#FF5CCD", "#ed7bde", "#111f5c", "#d6697d", "#e3d452",
+                      "#390661", "#6e1727",
+                      "#cc18bd", "#f78383", "#17362e", "#b95eff", "#8a76db", "#031a05", "#08264a", "#59693e", "#111a03",
+                      "#c0e87d"]
+
         # labels = borough + ["Average Selected Crime"]
         fig = go.Figure()
         for i in range(0, len(borough)):
             fig.add_trace(go.Scatter(x=df["Date"].unique(), y=list(df[df["Borough"] == borough[i]][crime]),
                                      mode='lines',
                                      name=borough[i],
-                                     line=dict(width=1.5),
+                                     line=dict(width=1.5, color=color_list[i]),
                                      # connectgaps=True,
                                      ))
             forecast = self.get_forecast(data=forecast_df, crime=crime, borough=borough[i])
             forecast["ds"] = ["202110", "202111", "202112", "202201", "202202", "202203"]
-
+            last = df[(df["Borough"] == borough[i]) & (df["Date"] == "202109")][crime].iloc[0]
+            forecast.loc[-1] = ["202109", last, last, last]
+            forecast.index = forecast.index + 1
+            forecast.sort_index(inplace=True)
             fig.add_trace(go.Scatter(name="Forecast",
                                      x=forecast["ds"],
                                      y=forecast["yhat"],
                                      mode="lines",
+                                     line=dict(color=color_list[i]),
                                      showlegend=False))
             fig.add_trace(go.Scatter(
                 name='Upper Bound',
@@ -222,7 +228,7 @@ class all:
                 marker=dict(color="#444"),
                 line=dict(width=0),
                 mode='lines',
-                fillcolor='rgba(68, 68, 68, 0.3)',
+                fillcolor='rgba(138, 138, 138, 0.3)',
                 fill='tonexty',
                 showlegend=False
             ))
@@ -231,13 +237,18 @@ class all:
                                  name=f"Average {crime} Crimes",
                                  line=dict(color="darkgray", width=3, dash="dash")
                                  ))
-        fig.update_layout(legend={"orientation": "h", "font": {"size": 10}, "bgcolor": 'rgba(0,0,0,0)'})
+        fig.update_xaxes(tickangle=45, tickfont={"size": 10})
+        fig.update_layout(legend={"orientation": "h", "font": {"size": 10},
+                                  "bgcolor": 'rgba(0,0,0,0)',
+                                  "itemclick": False, "itemdoubleclick": False})
         return fig
 
     def hist(self, date, df, borough):
         fig = px.histogram(df[df["Borough"].isin(borough)],
-                           y="Major Class Description", x=date). \
+                           y="Major Class Description", x=date,
+                           labels={"x": "Crime Rate"}). \
             update_yaxes(categoryorder="total ascending")
+        fig.update_layout(showlegend=False)
         return fig
 
     def statistics_map(self, df, month, selected_areas, crime, m=0, mmm=0, y=0):
@@ -311,3 +322,51 @@ class all:
                                                  crime].tolist()))
                     compare_to_last_year[i] = a
                 return compare_to_last_year
+
+    def statistics_hist(self, time_range, df, borough):
+        correlation_m = df[(df["Date"].isin(time_range)) & (df["Borough"].isin(borough))][self.crime_list].corr()
+        mask = np.triu(np.ones_like(correlation_m, dtype=bool))
+        rLT = correlation_m.mask(mask)
+
+        heat = go.Heatmap(
+            z=rLT,
+            x=rLT.columns.values,
+            y=rLT.columns.values,
+            zmin=-1,
+            zmax=1,
+            xgap=1,  # Sets the horizontal gap (in pixels) between bricks
+            ygap=1,
+            colorscale='RdBu')
+
+        title = 'Crime Type Correlation Matrix'
+
+        layout = go.Layout(
+            title_text=title,
+            title_x=0.5,
+            xaxis_showgrid=False,
+            yaxis_showgrid=False,
+            yaxis_autorange='reversed')
+
+        fig = go.Figure(data=[heat], layout=layout)
+        fig.update_xaxes(tickangle=90, tickfont={"size": 10})
+        fig.update_yaxes(tickangle=45, tickfont={"size": 10})
+        return fig
+
+    def statistics_line(self,crime,df):
+        worst_average_borough = df.groupby("Borough").mean()[crime].idxmax()
+        average_bad = df.groupby("Borough").mean()[crime].loc[worst_average_borough]
+
+        best_average_borough = df.groupby("Borough").mean()[crime].idxmin()
+        average_good = df.groupby("Borough").mean()[crime].loc[best_average_borough]
+
+        worst_instance_borough = df.loc[df[crime].idxmax()]["Borough"]
+        year_max = df.loc[df[crime].idxmax()]["Date"]
+        max = df[crime].max()
+
+        best_borough = df.loc[df[crime].idxmin()]["Borough"]
+        year_min = df.loc[df[crime].idxmin()]["Date"]
+        min = df[crime].min()
+
+        return worst_average_borough, average_bad, best_average_borough, average_good,\
+               worst_instance_borough,\
+               year_max, max, best_borough, year_min, min
