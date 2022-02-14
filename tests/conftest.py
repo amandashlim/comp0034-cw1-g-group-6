@@ -1,8 +1,10 @@
-'''
+import os
 import pytest
 from dash.testing.application_runners import import_app
 from selenium.webdriver.chrome.options import Options
 
+def setup_module():
+    os.environ['no_proxy'] = 'localhost'
 
 def pytest_setup_options():
     options = Options()
@@ -11,6 +13,7 @@ def pytest_setup_options():
     #options.add_argument('--headless')
     return options
 
+'''
 @pytest.fixture(scope='function')
 def run_crime_app(dash_duo):
     app = import_app("app.crime_app")
