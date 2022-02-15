@@ -5,7 +5,7 @@ The target audience for our map visualisation is anyone who is either moving to 
 The line chart visualisation is intended to address are the following questions:
 
     1. How has drug crime evolved in London over the two recorded years?
-    2. How does sexual offences fluctuate over the four seasons?
+    2. How does sexual offence fluctuate over the four seasons?
 
 ![Map](../assets/line_chart.png)
 
