@@ -23,8 +23,8 @@ These filters allow our webapp users to tailor their map to their preferences.
 
 ### *2. Evaluating our visualisation*
 
-To create the map, we used multiple datasets; the main datasets used were the Metropolitan police dataset (crime_data.csv) and a London Borough dataset (london_boroughs.json) so that we could create the map.
-We also used multiple other datasets so that users could look at the map through different data on the population as we can see in the filters on the left-hand side of the dashboard.
+To create the map, we used multiple datasets; the main datasets were the Metropolitan police dataset (crime_data.csv) and a London Borough dataset (london_boroughs.json) to create the map.
+We used other datasets to provide additional insights by allowing users to look at the map through different population datasets. This can be observed in the filters on the left-hand side of the dashboard.
 The other datasets used were for raw data (population.csv) and total daytime population (daytime_population.csv). 
 
 For the map, we used all the data from each dataset listed above to answer the questions.
