@@ -34,7 +34,7 @@ This visualisation is effective at measuring the evolution of crime over time as
 On the right-hand side of the dashboard we also included statistics showing the boroughs with the highest and lowest average and recorded crime rates for the selected crime. 
 This is useful as it allows users to compare the boroughs they selected with the extremes of the form of crime selected.
 
-Although the feature where users are able to add multiple boroughs is useful for them to compare the crime rates across the timeline, adding multiple boroughs to the line chart makes it a lot messier and confusing. 
-Our solution to this weakness of the visualisation would probably be to limit the number of boroughs users can select to three. 
-Another weakness would be that we didn't create the option to look at the line chart data seasonally. 
-By providing a simple line chart in addition to the one we created with a timeline which only shows the average data across the four seasons would allow for the users to see whether the seasons have an impact on crime rates.
+Although the feature that allows users to add multiple boroughs is useful to compare the crime rates across the timeline, adding multiple boroughs clutters the line chart and makes it more confusing for the user. 
+Our solution to this weakness of the visualisation is to limit the number of boroughs users can select to three. 
+Another weakness is that we didn't create the option to look at the line chart data seasonally. 
+By providing an option to change the dates to seasons, we could allow for the users to see more precisely whether the occurrences of crime rates are seasonally linked.
