@@ -33,7 +33,7 @@ The map is extremely useful to users, as it offers an intuitive and interactive 
 We added more functionality by including a feature where users can hover their mouse over a borough and provide them with summary of information on the borough. This summary includes the borough name and the crime level for the selected crime category.
 If the user wishes to receive more detailed information on the borough or boroughs selected, they simply need to click on the borough(s) they are interested in and statistics on the selected borough(s) will show on the right-hand side of the screen.
 The statistics provides numerical values to show how the crime rate has changed since the previous month, the last 3 months and over the last year. This allows users to observe how the crime rates have improved or worsened over the chosen timeframe.
-These features are all strengths of the webapp as it allows the user to be provided with global data, which is easy to understand. However, if they wish to have more in depth data, they simply need to click on the borough to see it. 
+These features are all strengths of the webapp as it allows the user to be provided with global data, which is easy to understand. However, if they wish to understand the crime intricacies over each borough, they simply need to click on the borough to view the insights. 
 
 A weakness of the map is that we are unable to provide users with a map where the date selected is "Today", as we are not provided with the data.
 If were able to have access to this data, we would try to improve the map by enabling it to fetch data in real-time and update the map constantly so that users would have access to the latest crime data in the London boroughs.
