@@ -164,6 +164,7 @@ app.layout = html.Div(className="web_app", children=[
     Input("chart_select", "value")
 )
 def hide(chart_select):
+    # Hides/Shows parts of the web app based off which chart is selected
     if chart_select == "Map":
         return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, \
                {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, \
@@ -186,7 +187,7 @@ def hide(chart_select):
     Input("hist_slider", "value")
 )
 def update_data(data_select, hist_checklist, hist_slider):
-    # print(hist_slider)
+    # Updates the data used for the histogram based on the slider date range
     if hist_slider is not None:
         if hist_slider[0] != hist_slider[1]:
             fig = v.hist(df=data[data_select],
@@ -228,6 +229,7 @@ def selections_data(clickData):
     Input("map_slider", "value")
 )
 def update_figure(data_1, crime_select, data_select, map_slider):
+    # Updates the map when the date range slider changes
     selections = data_1
     if map_slider is not None:
         fig = v.map_2_layer(df=v.reformat(
@@ -255,6 +257,7 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
         selected_month = date_slider_dict[map_slider]["label"]
     else:
         selected_month = "201910"
+    # Defines how stats are calculated
     last_month = v.statistics_map(df=v.reformat(data[data_select]),
                                   month=selected_month,
                                   crime=crime_select,
@@ -271,6 +274,7 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
                                  selected_areas=boroughs,
                                  y=1)
     for i in boroughs:
+        # Calculates the stats for each borough and appends them to a list
         stat_list.append(html.H4(f"Changes for {i}:"))
 
         stat_list.append(html.H6("Last month:"))
@@ -312,6 +316,7 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
     Input("hist_checklist", "value")
 )
 def update_line(crime, data_select, borough):
+    # Hides/shows different boroughs on the line chatt based oh borough(s) selected
     fig = v.line_2(crime=crime, df=v.reformat(data[data_select]), borough=borough)
     return fig
 
@@ -322,6 +327,7 @@ def update_line(crime, data_select, borough):
     Input("data_select", 'value')
 )
 def update_line_stats(crime, data_select):
+    # Define the different crime rate calculations
     worst_average_borough, average_bad, best_average_borough, average_good, worst_instance_borough, \
     year_max, max, best_borough, year_min, min = v.statistics_line(crime=crime,
                                                                    df=v.reformat(data[data_select]))
@@ -332,6 +338,7 @@ def update_line_stats(crime, data_select):
         html.P(f'{worst_instance_borough}, with rate: {round(max, 3)}'),
         html.P(f'Recorded: {year_max[4:]}/{year_max[0:4]}', style={"font-style": "italic", "color": "grey"}),
         html.Br()]
+
     stats_list_good = [
         html.H5(f"Lowest Average {crime} Rate:"),
         html.P(f'{best_average_borough}, with rate: {round(average_good, 3)}'),
