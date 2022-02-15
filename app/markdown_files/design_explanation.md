@@ -25,19 +25,21 @@ Our target audience for the webapp, are university students who are new to Londo
 Since our target audience is assumed to not know London, the webapp would be useful as it would allow them to be informed on the crime rates associated with each London borough.
 Moreover, based on personal preferences, they would be able to tailor their searches to the crimes they are more concerned about.
 
-### 2. Visualisation 1: The Map
+### 2. Software Engineering Process - CRISP DM
+
+### 3. Visualisation 1: The Map
 
 [Visualisation 1: Link to design explanation and evaluation](../markdown_files/visualisation_1.md)
 
-### 3. Visualisation 2: The Histogram
+### 4. Visualisation 2: The Histogram
 
 [Visualisation 2: Link to design explanation and evaluation](../markdown_files/visualisation_2.md)
 
-### 4. Visualisation 3: The Line Chart
+### 5. Visualisation 3: The Line Chart
 
 [Visualisation 3: Link to design explanation and evaluation](../markdown_files/visualisation_3.md)
 
-### 5. Testing the Dash App
+### 6. Testing the Dash App
 
 To test the dash app, we came up with 2 separate tests using selenium.
 The first test, checks to see that, given the app is running, when we access the homepage, the H1 heading of the webapp is "London Crime Rates".
