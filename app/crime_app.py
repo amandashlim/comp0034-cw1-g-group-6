@@ -11,11 +11,7 @@ from app.visualization import all
 
 '''
 TODO:
-reformat UI layout - Amanda
-responsive design - changes the display on phone vs. web vs. changing window size
-ask TA/Sarah -- what is meant to be in index.html if the HTML elements and formatting are done in crime_app.py?
 Make map max zoom out - Matic
-ask TA/Sarah -- Window size vw with padding messed up. Header spacing too.
 '''
 
 # Define list of data sources
@@ -57,7 +53,7 @@ app.layout = html.Div(className="web_app", children=[
 
         # Display Settings Column
         dbc.Col(className="container", id="display_settings", children=[
-            html.H4("Display Settings"),
+            html.H3("Display Settings"),
 
             # Selecting which dataset will be used to display the data (Always show)
             html.Br(),
@@ -84,7 +80,6 @@ app.layout = html.Div(className="web_app", children=[
             html.P("Select Crime to Display", id="crime_select_text"),
             dcc.Dropdown(id="crime_select",
                          options=[{"label": x, "value": x} for x in v.crime_list],
-                         # TODO: Add dropdown preview text on the button
                          value="Drugs"
                          ),
 
@@ -102,7 +97,7 @@ app.layout = html.Div(className="web_app", children=[
         dbc.Col(className="container", id="visual_charts", children=[
             # Map
             dbc.Row(id="map_row", children=[
-                html.H2("Map"),
+                html.H3("Map"),
                 dcc.Graph(id="map",
                           figure=v.map_2_layer(df=v.df_r,
                                                selections=selections,
@@ -114,7 +109,7 @@ app.layout = html.Div(className="web_app", children=[
             ]),
             # Histogram
             dbc.Row(id="hist_row", children=[
-                html.H2("Histogram"),
+                html.H3("Histogram"),
                 dcc.Graph(id="hist",
                           figure=v.hist(date=["202109"],
                                         df=v.pop2020_df, borough=["Camden"])),
@@ -125,7 +120,7 @@ app.layout = html.Div(className="web_app", children=[
             ]),
             # Line Chart
             dbc.Row(id="line_row", children=[
-                html.H2("Line Chart"),
+                html.H3("Line Chart"),
                 dcc.Graph(id="line",
                           figure=v.line_2(crime="Drugs",
                                           df=v.df_r, borough=["Camden"]))
@@ -135,10 +130,10 @@ app.layout = html.Div(className="web_app", children=[
 
         # Statistics Column
         dbc.Col(className="container", id="statistics", children=[
-            html.H2("Statistics"),
+            html.H3("Statistics"),
             html.P(""),
             dbc.Row(id="map_statistics", children=[
-                html.H5("Please select boroughs and month"),
+                html.P("Please select boroughs and month.", style={"font-style": "italic"}),
                 html.P(""),
                 html.Br()
             ]),
@@ -147,7 +142,7 @@ app.layout = html.Div(className="web_app", children=[
                           figure=v.statistics_hist(time_range=v.date_list, df=v.df_r, borough=v.borough_list))
             ]),
             dbc.Row(id="line_statistics", children=[
-                html.H4("Test Line")
+                # html.H4("Test Line")
             ])],
                 width=3)
     ])
@@ -278,7 +273,7 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
     for i in boroughs:
         stat_list.append(html.H4(f"Changes for {i}:"))
 
-        stat_list.append(html.H6("Change from last month:"))
+        stat_list.append(html.H6("Last month:"))
         if type(last_month[i]) is not str:
             if last_month[i] > 0:
                 stat_list.append(html.H6(f'+{round(last_month[i] * 100, 2)}%', style={'color': "red"}))
@@ -287,7 +282,7 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
         elif type(last_month[i]) is str:
             stat_list.append(html.H6(last_month[i], style={'color': "black"}))
 
-        stat_list.append(html.H6("Change from last 3-months average:"))
+        stat_list.append(html.H6("Last 3-months average:"))
         if type(last_three_months[i]) is not str:
             if last_three_months[i] > 0:
                 stat_list.append(html.H6(f'+{round(last_three_months[i] * 100, 2)}%', style={'color': "red"}))
@@ -296,7 +291,7 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
         elif type(last_three_months[i]) is str:
             stat_list.append(html.H6(last_three_months[i], style={'color': "black"}))
 
-        stat_list.append(html.H6("Change from last year:"))
+        stat_list.append(html.H6("Last year:"))
         if type(last_year[i]) is not str:
             if last_year[i] > 0:
                 stat_list.append(html.H6(f'+{round(last_year[i] * 100, 2)}%', style={'color': "red"}))
@@ -331,18 +326,18 @@ def update_line_stats(crime, data_select):
     year_max, max, best_borough, year_min, min = v.statistics_line(crime=crime,
                                                                    df=v.reformat(data[data_select]))
     stats_list_bad = [
-        html.H5(f"Borough with the highest average {crime} rate:"),
-        html.P(f'{worst_average_borough}, with rate: {round(average_bad, 3)}', style={"font-weight": "bold"}),
-        html.H5(f"Borough with the highest recorded {crime} rate:"),
-        html.P(f'{worst_instance_borough}, with rate: {round(max, 3)}', style={"font-weight": "bold"}),
-        html.P(f'Recorded on date: {year_max[4:]}/{year_max[0:4]}'),
+        html.H5(f"Highest Average {crime} Rate:"),
+        html.P(f'{worst_average_borough}, with rate: {round(average_bad, 3)}'),
+        html.H5(f"Highest Recorded {crime} Rate:"),
+        html.P(f'{worst_instance_borough}, with rate: {round(max, 3)}'),
+        html.P(f'Recorded: {year_max[4:]}/{year_max[0:4]}', style={"font-style": "italic", "color": "grey"}),
         html.Br()]
     stats_list_good = [
-        html.H5(f"Borough with the lowest average {crime} rate:"),
-        html.P(f'{best_average_borough}, with rate: {round(average_good, 3)}', style={"font-weight": "bold"}),
-        html.H5(f"Borough with the lowest recorded {crime} rate:"),
-        html.P(f'{best_borough}, with rate: {round(min, 3)}', style={"font-weight": "bold"}),
-        html.P(f'Recorded on date: {year_min[4:]}/{year_min[0:4]}'),
+        html.H5(f"Lowest Average {crime} Rate:"),
+        html.P(f'{best_average_borough}, with rate: {round(average_good, 3)}'),
+        html.H5(f"Lowest Recorded {crime} Rate:"),
+        html.P(f'{best_borough}, with rate: {round(min, 3)}'),
+        html.P(f'Recorded: {year_min[4:]}/{year_min[0:4]}', style={"font-style": "italic", "color": "grey"}),
         html.Br()]
     return html.Div(children=[
         dbc.Row(className="container", children=stats_list_bad),
