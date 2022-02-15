@@ -26,7 +26,7 @@ The other datasets used were for raw data (population.csv), population - 2020 GL
 We used the multiple datasets to provide a line chart visualisation that answers all the aforementioned target audience questions.
 
 Webapp users are able to select a form of crime as well as one or multiple boroughs.
-For each form of crime, we added a line which shows the average crime rate for the corresponding form of crime.
+For each form of crime, we added a line to show the average crime rate for the corresponding form of crime.
 Then, for each form of crime we have a personalised line which shows the counts of crime over the months recorded.
 However, in the dataset provided, there were missing counts for some of the most recent months. 
 We overcame this obstacle by forecasting the data for the more recent months by also adding upper and lower bounds.
