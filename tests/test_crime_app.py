@@ -239,7 +239,6 @@ def test_selected_crime_on_line_chart (dash_duo):
     time.sleep(3)
 
     a = dash_duo.find_element("#line_statistics")
-    print(a.text)
     assert "Westminster, with rate: 0.453".casefold() in a.text.casefold()
 
 
