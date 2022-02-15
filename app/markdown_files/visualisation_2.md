@@ -11,7 +11,7 @@ The question that this visualisation is intended to address is the following:
 ### *1. Explaining the design*
 
 To answer the question stated above, we decided that a histogram would be the most effective visual.
-It allows users to see the counts for each type of crime and compare them with each other, to know which crimes are the highest and lowest in London.
+It allows users to see the counts for each type of crime and compare them with each other. This help the user discover which crimes are the highest and lowest in London.
 
 We decided to add a slider allowing users to select a specific time range, within the data we have. 
 Therefore, users are able to select a specific timeframe, such as a season, to see whether the crime counts of the different types of crime fluctuate during different periods. 
