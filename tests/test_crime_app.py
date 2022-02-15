@@ -6,27 +6,27 @@ v = v.all()
 
 # General App tests
 
-def test_main_header(dash_duo):
+def test_main_header(dash_duo, run_crime_app):
     '''
     GIVEN that the app is running
     WHEN we access the homepage of the app
     THEN there should be a main header
     '''
-    app = import_app(app_file = "app.crime_app")
-    dash_duo.start_server(app)
+    #app = import_app(app_file = "app.crime_app")
+    #dash_duo.start_server(app)
     dash_duo.wait_for_element("H2", timeout = 10)
     main_header = dash_duo.find_element("#main_header").text
     time.sleep(2)
     assert main_header == "Crime in London Overview Dashboard"
 
-def test_selected_data (dash_duo):
+def test_selected_data (dash_duo, run_crime_app):
     '''
     Given that the app is running
     When we select a specific dataset (Population 2011)
     Then the default visualization should update (we check with unique legend values)
     '''
-    app = import_app(app_file="app.crime_app")
-    dash_duo.start_server(app)
+    #app = import_app(app_file="app.crime_app")
+    #dash_duo.start_server(app)
     dash_duo.wait_for_element("#visual_charts", timeout=15)
 
     dash_duo.click_at_coord_fractions("#data_select", 0.4, 0.5)
