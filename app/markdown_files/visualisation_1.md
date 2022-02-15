@@ -37,4 +37,4 @@ These features are all strengths of the webapp as it allows the user to be provi
 
 A weakness of the map is that we are unable to provide users with a map where the date selected is "Today". This is because we have not been provided with this data.
 If were able to have access to this data, we could improve the map by enabling it to fetch data in real-time and update the map constantly so that users would have access to the latest crime information of London.
-Moreover, it would have been interesting to compare the London data to other locations within the UK, so that webapp users can have a broader understanding on the crime data to better determine whether the crime rates should be considered as low or high in relation to areas outside of London.
+Moreover, it would have been interesting to compare the London data to other locations within the UK. Webapp users would have a more contextualised understanding on the crime data to better determine whether the crime rates should be considered as low or high in relation to areas outside of London.
