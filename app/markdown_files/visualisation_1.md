@@ -35,6 +35,6 @@ If the user wishes to receive more detailed information on the borough or boroug
 The statistics provides numerical values to show how the crime rate has changed since the previous month, the last 3 months and over the last year. This allows users to observe how the crime rates have improved or worsened over the chosen timeframe.
 These features are all strengths of the webapp as it allows the user to be provided with global data, which is easy to understand. However, if they wish to understand the crime intricacies over each borough, they simply need to click on the borough to view the insights. 
 
-A weakness of the map is that we are unable to provide users with a map where the date selected is "Today", as we are not provided with the data.
-If were able to have access to this data, we would try to improve the map by enabling it to fetch data in real-time and update the map constantly so that users would have access to the latest crime data in the London boroughs.
-Moreover, it would have been interesting to be able to compare the London data to other locations within the UK, so that webapp users can have a broader understanding on the crime data to better determine whether the crime rates should be considered as low or high in relation to areas outside of London.
+A weakness of the map is that we are unable to provide users with a map where the date selected is "Today". This is because we have not been provided with this data.
+If were able to have access to this data, we could improve the map by enabling it to fetch data in real-time and update the map constantly so that users would have access to the latest crime information of London.
+Moreover, it would have been interesting to compare the London data to other locations within the UK, so that webapp users can have a broader understanding on the crime data to better determine whether the crime rates should be considered as low or high in relation to areas outside of London.
