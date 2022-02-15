@@ -28,7 +28,7 @@ We used the multiple datasets to provide a line chart visualisation that answers
 Webapp users are able to select a form of crime as well as one or multiple boroughs.
 For each form of crime, we added a line to show the average crime rate for the corresponding form of crime.
 Then, for each form of crime we have a personalised line which shows the counts of crime over the months recorded.
-However, in the dataset provided, there were missing counts for some of the most recent months. 
+However, in the dataset provided, there were missing counts for some of the most recent months. This was a limitation. 
 We overcame this obstacle by forecasting the data for the more recent months by also adding upper and lower bounds.
 This visualisation is the optimal one to answer the questions is relation to measure the evolution of crime over the recorded months as it shows the webapp users the fluctuation of the crime count.
 On the right-hand side of the dashboard we also included statistics showing the boroughs with the highest and lowest average and recorded crime rates for the form of crime selected by the user. 
