@@ -72,8 +72,6 @@ def test_selected_borough_on_map (dash_duo):
     crime.send_keys(Keys.RETURN)
     time.sleep(3)
 
-    #dash_duo.click_at_coord_fractions("#visual_charts", 0.3, 0.3)
-    #dash_duo.click_at_coord_fractions("#visual_charts", 0.5, 0.5)
     dash_duo.click_at_coord_fractions("#visual_charts", 0.6, 0.5)
     time.sleep(5)
     a = dash_duo.find_element("#map_statistics")
