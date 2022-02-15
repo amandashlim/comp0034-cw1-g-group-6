@@ -27,7 +27,7 @@ To create the map, we used multiple datasets; the main datasets were the Metropo
 We used other datasets to provide additional insights by allowing users to look at the map through different population datasets. This can be observed in the filters on the left-hand side of the dashboard.
 The other datasets used were for raw data (population.csv) and total daytime population (daytime_population.csv). 
 
-For the map, we used all the data from each dataset listed above to answer the questions.
+For the map, we used all the data from each dataset listed above to answer our questions.
 
 The map is extremely useful to the users, as it is the simplest and most interactive way for them to learn about the crime rates in each London borough.
 We decided to add a feature where users can hover their mouse over a borough and provide them with (summary)**condensed?? idk what word to use** information on the borough which is the borough name and the amount of crime for the type selected by the user.
