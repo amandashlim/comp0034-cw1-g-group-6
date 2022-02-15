@@ -33,7 +33,7 @@ def test_selected_data (dash_duo):
     time.sleep(5)
 
     a = dash_duo.find_element("#map")
-    assert "0.1\n0.2\n0.3\n0.4\n0.5\nDrugs" == a.text[:31]
+    assert "0.1\n0.2\n0.3\n0.4\n0.5\nDrugs" in a.text
 
 def test_selected_chart_type (dash_duo):
     '''
@@ -121,7 +121,7 @@ def test_selected_month_on_map (dash_duo):
     time.sleep(5)
 
     a = dash_duo.find_element("#map")
-    assert "20\n30\n40\n50\n60\n70\nDrugs" == a.text[:29]
+    assert "20\n30\n40\n50\n60\n70\nDrugs" in a.text
 
 def test_correct_statistics_for_selected_borough_time_crime (dash_duo):
     '''
