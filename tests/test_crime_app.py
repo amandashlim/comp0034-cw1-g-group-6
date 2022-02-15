@@ -29,7 +29,7 @@ def test_selected_data (dash_duo):
     dash_duo.start_server(app)
     dash_duo.wait_for_element("#visual_charts", timeout=15)
 
-    dash_duo.click_at_coord_fractions("#data_select", 0.4, 0.4)
+    dash_duo.click_at_coord_fractions("#data_select", 0.4, 0.45)
     time.sleep(5)
 
     a = dash_duo.find_element("#map")
@@ -72,12 +72,12 @@ def test_selected_borough_on_map (dash_duo):
     crime.send_keys(Keys.RETURN)
     time.sleep(3)
 
-    dash_duo.click_at_coord_fractions("#visual_charts", 0.3, 0.3)
-    dash_duo.click_at_coord_fractions("#visual_charts", 0.5, 0.5)
-    dash_duo.click_at_coord_fractions("#visual_charts", 0.6, 0.6)
+    #dash_duo.click_at_coord_fractions("#visual_charts", 0.3, 0.3)
+    #dash_duo.click_at_coord_fractions("#visual_charts", 0.5, 0.5)
+    dash_duo.click_at_coord_fractions("#visual_charts", 0.6, 0.5)
     time.sleep(5)
     a = dash_duo.find_element("#map_statistics")
-    assert "Greenwich" == a.text[12:21]
+    assert "Newham" == a.text[12:18]
 
 def test_selected_crime_on_map (dash_duo):
     '''
@@ -117,11 +117,11 @@ def test_selected_month_on_map (dash_duo):
     crime.send_keys(Keys.RETURN)
     time.sleep(3)
 
-    dash_duo.click_at_coord_fractions("#map_slider", 0.4, 0.4)
+    dash_duo.click_at_coord_fractions("#map_slider", 0.8, 0.3)
     time.sleep(5)
 
     a = dash_duo.find_element("#map")
-    assert "20\n30\n40\n50\n60\n70\n80\n90\n100\nDrugs" == a.text
+    assert "20\n30\n40\n50\n60\n70\nDrugs" == a.text
 
 def test_correct_statistics_for_selected_borough_time_crime (dash_duo):
     '''
@@ -239,8 +239,8 @@ def test_selected_crime_on_line_chart (dash_duo):
     time.sleep(3)
 
     a = dash_duo.find_element("#line_statistics")
-    assert "Bexley, with rate: 0.017".casefold() and \
-           "Westminster, with rate: 0.453".casefold() in a.text.casefold()
+    assert "\nBexley, with rate: 0.017".casefold() and \
+           "\nWestminster, with rate: 0.453".casefold() in a.text.casefold()
 
 
 
