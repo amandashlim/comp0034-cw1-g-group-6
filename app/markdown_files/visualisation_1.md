@@ -30,7 +30,7 @@ The other datasets used were for raw data (population.csv) and total daytime pop
 For the map, we used all the data from each dataset listed above to answer the questions.
 
 The map is extremely useful to the users, as it is the simplest and most interactive way for them to learn about the crime rates in each London borough.
-We decided to add a feature where users can hover their mouse over a borough and provide them with **condensed?? idk what word to use** information on the borough which is the borough name and the amount of crime for the type selected by the user.
+We decided to add a feature where users can hover their mouse over a borough and provide them with (summary)**condensed?? idk what word to use** information on the borough which is the borough name and the amount of crime for the type selected by the user.
 If the user wishes to get more in depth information on the borough or boroughs selected, they simply need to click on the borough(s) they are interested in and statistics on the selected borough(s) will show on the right-hand side of the borough.
 Th statistics provided show the users by how much the crime rate has changed since the previous month, the last 3 months and from the last year, allowing them to know if the crime rates have improved or gotten worse over the chosen timeframe.
 These features are all strengths of the webapp as it allows the user to be provided with global data, which is easy to understand. However, if they wish to have more in depth data, they simply need to click on the borough to see it. 

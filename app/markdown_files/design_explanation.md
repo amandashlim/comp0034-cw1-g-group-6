@@ -14,8 +14,7 @@ To answer these questions, we narrowed the scope of our data exploration to thre
     2. A histogram
     3. A line chart
 
-Each of these visualisations are able to answer one or multiple of the aforementioned target audience questions. 
-jjj
+Each of these visualisations are able to answer one or multiple of the aforementioned target audience questions.
 To explain the design of our visualisations clearly, we will first obtain a solid understanding of our target audience and their needs.
 
 ### 1. Target Audience
