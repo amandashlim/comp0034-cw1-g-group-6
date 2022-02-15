@@ -133,7 +133,7 @@ app.layout = html.Div(className="web_app", children=[
             html.H3("Statistics"),
             html.P(""),
             dbc.Row(id="map_statistics", children=[
-                html.H5("Please select boroughs and month"),
+                html.P("Please select boroughs and month.", style={"font-style": "italic"}),
                 html.P(""),
                 html.Br()
             ]),
@@ -142,7 +142,7 @@ app.layout = html.Div(className="web_app", children=[
                           figure=v.statistics_hist(time_range=v.date_list, df=v.df_r, borough=v.borough_list))
             ]),
             dbc.Row(id="line_statistics", children=[
-                html.H4("Test Line")
+                # html.H4("Test Line")
             ])],
                 width=3)
     ])
@@ -326,18 +326,18 @@ def update_line_stats(crime, data_select):
     year_max, max, best_borough, year_min, min = v.statistics_line(crime=crime,
                                                                    df=v.reformat(data[data_select]))
     stats_list_bad = [
-        html.H5(f"Borough with the highest average {crime} rate:"),
-        html.P(f'{worst_average_borough}, with rate: {round(average_bad, 3)}', style={"font-weight": "bold"}),
-        html.H5(f"Borough with the highest recorded {crime} rate:"),
-        html.P(f'{worst_instance_borough}, with rate: {round(max, 3)}', style={"font-weight": "bold"}),
-        html.P(f'Recorded on date: {year_max[4:]}/{year_max[0:4]}'),
+        html.H5(f"Highest Average {crime} Rate:"),
+        html.P(f'{worst_average_borough}, with rate: {round(average_bad, 3)}'),
+        html.H5(f"Highest Recorded {crime} Rate:"),
+        html.P(f'{worst_instance_borough}, with rate: {round(max, 3)}'),
+        html.P(f'Recorded: {year_max[4:]}/{year_max[0:4]}', style={"font-style": "italic", "color": "grey"}),
         html.Br()]
     stats_list_good = [
-        html.H5(f"Borough with the lowest average {crime} rate:"),
-        html.P(f'{best_average_borough}, with rate: {round(average_good, 3)}', style={"font-weight": "bold"}),
-        html.H5(f"Borough with the lowest recorded {crime} rate:"),
-        html.P(f'{best_borough}, with rate: {round(min, 3)}', style={"font-weight": "bold"}),
-        html.P(f'Recorded on date: {year_min[4:]}/{year_min[0:4]}'),
+        html.H5(f"Lowest Average {crime} Rate:"),
+        html.P(f'{best_average_borough}, with rate: {round(average_good, 3)}'),
+        html.H5(f"Lowest Recorded {crime} Rate:"),
+        html.P(f'{best_borough}, with rate: {round(min, 3)}'),
+        html.P(f'Recorded: {year_min[4:]}/{year_min[0:4]}', style={"font-style": "italic", "color": "grey"}),
         html.Br()]
     return html.Div(children=[
         dbc.Row(className="container", children=stats_list_bad),
