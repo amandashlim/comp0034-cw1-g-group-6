@@ -25,7 +25,7 @@ To create the histogram, we used multiple datasets; the main dataset used was th
 We also used multiple other datasets so that users could look at the histogram through different data on the population as we can see in the filters on the left-hand side of the dashboard.
 The other datasets used were for raw data (population.csv) and total daytime population (daytime_population.csv). 
 
-We used all the data from each dataset listed above to answer the question.
+We used the multiple datasets to provide a histogram visualisation that answers all the aforementioned target audience questions.
 
 The histogram has many strengths in helping our webapp users understand the crime rates in London. 
 They are able to create a histogram where they can select one or multiple boroughs they are interested in.
