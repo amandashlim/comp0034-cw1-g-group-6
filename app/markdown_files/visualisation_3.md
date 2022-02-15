@@ -19,11 +19,11 @@ This aspect provides our webapp users with the option to personalise their crime
 
 ### *2. Evaluating the design*
 
-To create the line chart, we used multiple datasets; the main dataset used was the Metropolitan police dataset (crime_data.csv).
-We also used multiple other datasets so that users could look at the line chart through different data on the population as we can see in the filters on the left-hand side of the dashboard.
+To create the line chart, we used multiple datasets. The main dataset used was the Metropolitan police dataset (crime_data.csv).
+We also used other datasets so that users could look at the line chart through different population data as we can see in the filters on the left-hand side of the dashboard.
 The other datasets used were for raw data (population.csv), population - 2020 GLA estimate (pop2020_df_r.json), population - 2011 Census (pop2011_df_r.json), workday population (workday_df_r.json), predictions made with fbprophet (df_r.json) and total daytime population (daytime_df_r.json and daytime_population.csv). 
 
-We used all the data from each dataset listed above to answer the questions.
+We used the multiple datasets to provide a line chart visualisation that answers all the aforementioned target audience questions.
 
 Webapp users are able to select a form of crime as well as one or multiple boroughs.
 For each form of crime, we added a line which shows the average crime rate for the corresponding form of crime.
