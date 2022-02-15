@@ -29,7 +29,7 @@ def test_selected_data (dash_duo):
     dash_duo.start_server(app)
     dash_duo.wait_for_element("#visual_charts", timeout=15)
 
-    dash_duo.click_at_coord_fractions("#data_select", 0.4, 0.45)
+    dash_duo.click_at_coord_fractions("#data_select", 0.4, 0.5)
     time.sleep(5)
 
     a = dash_duo.find_element("#map")
@@ -121,7 +121,7 @@ def test_selected_month_on_map (dash_duo):
     time.sleep(5)
 
     a = dash_duo.find_element("#map")
-    assert "20\n30\n40\n50\n60\n70\nDrugs" == a.text
+    assert "20\n30\n40\n50\n60\n70\nDrugs" == a.text[:39]
 
 def test_correct_statistics_for_selected_borough_time_crime (dash_duo):
     '''
@@ -235,12 +235,12 @@ def test_selected_crime_on_line_chart (dash_duo):
     crime.send_keys("Line")
     crime.send_keys(Keys.RETURN)
 
-    dash_duo.click_at_coord_fractions("#data_select", 0.4, 0.4)
+    dash_duo.click_at_coord_fractions("#data_select", 0.4, 0.5)
     time.sleep(3)
 
     a = dash_duo.find_element("#line_statistics")
-    assert "\nBexley, with rate: 0.017".casefold() and \
-           "\nWestminster, with rate: 0.453".casefold() in a.text.casefold()
+    print(a.text)
+    assert "Westminster, with rate: 0.453".casefold() in a.text.casefold()
 
 
 
