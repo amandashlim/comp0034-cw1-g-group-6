@@ -30,8 +30,8 @@ For each form of crime, we added a line to show the average crime rate for the c
 Then, for each form of crime we have a personalised line which shows the counts of crime over the months recorded.
 However, in the dataset provided, there were missing counts for some of the most recent months. This was a limitation. 
 We overcame this by forecasting the data for the more recent months by also adding upper and lower bounds.
-This visualisation is effective at measuring the evolution of crime over time as it shows the webapp users the fluctuation of the crime count. This helps us answer the target audience questions.
-On the right-hand side of the dashboard we also included statistics showing the boroughs with the highest and lowest average and recorded crime rates for the form of crime selected by the user. 
+This visualisation is effective at measuring the evolution of crime over time as it shows the webapp users the fluctuation of the crime count - This helps us answer the target audience questions.
+On the right-hand side of the dashboard we also included statistics showing the boroughs with the highest and lowest average and recorded crime rates for the selected crime. 
 This is useful as it allows users to compare the boroughs they selected with the extremes of the form of crime selected.
 
 Although the feature where users are able to add multiple boroughs is useful for them to compare the crime rates across the timeline, adding multiple boroughs to the line chart makes it a lot messier and confusing. 
