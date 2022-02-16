@@ -39,6 +39,10 @@ A weakness of the map is that we are unable to provide users with a map where th
 If were able to have access to this data, we could improve the map by enabling it to fetch data in real-time and update the map constantly so that users would have access to the latest crime information of London.
 Moreover, it would have been interesting to compare the London data to other locations within the UK. Webapp users would have a more contextualised understanding on the crime data to better determine whether the crime rates should be considered as low or high in relation to areas outside of London.
 
+Another weakness is the finicky nature of highlighting and updating the boroughs by clicking on the map. Because the dash callback works that it checks which element was clicked and then updates the map by 
+filtering a geojson file to include only clicked on boroughs the response can sometimes be delayed. 
+An alternative could be a dropdown menu, but we decided the visual nature of clicking on an area of London is more intuitive for the user, so the slight delay is an acceptable limitation.  
+
 Another weakness are the tradeoffs we had to make. 
 * One tradeoff is between a static legend/color range and a dynamic one: 
   * A static legend/color range would provide the user a better 
