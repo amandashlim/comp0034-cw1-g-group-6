@@ -63,5 +63,6 @@ W3 School. “HTML Reference.” W3schools.com, 2019, <https://www.w3schools.com
 
 __Elements (i.e.: Persona, questions to be answered through the webapp...) have been taken from France Chalon's COMP0035 Coursework 1 and Coursework 2.__
 
+__Elements (i.e.: function for data formatting) have been taken from Matic Potocnik's COMP0035 Coursework 1.__
 
 
