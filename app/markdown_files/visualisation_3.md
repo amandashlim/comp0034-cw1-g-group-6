@@ -52,7 +52,7 @@ This weakness could be solved by limiting the number of boroughs users can selec
 has to manually toggle their visibility in the legend - both of those things would improve the readability but slightly increase the complexity. 
 
 The second weakness is that we didn't create the option to look at the line chart data seasonally. 
-By providing an option to change the dates to seasons, we could allow for the users to see more precisely whether the occurrences of crime rates are seasonally linked.
+By providing an option to change the dates to seasons, we could allow for the users to see more precisely whether the occurrences of crime rates are seasonally linked and if there is a pattern they could look out for.
 
 The third weakness are the Prophet predictions, given that the model had very few data points to make a prediction, the predictions can be potentially misleading,
 and the user should be informed about their drawbacks.
