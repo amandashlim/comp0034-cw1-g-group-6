@@ -89,7 +89,7 @@ Evolution
 
 Deployment
 
-- Now, the dash app is ready to use and should aid prospective home-renters in London to find a safe area if they are concerned about crime levels.
+- The dash app is ready to use and should aid prospective home-renters in London to find a safe area if they are concerned about crime levels.
 
 
 ### 3. Visualisation 1: The Map
