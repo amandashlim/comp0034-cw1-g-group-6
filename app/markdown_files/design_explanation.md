@@ -14,16 +14,58 @@ To answer these questions, we narrowed the scope of our data exploration to thre
     2. A histogram
     3. A line chart
 
-Each of these visualisations are able to answer one or multiple of the aforementioned target audience questions.
-To explain the design of our visualisations clearly, we will first obtain a solid understanding of our target audience and their needs.
+We also found that the standard method of reporting Crime Statistics is with a "Crime Rate per 1000 population" [(UKCrimeStats, 2014)](https://ukcrimestats.com/blog/faqs/what-exactly-does-crime-rate-mean-and-how-do-you-calculate-it/).
+Which requires both the number of committed crimes and the area population. However, the given data only provides us with the total number of reported crimes for respective Boroughs, Crime Types, and Months.
+
+So, to provide the target audience relevant statistics they can compare with statistics from other articles or websites, we decided to use two additional datasets:
+
+####Daytime Population by Borough
+* The dataset provides us with a Total Daytime Population which includes tourism and Workday Population which excludes them for year 2014. This is 
+particularly useful to understand the crime rates of Boroughs that have a high Daytime population but relatively low residential population, 
+as it adjusts the reported crimes.
+* The dataset does not contain any personal information on persons but rather general statistics on ares in London
+* The dataset is licensed under [UK Open Government License](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/), which allows for free 
+  * Copying, publishing, distributing, and transmitting the Information
+  * Adapting the Information
+  * Exploiting the Information commercially and non-commercially
+* The dataset is available on [London Datastore](https://data.london.gov.uk/dataset/daytime-population-borough)
+
+
+####Population Density by Borough
+* The dataset provides us with GLA estimates for residential population throughout Boroughs and residential population statistics from 2011 Census Data. 
+This can be useful to calculate the traditional crime rate statistics per 1000 residents.
+* The dataset does not contain any personal information on persons but rather general statistics on ares in London
+* The dataset is licensed under [UK Open Government License](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/), which allows for free 
+  * Copying, publishing, distributing, and transmitting the Information
+  * Adapting the Information
+  * Exploiting the Information commercially and non-commercially
+* The dataset is available on [London Datastore](https://data.london.gov.uk/dataset/land-area-and-population-density-ward-and-borough)
+
+
+With the population data included the app users will be able to select whichever statistic are most useful to them:
+* Raw Reported Numbers of Crimes
+* Crime Rate per 1000 residents, adjusted with 2020 GLA resident population estimate
+* Crime Rate per 1000 residents, adjusted with 2011 Census resident population statistics
+* Crime Rate per 1000 daytime population, adjusted with Total Daytime Population including tourists
+* Crime Rate per 1000 daytime population, adjusted only with Working Daytime Population excluding tourists (which might be most appropriate for COVID-19 Time)
+
+Each of the mentioned visualizations will change based on selected data and are able to answer one or multiple of the aforementioned target audience questions.
+To explain the design of our visualizations clearly, we will first obtain a solid understanding of our target audience and their needs.
 
 ### 1. Target Audience
 
 ![Persona](../assets/persona.png)
 
-Our target audience for the webapp, are university students who are new to London and looking for accommodation.
-Since our target audience is assumed to not know London, the webapp would be useful as it would allow them to be informed on the crime rates associated with each London borough.
-Moreover, based on personal preferences, they would be able to tailor their searches to the crimes they are more concerned about.
+Our target audience for the webapp, are university students who are new to London and looking for accommodation. 
+They are generally not familiar with population densities, economic conditions, and variations in population composition of London Boroughs, 
+as those are recognized as some factors that impact the crime rates by the FBI, so they can struggle to make informed judgements on the safety of Boroughs. 
+Therefore, they rely on websites and articles reporting crime rates and quantifying borough safety.
+
+The webapp would be useful to the target audience as it would allow them to explore the claims made by various other sources
+and compare those claims with statistics. 
+
+Moreover, based on personal preferences, they would be able to tailor their searches to the crimes they are more concerned about for Boroughs they're interested in,
+understand how those crime rates change over seasons/years, and see the crime rate forecasts for the next 6 months.
 
 ### 2. Software Engineering Process - CRISP DM
 
