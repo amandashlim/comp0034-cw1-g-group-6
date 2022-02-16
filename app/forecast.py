@@ -7,25 +7,8 @@ import pandas as pd
 import visualization as v
 from prophet import Prophet
 import json
-from datetime import datetime
 
 v = v.all()
-'''
-df = v.df_r
-df["Date"] = pd.to_datetime(df["Date"], format="%Y%m").dt.strftime("%Y-%m")
-dummy = pd.DataFrame(df[df["Borough"] == "Camden"][["Date", "Drugs"]]).reset_index(drop=True).rename(
-    columns={"Date": "ds", "Drugs": "y"})
-
-m = Prophet(seasonality_mode="multiplicative")
-m.fit(dummy)
-
-future = m.make_future_dataframe(periods=6, freq="MS")
-forecast = m.predict(future)
-fig = m.plot_components(forecast)
-fig.show()
-forecast[["ds", "yhat", "yhat_lower", "yhat_upper"]].tail(6)
-
-'''
 
 def forecast(borough, crime, df):
     df["Date"] = pd.to_datetime(df["Date"], format="%Y%m").dt.strftime("%Y-%m")
