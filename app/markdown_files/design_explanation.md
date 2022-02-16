@@ -78,11 +78,11 @@ Data Understanding
 
 Data preparation
 
-The collected data will be transformed into a more useful subset. The data preparation stage will determine if there is any missing data, whether it is reliable or if more is needed. Other tasks could involve merging data sets or spliting into train and test subsets.
+- The collected data will be transformed into a more useful subset. The data preparation stage will determine if there is any missing data, whether it is reliable or if more is needed. Other tasks could involve merging data sets or spliting into train and test subsets.
 
 Modelling
 
-Data is expressed through suitable models to give new insights. This process will uncover trends in the data that can be useful for the relevant client to solve their business problem. Models created are chosen based on a subset of data and are adjusted should it be required.
+- Data is expressed through suitable models to give new insights. This process will uncover trends in the data that can be useful for the relevant client to solve their business problem. Models created are chosen based on a subset of data and are adjusted should it be required.
 
 Evolution 
 - At this stage we conducted two types of tests. We tested the dash app features to verify that the interface was working as planned with 10 distinct tests, this was done using selenium. We also used Unit tests to check for a specific response to a set of inputs. After, we integrated this with GitHub Actions to create a workflow to run the tests. These tests verified a good functionality of the dash app. Information on the specific tests conducted can be found in part 6. 
