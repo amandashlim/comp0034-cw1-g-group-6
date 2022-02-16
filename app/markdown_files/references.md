@@ -10,6 +10,8 @@ unittests, p., 2021. python mocking raw input in unittests. [online] Stack Overf
 
 Data Science Process Alliance. n.d. CRISP-DM - Data Science Process Alliance. [online] Available at: <https://www.datascience-pm.com/crisp-dm-2/> [Accessed 12 February 2022].
 
+Data Science Process Alliance. “CRISP-DM.” Data Science Project Management, 2021, <https://www.datascience-pm.com/crisp-dm-2/>. Accessed 16 Feb. 2022.
+
 Nantasenamat, C., 2020. The Data Science Process. [online] Medium. Available at: <https://towardsdatascience.com/the-data-science-process-a19eb7ebc41b> [Accessed 13 February 2022].
 
 GreatLearning Blog: Free Resources what Matters to shape your Career!. 2020. Why using CRISP-DM will make you a better Data Scientist?. [online] Available at: <https://www.mygreatlearning.com/blog/why-using-crisp-dm-will-make-you-a-better-data-scientist/> [Accessed 13 February 2022].
