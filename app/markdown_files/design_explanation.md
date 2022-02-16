@@ -14,8 +14,8 @@ To answer these questions, we narrowed the scope of our data exploration to thre
     2. A histogram
     3. A line chart
 
-We also found that the standard method of reporting Crime Statistics is with a "Crime Rate per 1000 population" [(UKCrimeStats, 2014)](https://ukcrimestats.com/blog/faqs/what-exactly-does-crime-rate-mean-and-how-do-you-calculate-it/).
-Which requires both the number of committed crimes and the area population. However, the given data only provides us with the total number of reported crimes for respective Boroughs, Crime Types, and Months.
+We also found that the standard method of reporting Crime Statistics is with a "Crime Rate per 1000 population" [(UKCrimeStats, 2014)](https://ukcrimestats.com/blog/faqs/what-exactly-does-crime-rate-mean-and-how-do-you-calculate-it/)
+which requires both the number of committed crimes and the area population. However, the given data only provides us with the total number of reported crimes for respective Boroughs, Crime Types, and Months.
 
 So, to provide the target audience relevant statistics they can compare with statistics from other articles or websites, we decided to use two additional datasets:
 
@@ -34,7 +34,7 @@ as it adjusts the reported crimes.
 #### Population Density by Borough
 * The dataset provides us with GLA estimates for residential population throughout Boroughs and residential population statistics from 2011 Census Data. 
 This can be useful to calculate the traditional crime rate statistics per 1000 residents.
-* The dataset does not contain any personal information on persons but rather general statistics on ares in London
+* The dataset does not contain any personal information on persons but rather general statistics on areas in London
 * The dataset is licensed under [UK Open Government License](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/), which allows for free 
   * Copying, publishing, distributing, and transmitting the Information
   * Adapting the Information
@@ -42,14 +42,14 @@ This can be useful to calculate the traditional crime rate statistics per 1000 r
 * The dataset is available on [London Datastore](https://data.london.gov.uk/dataset/land-area-and-population-density-ward-and-borough)
 
 
-With the population data included the app users will be able to select whichever statistic are most useful to them:
+With the population data included, webapp users will be able to select whichever statistics that are most useful to them:
 * Raw Reported Numbers of Crimes
 * Crime Rate per 1000 residents, adjusted with 2020 GLA resident population estimate
 * Crime Rate per 1000 residents, adjusted with 2011 Census resident population statistics
 * Crime Rate per 1000 daytime population, adjusted with Total Daytime Population including tourists
-* Crime Rate per 1000 daytime population, adjusted only with Working Daytime Population excluding tourists (which might be most appropriate for COVID-19 Time)
+* Crime Rate per 1000 daytime population, adjusted only with Working Daytime Population excluding tourists (which might be most appropriate for the COVID-19 period)
 
-Each of the mentioned visualizations will change based on selected data and are able to answer one or multiple of the aforementioned target audience questions.
+Each of the mentioned visualizations will change based on selected data and is able to answer one or multiple of the aforementioned target audience questions.
 To explain the design of our visualizations clearly, we will first obtain a solid understanding of our target audience and their needs.
 
 ### 1. Target Audience
@@ -57,28 +57,28 @@ To explain the design of our visualizations clearly, we will first obtain a soli
 ![Persona](../assets/persona.png)
 
 Our target audience for the webapp, are university students who are new to London and looking for accommodation. 
-They are generally not familiar with population densities, economic conditions, and variations in population composition of London Boroughs, 
-as those are recognized as some factors that impact the crime rates by the FBI, so they can struggle to make informed judgements on the safety of Boroughs. 
+They are generally not familiar with population densities, economic conditions, and variations in population composition of the London Boroughs, 
+as those are recognized as some factors that impact the crime rates by the FBI, so they can struggle to make informed judgements on the safety of the Boroughs. 
 Therefore, they rely on websites and articles reporting crime rates and quantifying borough safety.
 
 The webapp would be useful to the target audience as it would allow them to explore the claims made by various other sources
 and compare those claims with statistics. 
 
-Moreover, based on personal preferences, they would be able to tailor their searches to the crimes they are more concerned about for Boroughs they're interested in,
+Moreover, based on personal preferences, they would be able to tailor their searches to the crimes they are the most concerned about for Boroughs they're interested in,
 understand how those crime rates change over seasons/years, and see the crime rate forecasts for the next 6 months.
 
 ### 2. Software Engineering Process - CRISP DM
 
 In our application development process we adhered to the 6 CRISP-DM Phases outlined by the 
-[Data Science Process Alliance](https://www.datascience-pm.com/crisp-dm-2/) and used an agile approach, iterating on multiple Phases without necessarily locking on a previous one.
+[Data Science Process Alliance](https://www.datascience-pm.com/crisp-dm-2/) and used an agile approach, iterating on multiple phases without necessarily locking on a previous one.
 
 #### Business Understanding
 * **Determine business objective:**
-Part of this was already done by the teammate whose dataset we selected in coursework 2 for COMP0035. Together we refined the goals and requirements of the target group and how could we achieve them
+Part of this was already done by the teammate whose dataset we selected in Coursework 1 and Coursework 2 for COMP0035. Together we refined the goals and requirements of the target group and how could we achieve them.
 
 
 * **Assess situation:**
-When assessing the situation we paid attention both to the requirements of our target customers and the coursework grading criteria, to determine which solutions would lead to the best result
+When assessing the situation we paid attention both to the requirements of our target customers and the coursework grading criteria, to determine which solutions would lead to the best results.
 
 
 * **Determine data mining goals:**
@@ -106,7 +106,7 @@ We used 3 categories of data:
 
 
 * **Explore data:**
-As our app is based upon exploration of the dataset, the three visualizations we designed are meant to help target customers to understand the data
+As our app is based on exploration of the dataset, the three visualizations we designed are meant to help our target audience to understand the data.
 
 
 * **Verify data quality:**
@@ -115,15 +115,15 @@ None of our datasets had any missing values and was generally clean, except Crim
 #### Data preparation
 
 * **Select data**
-As mentioned above we're using 3 types of datasets: Crime Data, London geojson, and Population data
+As mentioned above we're using 3 types of datasets: Crime Data, London geojson, and Population data.
 
 
 * **Clean data**
-Our data was already cleaned, so the only thing we had to do is after reformatting change the dates from a string into a datetime format
+Our data was already cleaned, so the only thing we had to do is, after reformatting it, change the dates from a string into a datetime format.
 
 
 * **Construct data**
-We added calculated metrics such as Total Crime Rate and Average Crime Rate to our datasets
+We added calculated metrics such as Total Crime Rate and Average Crime Rate to our datasets.
 
 
 * **Integrate data**
@@ -135,26 +135,26 @@ We integrated the Crime Data and Population Data into 4 new datasets based on di
 
 
 * **Format data**
-To get the datasets into the correct format for choropleth and line visualizations we had to pivot the dataset, so instead of the dates representing the columns and crime types the rows, date are aggregated in a Date column and columns generally represent the crime types. 
+To get the datasets into the correct format for choropleth and line visualizations we had to pivot the dataset, so instead of the columns representing the dates and the rows the crime types, dates were aggregated into a Date column and the columns now represent the crime types. 
 We also did some filtering and smaller reformatting when necessary. 
 
 #### Modelling
-Because our solution is mainly based around creating interactive visualizations so the app user can explore the data in an intuitive manner, the project didn't focus on
+* Because our solution is mainly based around creating interactive visualizations so the app user can explore the data in an intuitive manner, the project didn't focus on
 developing any models or algorithms. 
 
-However, we did use Facebook's Prophet time series predicting model in order to forecast the crime rate for the next 6 months. But the model is already trained
+* However, we did use Facebook's Prophet time series predicting model in order to forecast the crime rate for the next 6 months. But the model is already trained
 by Facebook, so we only fitted the data.
 
-In our case developing unique forecasting algorithms would most likely not yield great results as we only had about 2 years worth of monthly data as data-points which is far too few to properly train a predictive algorithm.
+* In our case, developing unique forecasting algorithms would most likely not yield great results as we only had about 2 years worth of monthly data as data-points which is far too few to properly train a predictive algorithm.
 
 
 #### Evolution 
-* Looking at the final delivery form a business perspective, we believe the app and app visualizations answer all the target customers' requirements.
+* Looking at the final delivery from a business perspective, we believe the app and app visualizations answer all the target customers' requirements.
 However, to see if that really is the case the app should be presented to stakeholders and target customers to get their feedback on it, and then further
 iterate and improve the app based on their feedback
 
 
-* At this stage we conducted two types of tests. We tested the dash app features to verify that the interface was working as planned with 10 distinct tests, this was done using selenium. We also used Unit tests to check for a specific response to a set of inputs. After, we integrated this with GitHub Actions to create a workflow to run the tests. These tests verified a good functionality of the dash app. Information on the specific tests conducted can be found in part 6. 
+* At this stage we conducted two types of tests. We tested the dash app features to verify that the interface was working as planned with 11 distinct tests which was done using selenium. We also created Unit tests to check for a specific response to a set of inputs. After, we integrated this with GitHub Actions to create a workflow to run the tests. These tests verified a good functionality of the dash app. Information on the specific tests conducted can be found in part 6. 
 
 #### Deployment
 
@@ -178,19 +178,19 @@ However, any further discussion of the app's deployment is beyond the scope of t
 
 To test the dash app, we came up with 11 separate tests using selenium.
 The tests check if the interactivity of Display Settings panel (left) updates the graphs correctly.
-They check if the map visual and its statistics are updated correctly when selecting a particular data, crime, time frame, boroughs.
-They check if the line visual and its statistics are updated correctly when selecting crime, borough, data.
+They check if the map visual and its statistics are updated correctly when selecting a particular data, crime, time frame and/or boroughs.
+They also check to see if the line visual and its statistics are updated correctly when selecting crime, borough and/or data.
 
 The histogram part of the app is the only one not tested for, as the elements of the histogram graph don't help distinguish between
 when different boroughs and time ranges are selected. This could be improved by implementing different elements in the app that report 
-the changes to the histogram, however, due to time constraints we decided not to perform app tests for histogram.
+the changes to the histogram, however, due to time constraints we decided not to perform app tests for the histogram.
 
 
 We also created 8 unit tests to test all functions of all() class in visualizations.py file.
 
-It tests if data imports and data reformatting work by checking the data shapes,
-if returned crime, borough, date lists are correct. If the get_highlights returns the correct subsection of the
-geojson given a particular borough, and if test_map_statistics return the correct specific values.
+It tests if the data imports and data reformatting work by checking the data shapes,
+if returned crime, borough and/or date lists are correct. It also tests for if the get_highlights returns the correct subsection of the
+geojson given a particular borough, and if test_map_statistics returns the correct specific values.
 
 What is not tested are the functions that return various plotly visualizations.
 
@@ -198,7 +198,7 @@ What is not tested are the functions that return various plotly visualizations.
 
 We decided to have a Google doc as a way of reporting what we discussed in the meetings, what we have done, and what we need to do next.
 Google doc instead of moodle was used so all teammates have access to the TODO list and can write what they have done / plan to do.
-On top of that we had about two meetings per week to catch up and update the TODO list, and we had a WhatsApp group that was used to communicate and help troubleshoot 
+On top of that we had about two meetings per week to catch up and update the TODO list, and we had a WhatsApp group that was used to communicate and helps each other in case we faced issues that could be solved by another team member.
 
 The contents of that doc are available bellow:
 #### Week 1
