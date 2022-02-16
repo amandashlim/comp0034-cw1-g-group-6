@@ -8,7 +8,7 @@ GitHub Link to Repo:[https://github.com/ucl-comp0035/comp0034-cw1-g-group-6](htt
 Link to App Design Explanation: [design_explanation.md](app/markdown_files/design_explanation.md)
 
 #
-####Note about requirements.txt:
+#### Note about requirements.txt:
 
 All dependencies used are in the [requirements.txt](requirements.txt), however [***pystan***](https://pystan.readthedocs.io/en/latest/) 
 and [***prophet***](https://facebook.github.io/prophet/docs/installation.html#python) are commented out
