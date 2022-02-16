@@ -69,27 +69,97 @@ understand how those crime rates change over seasons/years, and see the crime ra
 
 ### 2. Software Engineering Process - CRISP DM
 
-Business Understanding
-  - The intention of the project is to create a dash app for anyone who is either moving to or living in London and hence is looking for somewhere to live. This interface should allow the user to compare the crime rate across different London boroughs.
-  - Many of our resources were spent on the business understanding. We needed to make sure that all parties of the group knew the objective of this task (this involved removing biases, creating objectives, and reviewing modalities of the data).
+In our application development process we adhered to the 6 CRISP-DM Phases outlined by the 
+[Data Science Process Alliance](https://www.datascience-pm.com/crisp-dm-2/) and used an agile approach, iterating on multiple Phases without necessarily locking on a previous one.
 
-Data Understanding
-  - We used 3 categories of data; crime data, London borough data and population data. Understanding these data sets was reliant on a coherent business understanding from all team members. At this stage an initial data overview was conducted by all team members. Doing this allowed us to choose relevant population data and choose appropriate methods to prepare and explore the data.
+#### Business Understanding
+* **Determine business objective:**
+Part of this was already done by the teammate whose dataset we selected in coursework 2 for COMP0035. Together we refined the goals and requirements of the target group and how could we achieve them
 
-Data preparation
 
-- The collected data will be transformed into a more useful subset. The data preparation stage will determine if there is any missing data, whether it is reliable or if more is needed. Other tasks could involve merging data sets or spliting into train and test subsets.
+* **Assess situation:**
+When assessing the situation we paid attention both to the requirements of our target customers and the coursework grading criteria, to determine which solutions would lead to the best result
 
-Modelling
 
-- Data is expressed through suitable models to give new insights. This process will uncover trends in the data that can be useful for the relevant client to solve their business problem. Models created are chosen based on a subset of data and are adjusted should it be required.
+* **Determine data mining goals:**
+We iterated that one of the main requirements our target audience had is being able to access standard Crime Rate per 1000 population statistical metric, so we found appropriate datasets to include in our app in order to satisfy that condition.
 
-Evolution 
-- At this stage we conducted two types of tests. We tested the dash app features to verify that the interface was working as planned with 10 distinct tests, this was done using selenium. We also used Unit tests to check for a specific response to a set of inputs. After, we integrated this with GitHub Actions to create a workflow to run the tests. These tests verified a good functionality of the dash app. Information on the specific tests conducted can be found in part 6. 
 
-Deployment
+* **Produce Project plan:**
+Initially many of our resources were spent on the business understanding. We needed to make sure that all parties of the group knew the objective of this task (this involved removing biases, creating objectives, and reviewing modalities of the data).
+After agreeing on the business understanding, we developed a mix of visual and numerical solutions that would display the data in way most understandable to the target customer.
+
+#### Data Understanding
+* **Collect initial data:**
+We used 3 categories of data: 
+  * Crime data (which was already provided) 
+  * London geojson data, used to create the choropleth visualization
+  * Population data, which we had to research and find out, and was used together with Crime Data to create standard Crime Rate per 1000 population statistics metrics
+
+
+* **Describe data:**
+  * Crime Data has 26 columns (First one representing Boroughs, Second one representing Crime Types, and all the other representing different Months) and 298 rows
+  * London geojson data is a dictionary with coordinates for each London borough
+  * Population data:
+    * Daytime Population data had 3 columns (Borough, Total Daytime Population, Workday Population) and 34 rows, representing the number of people that is in a borough throughout the day
+    * Resident Population data had 3 columns (Borough, Population 2020 GLA Estimate, Population 2011 Census) and 34 rows, representing the number of residents in each Borough
+
+
+* **Explore data:**
+As our app is based upon exploration of the dataset, the three visualizations we designed are meant to help target customers to understand the data
+
+
+* **Verify data quality:**
+None of our datasets had any missing values and was generally clean, except Crime Data, where the months were written as a string and not in a datetime format. 
+
+#### Data preparation
+
+* **Select data**
+As mentioned above we're using 3 types of datasets: Crime Data, London geojson, and Population data
+
+
+* **Clean data**
+Our data was already cleaned, so the only thing we had to do is after reformatting change the dates from a string into a datetime format
+
+
+* **Construct data**
+We added calculated metrics such as Total Crime Rate and Average Crime Rate to our datasets
+
+
+* **Integrate data**
+We integrated the Crime Data and Population Data into 4 new datasets based on different ways of reporting Crime Rate statistics per 1000 people:
+  * Crime Rate per 1000 residents based on 2020 GLA Population Estimate 
+  * Crime Rate per 1000 residents based on 2011 Census Population statistics
+  * Crime Rate per 1000 daytime population based on Total Daytime Population, including tourists
+  * Crime Rate per 1000 workday population based on Total Workday Population, excluding tourists
+
+
+* **Format data**
+To get the datasets into the correct format for choropleth and line visualizations we had to pivot the dataset, so instead of the dates representing the columns and crime types the rows, date are aggregated in a Date column and columns generally represent the crime types. 
+We also did some filtering and smaller reformatting when necessary. 
+
+#### Modelling
+Because our solution is mainly based around creating interactive visualizations so the app user can explore the data in an intuitive manner, the project didn't focus on
+developing any models or algorithms. 
+
+However, we did use Facebook's Prophet time series predicting model in order to forecast the crime rate for the next 6 months. But the model is already trained
+by Facebook, so we only fitted the data.
+
+In our case developing unique forecasting algorithms would most likely not yield great results as we only had about 2 years worth of monthly data as data-points which is far too few to properly train a predictive algorithm.
+
+
+#### Evolution 
+* Looking at the final delivery form a business perspective, we believe the app and app visualizations answer all the target customers' requirements.
+However, to see if that really is the case the app should be presented to stakeholders and target customers to get their feedback on it, and then further
+iterate and improve the app based on their feedback
+
+
+* At this stage we conducted two types of tests. We tested the dash app features to verify that the interface was working as planned with 10 distinct tests, this was done using selenium. We also used Unit tests to check for a specific response to a set of inputs. After, we integrated this with GitHub Actions to create a workflow to run the tests. These tests verified a good functionality of the dash app. Information on the specific tests conducted can be found in part 6. 
+
+#### Deployment
 
 - The dash app is ready to use and should aid prospective home-renters in London to find a safe area if they are concerned about crime levels.
+However, any further discussion of the app's deployment is beyond the scope of this project.
 
 
 ### 3. Visualisation 1: The Map
