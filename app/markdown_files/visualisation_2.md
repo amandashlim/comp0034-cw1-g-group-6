@@ -1,8 +1,8 @@
 # Visualisation 2: The Histogram
 
-The target audience for our map visualisation is anyone who is either moving to or living in London, who is interested in learning about and comparing the crime rates for each form of crime in the different london boroughs.
+The target audience for our map visualisation is anyone who is either moving to or living in London and hence, is looking for somewhere to live. The target audience wants to learn and compare the crime rates in the different london boroughs. Furthermore, they are looking for insights into the occurrences of different forms of crime.
 
-The question that this visualisation is intended to address is the following:
+The histogram visualisation is intended to address are the following question:
 
     1. Which type of crime is the highest and lowest in London?
 
@@ -11,12 +11,12 @@ The question that this visualisation is intended to address is the following:
 ### *1. Explaining the design*
 
 To answer the question stated above, we decided that a histogram would be the most effective visual.
-It allows users to see the counts for each type of crime and compare them with each other, to know which crimes are the highest and lowest in London.
+It allows users to see the counts for each type of crime and compare them with each other. This help the user discover which crimes are the highest and lowest in London.
 
-We decided to add a slider allowing users to select a specific time range, within the data we have. 
+We added functionality with a slider allowing users to select a specific time range, within the data we have. 
 Therefore, users are able to select a specific timeframe, such as a season, to see whether the crime counts of the different types of crime fluctuate during different periods. 
 
-On the left-hand side of the dashboard, we included filters where users can choose one or multiple boroughs they would like to have shown in the histogram.
+On the left-hand side of the dashboard we included filters where users can choose one or multiple boroughs they would like to have shown in the histogram.
 This allows them to either look at the crime counts for a specific borough they are interested in or look at the crime counts for a larger area.
 
 ### *2. Evaluating the design*
@@ -25,7 +25,7 @@ To create the histogram, we used multiple datasets; the main dataset used was th
 We also used multiple other datasets so that users could look at the histogram through different data on the population as we can see in the filters on the left-hand side of the dashboard.
 The other datasets used were for raw data (population.csv) and total daytime population (daytime_population.csv). 
 
-We used all the data from each dataset listed above to answer the question.
+We used the multiple datasets to provide a histogram visualisation that answers all the aforementioned target audience questions.
 
 The histogram has many strengths in helping our webapp users understand the crime rates in London. 
 They are able to create a histogram where they can select one or multiple boroughs they are interested in.
