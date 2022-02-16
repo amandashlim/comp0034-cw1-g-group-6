@@ -150,7 +150,7 @@ app.layout = html.Div(className="web_app", children=[
 
 
 @app.callback(
-    # Show/Hide different charts
+    # Setting up callbacks for different parts of the web app
     Output("map_row", "style"),
     Output("hist_row", "style"),
     Output("line_row", "style"),
@@ -221,7 +221,7 @@ def selections_data(clickData):
 
 
 @app.callback(
-    # Update map (select areas and highlight - useful for statistics later, select data, select crime)
+    # Callbacks for updating the map
     Output("map", "figure"),
     Input("selections", "data"),
     Input("crime_select", "value"),
@@ -305,7 +305,6 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
             stat_list.append(html.H6(last_year[i], style={'color': "black"}))
 
         stat_list.append(html.Br())
-        # print(stat_list)
     return html.Div(stat_list, style={"maxHeight": "500px", "overflow": "scroll"})
 
 
@@ -316,7 +315,7 @@ def update_map_stats(boroughs, crime_select, data_select, map_slider):
     Input("hist_checklist", "value")
 )
 def update_line(crime, data_select, borough):
-    # Hides/shows different boroughs on the line chatt based oh borough(s) selected
+    # Hides/shows different boroughs on the line chart based oh borough(s) selected
     fig = v.line_2(crime=crime, df=v.reformat(data[data_select]), borough=borough)
     return fig
 
@@ -327,7 +326,7 @@ def update_line(crime, data_select, borough):
     Input("data_select", 'value')
 )
 def update_line_stats(crime, data_select):
-    # Define the different crime rate calculations
+    # Defines the different crime rate calculations
     worst_average_borough, average_bad, best_average_borough, average_good, worst_instance_borough, \
     year_max, max, best_borough, year_min, min = v.statistics_line(crime=crime,
                                                                    df=v.reformat(data[data_select]))
@@ -346,6 +345,8 @@ def update_line_stats(crime, data_select):
         html.P(f'{best_borough}, with rate: {round(min, 3)}'),
         html.P(f'Recorded: {year_min[4:]}/{year_min[0:4]}', style={"font-style": "italic", "color": "grey"}),
         html.Br()]
+
+    # Returns list of the stats to display in two lists
     return html.Div(children=[
         dbc.Row(className="container", children=stats_list_bad),
         dbc.Row(className="container", children=stats_list_good)
@@ -359,6 +360,7 @@ def update_line_stats(crime, data_select):
     Input("hist_slider", "value")
 )
 def update_hist_stats(data_select, borough, time_range):
+    # Updates histogram statistics based on the borough and time range
     if time_range is not None:
         if time_range[0] != time_range[1]:
             fig = v.statistics_hist(
