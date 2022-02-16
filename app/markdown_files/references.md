@@ -65,4 +65,6 @@ __Elements (i.e.: Persona, questions to be answered through the webapp...) have 
 
 __Elements (i.e.: function for data formatting) have been taken from Matic Potocnik's COMP0035 Coursework 1 *(weirdaxe on Github)*.__
 
+__Elements (i.e.: CRISP-MD explanation) have been taken from Joe Hunt's COMP0035 Coursework 1 *(zceihun on Github)*.__
+
 
