@@ -83,15 +83,52 @@ understand how those crime rates change over seasons/years, and see the crime ra
 
 ### 6. Testing the Dash App
 
-To test the dash app, we came up with 2 separate tests using selenium.
-The first test, checks to see that, given the app is running, when we access the homepage, the H1 heading of the webapp is "London Crime Rates".
-The second test is that given the app is running, when we access the homepage, then there should be written "Select Chart Type".
+To test the dash app, we came up with 10 separate tests using selenium.
+The tests check if the interactivity of Display Settings panel (left) updates the graphs correctly.
+They check if the map visual and its statistics are updated correctly when selecting a particular data, crime, time frame, boroughs.
+They check if the line visual and its statistics are updated correctly when selecting crime, borough, data.
 
-** will there be a third???
+The histogram part of the app is the only one not tested for, as the elements of the histogram graph don't help distinguish between
+when different boroughs and time ranges are selected. This could be improved by implementing different elements in the app that report 
+the changes to the histogram, however, due to time constraints we decided not to perform app tests for histogram.
 
-[Link to tests with selenium](tests/test_crime.py)
 
-We also came up with unit tests. 
+We also created 8 unit tests to test all functions of all() class in visualizations.py file.
+
+It tests if data imports and data reformatting work by checking the data shapes,
+if returned crime, borough, date lists are correct. If the get_highlights returns the correct subsection of the
+geojson given a particular borough, and if test_map_statistics return the correct specific values.
+
+What is not tested are the functions that return various plotly visualizations.
+
+### 7. Weekly Progress reports
+
+We decided to have a Google doc as a way of reporting what we discussed in the meetings, what we have done, and what we need to do next.
+Google doc instead of moodle was used so all teammates have access to the TODO list and can write what they have done / plan to do.
+On top of that we had about two meetings per week to catch up and update the TODO list, and we had a WhatsApp group that was used to communicate and help troubleshoot 
+
+The contents of that doc are available bellow:
+#### Week 1
+![Week 1](../assets/Week%201.png)
+
+#### Week 2
+![Week 2](../assets/Week%202.png)
+
+#### Week 3
+![Week 3](../assets/Week%203.png)
+
+#### Week 4
+![Week 4](../assets/Week%204.png)
+
+#### Week 5
+![Week 5](../assets/Week%205.png)
+
+#### Week 6
+![Week 6](../assets/Week%206.png)
+
+
+
+
 
 
 
