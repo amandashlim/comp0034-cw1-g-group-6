@@ -19,7 +19,7 @@ Which requires both the number of committed crimes and the area population. Howe
 
 So, to provide the target audience relevant statistics they can compare with statistics from other articles or websites, we decided to use two additional datasets:
 
-####Daytime Population by Borough
+#### Daytime Population by Borough
 * The dataset provides us with a Total Daytime Population which includes tourism and Workday Population which excludes them for year 2014. This is 
 particularly useful to understand the crime rates of Boroughs that have a high Daytime population but relatively low residential population, 
 as it adjusts the reported crimes.
@@ -31,7 +31,7 @@ as it adjusts the reported crimes.
 * The dataset is available on [London Datastore](https://data.london.gov.uk/dataset/daytime-population-borough)
 
 
-####Population Density by Borough
+#### Population Density by Borough
 * The dataset provides us with GLA estimates for residential population throughout Boroughs and residential population statistics from 2011 Census Data. 
 This can be useful to calculate the traditional crime rate statistics per 1000 residents.
 * The dataset does not contain any personal information on persons but rather general statistics on ares in London
