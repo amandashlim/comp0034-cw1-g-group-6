@@ -5,7 +5,7 @@ In coursework 1 of COMP0035, we detailed these questions relating to the Metropo
 
     1. How has drug crime evolved in London over the two recorded years?
     2. Which type of crime is the highest and lowest in London?
-    3. How does sexual offences fluctuate over the four seasons?
+    3. How does sexual offence fluctuate over the four seasons?
     4. Which borough has the highest crime rates in London?
 
 To answer these questions, we narrowed the scope of our data exploration to three categories visualisations. These were:
