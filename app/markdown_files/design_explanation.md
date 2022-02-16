@@ -106,7 +106,7 @@ Deployment
 
 ### 6. Testing the Dash App
 
-To test the dash app, we came up with 10 separate tests using selenium.
+To test the dash app, we came up with 11 separate tests using selenium.
 The tests check if the interactivity of Display Settings panel (left) updates the graphs correctly.
 They check if the map visual and its statistics are updated correctly when selecting a particular data, crime, time frame, boroughs.
 They check if the line visual and its statistics are updated correctly when selecting crime, borough, data.
