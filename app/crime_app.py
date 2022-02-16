@@ -9,10 +9,6 @@ from dash import dcc, Output, Input
 from dash import html
 from app.visualization import all
 
-'''
-TODO:
-Make map max zoom out - Matic
-'''
 
 # Define list of data sources
 v = all()
@@ -205,7 +201,7 @@ def update_data(data_select, hist_checklist, hist_slider):
 
 
 @app.callback(
-    # Get selections
+    # Get selected boroughs from clicking on the map
     Output("selections", "data"),
     [Input("map", "clickData")]
 )
