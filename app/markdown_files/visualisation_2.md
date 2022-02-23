@@ -29,12 +29,12 @@ We used the multiple datasets to provide a histogram visualisation that answers 
 
 The histogram has many strengths in helping our webapp users understand the crime rates in London. 
 They are able to create a histogram where they can select one or multiple boroughs they are interested in.
-Each bar in the plot is decomposed in colours based on the timeline selected.
-Therefore, if they select a small timeframe, they are able to compare the crime rates during the months for the borough(s) selected.
+Each bar in the plot is decomposed into different colours based on the months selected.
+Therefore, if they select a smaller timeframe, they are able to compare the crime rates during the months for the borough(s) selected.
 Furthermore, on the right-hand side of the dashboard we added a correlation matrix so that users can see if there is a correlation between the different types of crime. For example, we see that Burglary and Fraud or Forgery have a strong positive correlation.
 We decided to add this feature into our dashboard so that our users can have more knowledge on crime rates within London.
 
 One of the weaknesses of our histogram is that if the user selects a large timeframe (i.e.: more than 6 months) it becomes hard for them to compare the months, especially for the forms of crime which have a lower count.
 This is why we decided that this visualisation would not be able to answer the questions 1. and 3. stated in the design_explanation.md [(Click to see the questions in the main markdown)](../markdown_files/design_explanation.md).
-To solve the issue and improve our visualisation, we would probably allow users to click on the histogram itself for it to take up the whole page of the webapp. 
+To solve the issue and improve our visualisation, we would probably allow users to click on the histogram itself for it to enlarge and take up the whole page of the webapp. 
 This means that they would be able to better compare the months as the histogram would be larger and therefore allowing them to select a larger timeframe.
