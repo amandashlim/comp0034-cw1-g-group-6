@@ -194,7 +194,12 @@ geojson given a particular borough, and if test_map_statistics return the correc
 
 What is not tested are the functions that return various plotly visualizations.
 
-### 7. Weekly Progress reports
+### 7. Link to Video
+
+[Link to Video](https://youtu.be/ufafiY_zjP0)
+
+
+### 8. Weekly Progress reports
 
 We decided to have a Google doc as a way of reporting what we discussed in the meetings, what we have done, and what we need to do next.
 Google doc instead of moodle was used so all teammates have access to the TODO list and can write what they have done / plan to do.

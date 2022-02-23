@@ -19,3 +19,8 @@ computers start lagging when trying to install them.
 As the app was designed in a way where using the ***prophet*** is unnecessary, 
 as the predictions are stored in .json files, we purposefully commented out the packages so to not interfere.
 However, if you wish to run the predictions yourself feel free to uncomment them or install them by yourself.
+
+### Link to Video
+
+Here is the link for a video showcasing our dash app:
+[https://youtu.be/ufafiY_zjP0](https://youtu.be/ufafiY_zjP0)
