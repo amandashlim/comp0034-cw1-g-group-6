@@ -1,15 +1,15 @@
 import time
 from selenium.webdriver.common.keys import Keys
 from dash.testing.application_runners import import_app
-from app import visualization as v
+from crime_dash_app import visualization as v
 v = v.all()
 
 # General App tests
 
 def test_tete001_main_header(dash_duo, run_crime_app):
     '''
-    GIVEN that the app is running
-    WHEN we access the homepage of the app
+    GIVEN that the crime_dash_app is running
+    WHEN we access the homepage of the crime_dash_app
     THEN there should be a main header
     '''
 
@@ -20,7 +20,7 @@ def test_tete001_main_header(dash_duo, run_crime_app):
 
 def test_tete002_selected_data (dash_duo, run_crime_app):
     '''
-    Given that the app is running
+    Given that the crime_dash_app is running
     When we select a specific dataset (Population 2011)
     Then the default visualization should update (we check with unique legend values)
     '''
@@ -35,7 +35,7 @@ def test_tete002_selected_data (dash_duo, run_crime_app):
 
 def test_tete003_selected_chart_type (dash_duo, run_crime_app):
     '''
-    Given that the app is running
+    Given that the crime_dash_app is running
     When the user selects a particular chart type
     Then only the correct chart should appear
     '''
@@ -56,7 +56,7 @@ def test_tete003_selected_chart_type (dash_duo, run_crime_app):
 
 def test_tete004_selected_borough_on_map (dash_duo, run_crime_app):
     '''
-    Given that the app is running and the Map visual is selected
+    Given that the crime_dash_app is running and the Map visual is selected
     When the user clicks on a borough
     Then the selections set should contain the selected borough
     '''
@@ -75,7 +75,7 @@ def test_tete004_selected_borough_on_map (dash_duo, run_crime_app):
 
 def test_tete005_selected_crime_on_map (dash_duo, run_crime_app):
     '''
-    Given that the app is running and the Map visual is selected
+    Given that the crime_dash_app is running and the Map visual is selected
     When the user select a particular crime
     Then the map will show the correct crime (we check that by checking the legend)
     '''
@@ -97,7 +97,7 @@ def test_tete005_selected_crime_on_map (dash_duo, run_crime_app):
 
 def test_tete006_selected_month_on_map (dash_duo, run_crime_app):
     '''
-    Given that the app is running and the Map visual is selected
+    Given that the crime_dash_app is running and the Map visual is selected
     When the user select a particular month
     Then the map will show the correct values for that month (we check that by checking the legend)
     '''
@@ -117,7 +117,7 @@ def test_tete006_selected_month_on_map (dash_duo, run_crime_app):
 
 def test_tete007_correct_statistics_for_selected_borough_time_crime (dash_duo, run_crime_app):
     '''
-    Given that the app is running and the Map visual is selected
+    Given that the crime_dash_app is running and the Map visual is selected
     When the user clicks on multiple boroughs and selects a specific year and select a specific crime
     Then the statistics shown should be correct
     '''
@@ -145,7 +145,7 @@ def test_tete007_correct_statistics_for_selected_borough_time_crime (dash_duo, r
 
 def test_tete008_selected_boroughs_on_line (dash_duo, run_crime_app):
     '''
-    Given that the app is running and the Line visual is selected
+    Given that the crime_dash_app is running and the Line visual is selected
     When the user selects multiple boroughs
     Then the line will show lines with forecasts for those boroughs (we check that by checking the legend)
     '''
@@ -168,7 +168,7 @@ def test_tete008_selected_boroughs_on_line (dash_duo, run_crime_app):
 
 def test_tete009_selected_crime_on_line_chart (dash_duo, run_crime_app):
     '''
-    Given that the app is running and the Line visual is selected
+    Given that the crime_dash_app is running and the Line visual is selected
     When the user selects a particular crime
     Then the line will show the appropriate crime (we check that by checking the legend)
     '''
@@ -189,7 +189,7 @@ def test_tete009_selected_crime_on_line_chart (dash_duo, run_crime_app):
 
 def test_tete010_selected_crime_on_line_stats (dash_duo, run_crime_app):
     '''
-    Given that the app is running and the Line visual is selected
+    Given that the crime_dash_app is running and the Line visual is selected
     When the user selects a particular crime
     Then the line statistics will show the appropriate crime
     '''
@@ -211,7 +211,7 @@ def test_tete010_selected_crime_on_line_stats (dash_duo, run_crime_app):
 
 def test_tete011_selected_crime_on_line_chart (dash_duo, run_crime_app):
     '''
-    Given that the app is running and the Line visual is selected
+    Given that the crime_dash_app is running and the Line visual is selected
     When the user selects a particular dataset (Population 2011)
     Then the line statistics should show the correct boroughs
     '''

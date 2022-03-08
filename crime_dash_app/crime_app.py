@@ -1,13 +1,13 @@
 # Copied from the Dash tutorial documentation at https://dash.plotly.com/layout on 24/05/2021
 # Import section modified 10/10/2021 to comply with changes in the Dash library.
 
-# Run this app with `python crime_app.py` and visit http://127.0.0.1:8050/ in your web browser.
+# Run this crime_dash_app with `python crime_app.py` and visit http://127.0.0.1:8050/ in your web browser.
 
 import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, Output, Input
 from dash import html
-from app.visualization import all
+from crime_dash_app.visualization import all
 
 
 # Define list of data sources
@@ -27,11 +27,11 @@ for i in range(0, len(v.date_list)):
     date_slider_dict[i] = {"label": v.date_list[i], "style": {"transform": "rotate(45deg)"}}
 
 selections = set()
-
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+def init_dashboard(flask_app):
+    app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
-app.layout = html.Div(className="web_app", children=[
+    app.layout = html.Div(className="web_app", children=[
     dcc.Store(id="selections"),
     # Top row
     dbc.Row(className="header", children=[
@@ -39,12 +39,12 @@ app.layout = html.Div(className="web_app", children=[
         dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
                          style={"height": "5vh"}),
                 width="auto"),  # The width changes
-        # Title of the web app
+        # Title of the web crime_dash_app
         dbc.Col(html.H2("Crime in London Overview Dashboard", id="main_header"), width=8)
     ],
             align="center"  # Vertically center the elements within this row
             ),
-    # Everything else row (main web app content)
+    # Everything else row (main web crime_dash_app content)
     dbc.Row(className="main_content", children=[
 
         # Display Settings Column
@@ -143,10 +143,12 @@ app.layout = html.Div(className="web_app", children=[
                 width=3)
     ])
 ])
+    init_callback(app)
+    return app.server
 
-
-@app.callback(
-    # Setting up callbacks for different parts of the web app
+def init_callback(app):
+    @app.callback(
+    # Setting up callbacks for different parts of the web crime_dash_app
     Output("map_row", "style"),
     Output("hist_row", "style"),
     Output("line_row", "style"),
@@ -159,221 +161,221 @@ app.layout = html.Div(className="web_app", children=[
     Output("line_statistics", "style"),
     Input("chart_select", "value")
 )
-def hide(chart_select):
-    # Hides/Shows parts of the web app based off which chart is selected
-    if chart_select == "Map":
-        return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, \
+    def hide(chart_select):
+    # Hides/Shows parts of the web crime_dash_app based off which chart is selected
+        if chart_select == "Map":
+            return {'display': 'block'}, {'display': 'none'}, {'display': 'none'}, {'display': 'none'}, \
                {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, \
                {'display': 'block'}, {'display': 'none'}, {'display': 'none'}
-    if chart_select == "Histogram":
-        return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'block'}, {
+        if chart_select == "Histogram":
+            return {'display': 'none'}, {'display': 'block'}, {'display': 'none'}, {'display': 'block'}, {
             'display': 'block'}, {'display': 'none'}, {'display': 'none'}, \
                {'display': 'none'}, {'display': 'block'}, {'display': 'none'}
-    if chart_select == "Line":
-        return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, {
+        if chart_select == "Line":
+            return {'display': 'none'}, {'display': 'none'}, {'display': 'block'}, {'display': 'block'}, {
             'display': 'block'}, {'display': 'block'}, {'display': 'block'}, \
                {'display': 'none'}, {'display': 'none'}, {'display': 'block'}
 
 
-@app.callback(
+    @app.callback(
     # Interactivity for histogram (data, borough, timeframe)
     Output("hist", "figure"),
     Input("data_select", "value"),
     Input("hist_checklist", "value"),
     Input("hist_slider", "value")
-)
-def update_data(data_select, hist_checklist, hist_slider):
+    )
+    def update_data(data_select, hist_checklist, hist_slider):
     # Updates the data used for the histogram based on the slider date range
-    if hist_slider is not None:
-        if hist_slider[0] != hist_slider[1]:
-            fig = v.hist(df=data[data_select],
+        if hist_slider is not None:
+            if hist_slider[0] != hist_slider[1]:
+                fig = v.hist(df=data[data_select],
                          date=[date_slider_dict[i]["label"] for i in list(range(hist_slider[0], hist_slider[1] + 1))],
+                         borough=hist_checklist)
+            else:
+                fig = v.hist(df=data[data_select],
+                         date=date_slider_dict[hist_slider[0]]["label"],
                          borough=hist_checklist)
         else:
             fig = v.hist(df=data[data_select],
-                         date=date_slider_dict[hist_slider[0]]["label"],
-                         borough=hist_checklist)
-    else:
-        fig = v.hist(df=data[data_select],
                      date=v.date_list,
                      borough=hist_checklist)
-    return fig
+        return fig
 
 
-@app.callback(
+    @app.callback(
     # Get selected boroughs from clicking on the map
     Output("selections", "data"),
     [Input("map", "clickData")]
-)
-def selections_data(clickData):
-    if clickData is not None:
-        location = clickData['points'][0]['location']
+    )
+    def selections_data(clickData):
+        if clickData is not None:
+            location = clickData['points'][0]['location']
 
-        if location not in selections:
-            selections.add(location)
-        else:
-            selections.remove(location)
-    return list(selections)
+            if location not in selections:
+                selections.add(location)
+            else:
+                selections.remove(location)
+        return list(selections)
 
 
-@app.callback(
+    @app.callback(
     # Callbacks for updating the map
     Output("map", "figure"),
     Input("selections", "data"),
     Input("crime_select", "value"),
     Input("data_select", "value"),
     Input("map_slider", "value")
-)
-def update_figure(data_1, crime_select, data_select, map_slider):
+    )
+    def update_figure(data_1, crime_select, data_select, map_slider):
     # Updates the map when the date range slider changes
-    selections = data_1
-    if map_slider is not None:
-        fig = v.map_2_layer(df=v.reformat(
-            data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[map_slider]["label"]],
+        selections = data_1
+        if map_slider is not None:
+            fig = v.map_2_layer(df=v.reformat(
+                data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[map_slider]["label"]],
                             selections=selections,
                             crime=crime_select)
-    else:
-        fig = v.map_2_layer(df=v.reformat(
+        else:
+            fig = v.map_2_layer(df=v.reformat(
             data[data_select])[v.reformat(data[data_select])["Date"] == date_slider_dict[0]["label"]],
                             selections=selections,
                             crime=crime_select)
-    return fig
+        return fig
 
 
-@app.callback(
+    @app.callback(
     Output("map_statistics", "children"),
     Input("selections", "data"),
     Input("crime_select", "value"),
     Input("data_select", "value"),
     Input("map_slider", "value")
-)
-def update_map_stats(boroughs, crime_select, data_select, map_slider):
-    stat_list = []
-    if map_slider is not None:
-        selected_month = date_slider_dict[map_slider]["label"]
-    else:
-        selected_month = "201910"
+    )
+    def update_map_stats(boroughs, crime_select, data_select, map_slider):
+        stat_list = []
+        if map_slider is not None:
+            selected_month = date_slider_dict[map_slider]["label"]
+        else:
+            selected_month = "201910"
     # Defines how stats are calculated
-    last_month = v.statistics_map(df=v.reformat(data[data_select]),
+        last_month = v.statistics_map(df=v.reformat(data[data_select]),
                                   month=selected_month,
                                   crime=crime_select,
                                   selected_areas=boroughs,
                                   m=1)
-    last_three_months = v.statistics_map(df=v.reformat(data[data_select]),
+        last_three_months = v.statistics_map(df=v.reformat(data[data_select]),
                                          month=selected_month,
                                          crime=crime_select,
                                          selected_areas=boroughs,
                                          mmm=1)
-    last_year = v.statistics_map(df=v.reformat(data[data_select]),
+        last_year = v.statistics_map(df=v.reformat(data[data_select]),
                                  month=selected_month,
                                  crime=crime_select,
                                  selected_areas=boroughs,
                                  y=1)
-    for i in boroughs:
+        for i in boroughs:
         # Calculates the stats for each borough and appends them to a list
-        stat_list.append(html.H4(f"Changes for {i}:"))
+            stat_list.append(html.H4(f"Changes for {i}:"))
 
-        stat_list.append(html.H6("Last month:"))
-        if type(last_month[i]) is not str:
-            if last_month[i] > 0:
-                stat_list.append(html.H6(f'+{round(last_month[i] * 100, 2)}%', style={'color': "red"}))
-            else:
-                stat_list.append(html.H6(f'{round(last_month[i] * 100, 2)}%', style={'color': "green"}))
-        elif type(last_month[i]) is str:
-            stat_list.append(html.H6(last_month[i], style={'color': "black"}))
+            stat_list.append(html.H6("Last month:"))
+            if type(last_month[i]) is not str:
+                if last_month[i] > 0:
+                    stat_list.append(html.H6(f'+{round(last_month[i] * 100, 2)}%', style={'color': "red"}))
+                else:
+                    stat_list.append(html.H6(f'{round(last_month[i] * 100, 2)}%', style={'color': "green"}))
+            elif type(last_month[i]) is str:
+                stat_list.append(html.H6(last_month[i], style={'color': "black"}))
 
-        stat_list.append(html.H6("Last 3-months average:"))
-        if type(last_three_months[i]) is not str:
-            if last_three_months[i] > 0:
-                stat_list.append(html.H6(f'+{round(last_three_months[i] * 100, 2)}%', style={'color': "red"}))
-            else:
-                stat_list.append(html.H6(f'{round(last_three_months[i] * 100, 2)}%', style={'color': "green"}))
-        elif type(last_three_months[i]) is str:
-            stat_list.append(html.H6(last_three_months[i], style={'color': "black"}))
+            stat_list.append(html.H6("Last 3-months average:"))
+            if type(last_three_months[i]) is not str:
+                if last_three_months[i] > 0:
+                    stat_list.append(html.H6(f'+{round(last_three_months[i] * 100, 2)}%', style={'color': "red"}))
+                else:
+                    stat_list.append(html.H6(f'{round(last_three_months[i] * 100, 2)}%', style={'color': "green"}))
+            elif type(last_three_months[i]) is str:
+                stat_list.append(html.H6(last_three_months[i], style={'color': "black"}))
 
-        stat_list.append(html.H6("Last year:"))
-        if type(last_year[i]) is not str:
-            if last_year[i] > 0:
-                stat_list.append(html.H6(f'+{round(last_year[i] * 100, 2)}%', style={'color': "red"}))
-            else:
-                stat_list.append(html.H6(f'{round(last_year[i] * 100, 2)}%', style={'color': "green"}))
-        elif type(last_year[i]) is str:
-            stat_list.append(html.H6(last_year[i], style={'color': "black"}))
+            stat_list.append(html.H6("Last year:"))
+            if type(last_year[i]) is not str:
+                if last_year[i] > 0:
+                    stat_list.append(html.H6(f'+{round(last_year[i] * 100, 2)}%', style={'color': "red"}))
+                else:
+                    stat_list.append(html.H6(f'{round(last_year[i] * 100, 2)}%', style={'color': "green"}))
+            elif type(last_year[i]) is str:
+                stat_list.append(html.H6(last_year[i], style={'color': "black"}))
 
-        stat_list.append(html.Br())
-    return html.Div(stat_list, style={"maxHeight": "500px", "overflow": "scroll"})
+            stat_list.append(html.Br())
+        return html.Div(stat_list, style={"maxHeight": "500px", "overflow": "scroll"})
 
 
-@app.callback(
+    @app.callback(
     Output("line", "figure"),
     Input("crime_select", "value"),
     Input("data_select", "value"),
     Input("hist_checklist", "value")
-)
-def update_line(crime, data_select, borough):
+    )
+    def update_line(crime, data_select, borough):
     # Hides/shows different boroughs on the line chart based oh borough(s) selected
-    fig = v.line_2(crime=crime, df=v.reformat(data[data_select]), borough=borough)
-    return fig
+        fig = v.line_2(crime=crime, df=v.reformat(data[data_select]), borough=borough)
+        return fig
 
 
-@app.callback(
+    @app.callback(
     Output("line_statistics", "children"),
     Input("crime_select", "value"),
     Input("data_select", 'value')
-)
-def update_line_stats(crime, data_select):
+    )
+    def update_line_stats(crime, data_select):
     # Defines the different crime rate calculations
-    worst_average_borough, average_bad, best_average_borough, average_good, worst_instance_borough, \
-    year_max, max, best_borough, year_min, min = v.statistics_line(crime=crime,
+        worst_average_borough, average_bad, best_average_borough, average_good, worst_instance_borough, \
+        year_max, max, best_borough, year_min, min = v.statistics_line(crime=crime,
                                                                    df=v.reformat(data[data_select]))
-    stats_list_bad = [
-        html.H5(f"Highest Average {crime} Rate:"),
-        html.P(f'{worst_average_borough}, with rate: {round(average_bad, 3)}'),
-        html.H5(f"Highest Recorded {crime} Rate:"),
-        html.P(f'{worst_instance_borough}, with rate: {round(max, 3)}'),
-        html.P(f'Recorded: {year_max[4:]}/{year_max[0:4]}', style={"font-style": "italic", "color": "grey"}),
-        html.Br()]
+        stats_list_bad = [
+            html.H5(f"Highest Average {crime} Rate:"),
+            html.P(f'{worst_average_borough}, with rate: {round(average_bad, 3)}'),
+            html.H5(f"Highest Recorded {crime} Rate:"),
+            html.P(f'{worst_instance_borough}, with rate: {round(max, 3)}'),
+            html.P(f'Recorded: {year_max[4:]}/{year_max[0:4]}', style={"font-style": "italic", "color": "grey"}),
+            html.Br()]
 
-    stats_list_good = [
-        html.H5(f"Lowest Average {crime} Rate:"),
-        html.P(f'{best_average_borough}, with rate: {round(average_good, 3)}'),
-        html.H5(f"Lowest Recorded {crime} Rate:"),
-        html.P(f'{best_borough}, with rate: {round(min, 3)}'),
-        html.P(f'Recorded: {year_min[4:]}/{year_min[0:4]}', style={"font-style": "italic", "color": "grey"}),
-        html.Br()]
+        stats_list_good = [
+            html.H5(f"Lowest Average {crime} Rate:"),
+            html.P(f'{best_average_borough}, with rate: {round(average_good, 3)}'),
+            html.H5(f"Lowest Recorded {crime} Rate:"),
+            html.P(f'{best_borough}, with rate: {round(min, 3)}'),
+            html.P(f'Recorded: {year_min[4:]}/{year_min[0:4]}', style={"font-style": "italic", "color": "grey"}),
+            html.Br()]
 
     # Returns list of the stats to display in two lists
-    return html.Div(children=[
-        dbc.Row(className="container", children=stats_list_bad),
-        dbc.Row(className="container", children=stats_list_good)
-    ])
+        return html.Div(children=[
+            dbc.Row(className="container", children=stats_list_bad),
+            dbc.Row(className="container", children=stats_list_good)
+        ])
 
 
-@app.callback(
+    @app.callback(
     Output("hist_correlation_matrix", "figure"),
     Input("data_select", "value"),
     Input("hist_checklist", "value"),
     Input("hist_slider", "value")
-)
-def update_hist_stats(data_select, borough, time_range):
+    )
+    def update_hist_stats(data_select, borough, time_range):
     # Updates histogram statistics based on the borough and time range
-    if time_range is not None:
-        if time_range[0] != time_range[1]:
-            fig = v.statistics_hist(
-                time_range=[date_slider_dict[i]["label"] for i in list(range(time_range[0], time_range[1] + 1))],
-                df=v.reformat(data[data_select]),
-                borough=borough)
+        if time_range is not None:
+            if time_range[0] != time_range[1]:
+                fig = v.statistics_hist(
+                    time_range=[date_slider_dict[i]["label"] for i in list(range(time_range[0], time_range[1] + 1))],
+                    df=v.reformat(data[data_select]),
+                    borough=borough)
+            else:
+                fig = v.statistics_hist(
+                    time_range=[date_slider_dict[time_range[0]]["label"]],
+                    df=v.reformat(data[data_select]),
+                    borough=borough)
         else:
-            fig = v.statistics_hist(
-                time_range=[date_slider_dict[time_range[0]]["label"]],
-                df=v.reformat(data[data_select]),
-                borough=borough)
-    else:
-        fig = v.statistics_hist(time_range=v.date_list,
+            fig = v.statistics_hist(time_range=v.date_list,
                                 df=v.reformat(data[data_select]),
                                 borough=v.borough_list)
-    return fig
+        return fig
 
 
-if __name__ == '__main__':
-    app.run_server(debug=True)
+#if __name__ == '__main__':
+#    app.run_server(debug=True)

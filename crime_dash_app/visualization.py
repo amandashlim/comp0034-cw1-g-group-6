@@ -112,7 +112,7 @@ class all:
         return geo_highlight
 
     def map_2_layer(self, df, selections, crime):
-        # Map visual used in the dash app
+        # Map visual used in the dash crime_dash_app
         # has the property to include selections (which will be implemented with click callback in dashapp)
         # it has two layers the DEFAULT layer with all boroughs and lower opacity
         # the SELECTABLE layer has higher opacity and only applies to boroughs in the selections
@@ -176,7 +176,7 @@ class all:
         return pepe_final
 
     def line_2(self, crime, df, borough):
-        # Line visual used in the dash app
+        # Line visual used in the dash crime_dash_app
         # creates a line visual with both the real data and the forecasts made with FB Prophet seasonality algorithm
 
         title = "Seasonal Crime Data - per 1000 population"
