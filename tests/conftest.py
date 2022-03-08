@@ -2,7 +2,7 @@ import os
 import pytest
 from dash.testing.application_runners import import_app
 from selenium.webdriver.chrome.options import Options
-from app import visualization as v
+from crime_dash_app import visualization as v
 
 v = v.all()
 
@@ -21,7 +21,7 @@ def pytest_setup_options():
 
 @pytest.fixture(scope='function')
 def run_crime_app(dash_duo):
-    app = import_app("app.crime_app")
+    app = import_app("crime_dash_app.crime_app")
     yield dash_duo.start_server(app)
 
 

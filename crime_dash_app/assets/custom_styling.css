@@ -1,4 +1,4 @@
-/*The entire web app*/
+/*The entire web crime_dash_app*/
 .web_app{
     /*Styling here*/
 }
@@ -11,7 +11,7 @@
     padding-left: 2%;
 }
 
-/*Content within the app, excluding top header*/
+/*Content within the crime_dash_app, excluding top header*/
 .main_content {
     background-color: lightgrey;
     padding: 2%;
