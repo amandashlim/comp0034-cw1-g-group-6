@@ -1,5 +1,5 @@
 TODO:
-- Main page:
+- Main page: - Joe
     - Who is the app meant for
     - Brief explanation of the app
     - Embed youtube video
@@ -10,8 +10,8 @@ TODO:
 After Login or register open dashboard
 When logged in the user can see the main page, the dashboard, the forum page, and the edit user page
 
-- Dashboard (just import):
-    - Hidden if not logged int
+- Dashboard (just import): - Matic
+    - Hidden if not logged in
 
 - User page (edit account):
 -   Hidden if not logged in
@@ -21,7 +21,7 @@ When logged in the user can see the main page, the dashboard, the forum page, an
     - Upload picture
     - Change picture
 
-- Forum (post posts):
+- Forum (post posts): - Matic
 -   Hidden if not logged in
     - Create a new post
     - Edit current post
