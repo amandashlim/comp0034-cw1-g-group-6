@@ -1,13 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, BooleanField
-from wtforms.validators import DataRequired, EqualTo
-
-from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, EmailField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 
 from crime_flask_app.models import User
-
 
 class SignupForm(FlaskForm):
     first_name = StringField(label='First name', validators=[DataRequired(message='First name required')])
