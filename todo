@@ -42,6 +42,7 @@ Flask App
 •	Captures and stores data entered by users of the app.
 •	Uses and/or displays data stored in a SQLite database.
 •	TWO additional features: user profiles and forums
+- Also see the rubric (blueprints, security concerns, etc.)
 
 Readme
 •	URL to your GitHub repository
