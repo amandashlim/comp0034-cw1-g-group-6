@@ -57,3 +57,6 @@ waitress==2.0.0
 webdriver-manager==3.5.2
 Werkzeug==2.0.3
 wsproto==1.0.0
+flask-SQLAlchemy
+flask_wtf
+flask_login
