@@ -30,3 +30,34 @@ AFTER LOGIN OR REGISTER
     - Filter posts (by tags)
 
 - Testing - Francie & Amanda
+
+STUFF WE NEED
+Flask App
+•	HTML, CSS (Bootstrap or other third party library) and Jinja2
+•	Python using the Flask micro-framework
+•	Interaction with a SQL database (SQLite is preferred though MySQL or Postgresql are accepted)
+•	Has a responsive design. Responsive design means that it displays reasonably on devices of different dimensions such as mobile phone and laptop computer. This can be achieved using a 3rd party library such as Bootstrap.
+•	Allows your Dash app to be launched as a route in the web app.
+•	Provides signup/login/logout and restriction of some content to logged in users.
+•	Captures and stores data entered by users of the app.
+•	Uses and/or displays data stored in a SQLite database.
+•	TWO additional features: user profiles and forums
+
+Readme
+•	URL to your GitHub repository
+•	URL to your video demo (optional)
+•	Any set-up instructions required to be completed to run your app
+
+Testing
+- Include automated tests for your web application.
+- Create a test directory in your project and save your tests to this directory.
+- Create unit tests (e.g. pytest, unittest, Flask-Testing), integration tests (e.g. Selenium webdriver) or a combination of the two.
+- You do not need to test the Dash app functionality unless you wish to.
+- Consider the extent to which the tests cover the web application code.
+- Consider the quality of the tests (naming convention, appropriate use of assertions).
+- Test assertions should be written to pass, that is, if a test fails it should indicate a problem has been found with the code. Do not write tests to purposely fail.
+
+Testing can be extended by:
+•	Use of continuous integration such as GitHub Actions workflow
+•	Use of fixtures, particularly where these go beyond the fixtures provided in the course materials
+•	Increasing the test coverage, or the number of tests e.g. by considering edge cases and error conditions
