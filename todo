@@ -1,0 +1,27 @@
+TODO:
+- Main page:
+    - Who is the app meant for
+    - Brief explanation of the app
+    - Embed youtube video
+    - Prompt to Register and Login page
+
+- Login page
+- Register page
+After Login or register
+
+- Dashboard (just import)
+- User page (edit account):
+    - Change password
+    - Change email
+    - Change name
+    - Upload picture
+    - Change picture
+- Forum (post posts):
+    - Create a new post
+    - Edit current post
+    - Comment on a post
+    - Edit comment
+    - Delete comment
+    - Delete post
+    - Tagging (like reddit (to filter))
+    - Filter posts (by tags)
