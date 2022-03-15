@@ -7,16 +7,22 @@ TODO:
 
 - Login page
 - Register page
-After Login or register
+After Login or register open dashboard
+When logged in the user can see the main page, the dashboard, the forum page, and the edit user page
 
-- Dashboard (just import)
+- Dashboard (just import):
+    - Hidden if not logged int
+
 - User page (edit account):
+-   Hidden if not logged in
     - Change password
     - Change email
     - Change name
     - Upload picture
     - Change picture
+
 - Forum (post posts):
+-   Hidden if not logged in
     - Create a new post
     - Edit current post
     - Comment on a post
