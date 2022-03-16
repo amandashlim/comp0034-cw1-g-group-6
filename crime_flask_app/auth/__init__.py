@@ -1,4 +1,5 @@
 from flask_wtf.csrf import CSRFProtect
+from flask import Flask
 
 csrf = CSRFProtect()
 

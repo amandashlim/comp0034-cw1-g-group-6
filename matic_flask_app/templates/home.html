@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1 id="visualisations-design-explanations">Visualisations Design Explanations</h1>
+<p>In this project, we set out to create an insightful and well-functioning Dash App for our dataset. To achieve this, we made three different visualisations to answer our target audience questions.
+In coursework 1 of COMP0035, we detailed these questions relating to the Metropolitan Police dataset and have been listed below:</p>
+<pre><code><span class="hljs-number">1.</span> How has drug crime evolved <span class="hljs-keyword">in</span> London over <span class="hljs-keyword">the</span> <span class="hljs-literal">two</span> recorded years?
+<span class="hljs-number">2.</span> Which type <span class="hljs-keyword">of</span> crime is <span class="hljs-keyword">the</span> highest <span class="hljs-keyword">and</span> lowest <span class="hljs-keyword">in</span> London?
+<span class="hljs-number">3.</span> How does sexual offence fluctuate over <span class="hljs-keyword">the</span> <span class="hljs-literal">four</span> seasons?
+<span class="hljs-number">4.</span> Which borough has <span class="hljs-keyword">the</span> highest crime rates <span class="hljs-keyword">in</span> London?
+</code></pre><p>To answer these questions, we narrowed the scope of our data exploration to three categories visualisations. These were:</p>
+<pre><code><span class="hljs-bullet">1. </span>A chloropleth map
+<span class="hljs-bullet">2. </span>A histogram
+<span class="hljs-bullet">3. </span>A line chart
+</code></pre><p>We also found that the standard method of reporting Crime Statistics is with a &quot;Crime Rate per 1000 population&quot; <a href="https://ukcrimestats.com/blog/faqs/what-exactly-does-crime-rate-mean-and-how-do-you-calculate-it/">(UKCrimeStats, 2014)</a>
+which requires both the number of committed crimes and the area population. However, the given data only provides us with the total number of reported crimes for respective Boroughs, Crime Types, and Months.</p>
+<p>So, to provide the target audience relevant statistics they can compare with statistics from other articles or websites, we decided to use two additional datasets:</p>
+<h4 id="daytime-population-by-borough">Daytime Population by Borough</h4>
+<ul>
+<li>The dataset provides us with a Total Daytime Population which includes tourism and Workday Population which excludes them for year 2014. This is
+particularly useful to understand the crime rates of Boroughs that have a high Daytime population but relatively low residential population,
+as it adjusts the reported crimes.</li>
+<li>The dataset does not contain any personal information on persons but rather general statistics on ares in London</li>
+<li>The dataset is licensed under <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/">UK Open Government License</a>, which allows for free <ul>
+<li>Copying, publishing, distributing, and transmitting the Information</li>
+<li>Adapting the Information</li>
+<li>Exploiting the Information commercially and non-commercially</li>
+</ul>
+</li>
+<li>The dataset is available on <a href="https://data.london.gov.uk/dataset/daytime-population-borough">London Datastore</a></li>
+</ul>
+<h4 id="population-density-by-borough">Population Density by Borough</h4>
+<ul>
+<li>The dataset provides us with GLA estimates for residential population throughout Boroughs and residential population statistics from 2011 Census Data.
+This can be useful to calculate the traditional crime rate statistics per 1000 residents.</li>
+<li>The dataset does not contain any personal information on persons but rather general statistics on areas in London</li>
+<li>The dataset is licensed under <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/">UK Open Government License</a>, which allows for free <ul>
+<li>Copying, publishing, distributing, and transmitting the Information</li>
+<li>Adapting the Information</li>
+<li>Exploiting the Information commercially and non-commercially</li>
+</ul>
+</li>
+<li>The dataset is available on <a href="https://data.london.gov.uk/dataset/land-area-and-population-density-ward-and-borough">London Datastore</a></li>
+</ul>
+<p>With the population data included, webapp users will be able to select whichever statistics that are most useful to them:</p>
+<ul>
+<li>Raw Reported Numbers of Crimes</li>
+<li>Crime Rate per 1000 residents, adjusted with 2020 GLA resident population estimate</li>
+<li>Crime Rate per 1000 residents, adjusted with 2011 Census resident population statistics</li>
+<li>Crime Rate per 1000 daytime population, adjusted with Total Daytime Population including tourists</li>
+<li>Crime Rate per 1000 daytime population, adjusted only with Working Daytime Population excluding tourists (which might be most appropriate for the COVID-19 period)</li>
+</ul>
+<p>Each of the mentioned visualizations will change based on selected data and is able to answer one or multiple of the aforementioned target audience questions.
+To explain the design of our visualizations clearly, we will first obtain a solid understanding of our target audience and their needs.</p>
+{%endblock%}
