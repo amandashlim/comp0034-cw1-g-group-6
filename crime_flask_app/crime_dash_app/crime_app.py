@@ -7,7 +7,7 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, Output, Input
 from dash import html
-from crime_dash_app.visualization import all
+from crime_flask_app.crime_dash_app.visualization import all
 
 
 # Define list of data sources
