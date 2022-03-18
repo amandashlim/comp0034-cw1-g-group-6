@@ -1,6 +1,7 @@
 import time
 from selenium.webdriver.common.keys import Keys
-from crime_flask_app.crime_dash_app import visualization as v
+from crime_dash_app import visualization as v
+
 v = v.all()
 
 # General App tests
