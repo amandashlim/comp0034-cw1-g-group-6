@@ -1,4 +1,4 @@
-from crime_dash_app import visualization as v
+from crime_flask_app.crime_dash_app import visualization as v
 
 v = v.all()
 
