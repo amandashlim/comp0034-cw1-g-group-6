@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\King\PycharmProjects\comp0034-cw1-g-group-6\crime_flask_app\lab_example.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="lab_example [2]" uuid="bc24e0fd-f87b-4ae6-ac95-658289933cd5">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/crime_flask_app/lab_example.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

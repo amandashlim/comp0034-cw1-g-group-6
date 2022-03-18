@@ -34,6 +34,11 @@ def login():
         return redirect(url_for('main.index'))
     return render_template('login.html', title='Login', form=login_form)
 
+# Just added for the moment to not forget to make one
+@auth_bp.route('/profile', methods=['GET', 'POST'])
+def profile():
+    return "Profile"
+
 
 from crime_flask_app import login_manager
 
