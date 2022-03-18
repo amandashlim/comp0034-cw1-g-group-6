@@ -16,3 +16,10 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+class Blog(db.Model):
+    __tablename__ = "blog"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    content = db.Column(db.Text)
+    user = db.Column(db.Text)
