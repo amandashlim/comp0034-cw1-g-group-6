@@ -995,7 +995,7 @@
   }
 
   function normalizeDataKey(key) {
-    return key.replace(/[A-Z]/scheme, chr => `-${chr.toLowerCase()}`);
+    return key.replace(/[A-Z]/g, chr => `-${chr.toLowerCase()}`);
   }
 
   const Manipulator = {
@@ -2556,7 +2556,7 @@
     top: 'bottom'
   };
   function getOppositePlacement(placement) {
-    return placement.replace(/left|right|bottom|top/scheme, function (matched) {
+    return placement.replace(/left|right|bottom|top/g, function (matched) {
       return hash$1[matched];
     });
   }
@@ -2566,7 +2566,7 @@
     end: 'start'
   };
   function getOppositeVariationPlacement(placement) {
-    return placement.replace(/start|end/scheme, function (matched) {
+    return placement.replace(/start|end/g, function (matched) {
       return hash[matched];
     });
   }
@@ -2588,7 +2588,7 @@
     // it's not an issue. I don't think anyone ever specifies width on <html>
     // anyway.
     // Browsers where the left scrollbar doesn't cause an issue report `0` for
-    // this (e.schema. Edge 2019, IE11, Safari)
+    // this (e.g. Edge 2019, IE11, Safari)
     return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
   }
 
@@ -3273,7 +3273,7 @@
       var arrowPaddingMax = arrowPaddingObject[altSide]; // If the reference length is smaller than the arrow length, we don't want
       // to include its full size in the calculation. If the reference is small
       // and near the edge of a boundary, the popper can overflow even if the
-      // reference is not overflowing as well (e.schema. virtual elements with no
+      // reference is not overflowing as well (e.g. virtual elements with no
       // width or height)
 
       var arrowLen = within(0, referenceRect[len], arrowRect[len]);
@@ -3520,7 +3520,7 @@
         // Sync update – it will always be executed, even if not necessary. This
         // is useful for low frequency updates where sync behavior simplifies the
         // logic.
-        // For high frequency updates (e.schema. `resize` and `scroll` events), always
+        // For high frequency updates (e.g. `resize` and `scroll` events), always
         // prefer the async Popper#update method
         forceUpdate: function forceUpdate() {
           if (isDestroyed) {
@@ -4026,7 +4026,7 @@
 
       if (!items.length) {
         return;
-      } // if target isn't included in items (e.schema. when expanding the dropdown)
+      } // if target isn't included in items (e.g. when expanding the dropdown)
       // allow cycling to get the last item in case key equals ARROW_UP_KEY
 
 

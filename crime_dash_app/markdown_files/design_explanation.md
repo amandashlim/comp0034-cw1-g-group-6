@@ -164,15 +164,15 @@ However, any further discussion of the app's deployment is beyond the scope of t
 
 ### 3. Visualisation 1: The Map
 
-[Visualisation 1: Link to design explanation and evaluation](../markdown_files/visualisation_1.md)
+[Visualisation 1: Link to design explanation and evaluation](visualisation_1.md)
 
 ### 4. Visualisation 2: The Histogram
 
-[Visualisation 2: Link to design explanation and evaluation](../markdown_files/visualisation_2.md)
+[Visualisation 2: Link to design explanation and evaluation](visualisation_2.md)
 
 ### 5. Visualisation 3: The Line Chart
 
-[Visualisation 3: Link to design explanation and evaluation](../markdown_files/visualisation_3.md)
+[Visualisation 3: Link to design explanation and evaluation](visualisation_3.md)
 
 ### 6. Testing the Dash App
 

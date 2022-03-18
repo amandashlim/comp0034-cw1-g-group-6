@@ -1,7 +1,7 @@
 import time
 from selenium.webdriver.common.keys import Keys
-from dash.testing.application_runners import import_app
 from crime_dash_app import visualization as v
+
 v = v.all()
 
 # General App tests
