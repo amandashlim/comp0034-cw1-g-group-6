@@ -8,5 +8,19 @@
       <jdbc-url>jdbc:sqlite:C:\Users\King\PycharmProjects\comp0034-cw1-g-group-6\crime_flask_app\lab_example.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="schema" uuid="03720fe2-ed40-4aa1-a899-89cf8416fd04">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/crime_flask_app/blog/schema</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="database_blog" uuid="6372877e-4c3b-40bd-9a9f-162e9faca8e6">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\King\PycharmProjects\comp0034-cw1-g-group-6\crime_flask_app\blog\database_blog.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
