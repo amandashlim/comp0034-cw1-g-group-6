@@ -52,7 +52,7 @@ Readme
 Testing
 - Include automated tests for your web application.
 - Create a test directory in your project and save your tests to this directory.
-- Create unit tests (e.schema. pytest, unittest, Flask-Testing), integration tests (e.schema. Selenium webdriver) or a combination of the two.
+- Create unit tests (e.g. pytest, unittest, Flask-Testing), integration tests (e.g. Selenium webdriver) or a combination of the two.
 - You do not need to test the Dash app functionality unless you wish to.
 - Consider the extent to which the tests cover the web application code.
 - Consider the quality of the tests (naming convention, appropriate use of assertions).
@@ -61,4 +61,4 @@ Testing
 Testing can be extended by:
 •	Use of continuous integration such as GitHub Actions workflow
 •	Use of fixtures, particularly where these go beyond the fixtures provided in the course materials
-•	Increasing the test coverage, or the number of tests e.schema. by considering edge cases and error conditions
+•	Increasing the test coverage, or the number of tests e.g. by considering edge cases and error conditions

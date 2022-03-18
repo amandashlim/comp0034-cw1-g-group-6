@@ -1,3 +1,4 @@
+# Routes for profile, login, logout
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from sqlalchemy.exc import IntegrityError
 

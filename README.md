@@ -3,9 +3,9 @@
 ### Crime Rate in London dataset
 
 
-GitHub Link to Repo:[https://github.com/ucl-comp0035/comp0034-cw1-schema-group-6](https://github.com/ucl-comp0035/comp0034-cw1-g-group-6)
+GitHub Link to Repo:[https://github.com/ucl-comp0035/comp0034-cw1-g-group-6](https://github.com/ucl-comp0035/comp0034-cw1-g-group-6)
 
-Link to App Design Explanation: [design_explanation.md](crime_flask_app/crime_dash_app/markdown_files/design_explanation.md)
+Link to App Design Explanation: [design_explanation.md](crime_dash_app/markdown_files/design_explanation.md)
 
 #
 #### Note about requirements.txt:
