@@ -561,6 +561,12 @@ progress {
   content: "— ";
 }
 
+.logo-image{
+  width: 100px;
+  height: 50px;
+  overflow: hidden
+}
+
 .img-fluid {
   max-width: 100%;
   height: auto;

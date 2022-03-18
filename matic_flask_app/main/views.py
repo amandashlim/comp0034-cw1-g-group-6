@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from matic_flask_app.models import Post
+from matic_flask_app.models import Post, User
 from matic_flask_app import db
 
 views = Blueprint("views",__name__)
@@ -10,6 +10,22 @@ views = Blueprint("views",__name__)
 def home():
     return render_template("home.html", user=current_user)
 
+@views.route("/user")
+@login_required
+def user():
+    return render_template("user.html",user=current_user)
+
+@views.route("/posts/<username>")
+@login_required
+def user_posts(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        flash('No user with that username exists.', category='error')
+        return redirect(url_for('views.home'))
+
+    posts = Post.query.filter_by(author=user.id).all()
+    return render_template("user_posts.html", user=current_user, posts=posts, username=username)
 
 @views.route("/blog")
 @login_required
@@ -30,7 +46,7 @@ def create_post():
             db.session.add(post)
             db.session.commit()
             flash("Post Created",category='success')
-            return redirect(url_for(views.home))
+
 
     return render_template("create_post.html", user=current_user)
 
