@@ -1,19 +1,22 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask
 from flask_login import login_required, current_user
 from matic_flask_app.models import Post, User
 from matic_flask_app import db
 
 views = Blueprint("views",__name__)
 
+
 @views.route("/")
 @views.route("/home")
 def home():
-    return render_template("home.html", user=current_user)
+    posts = Post.query.filter_by(author=current_user.id)
+    return render_template("home.html", user=current_user, posts=posts)
 
-@views.route("/user")
+@views.route("/<username>")
 @login_required
-def user():
-    return render_template("user.html",user=current_user)
+def user(username):
+    posts = Post.query.all()
+    return render_template("user.html",user=current_user, posts=posts, username=username)
 
 @views.route("/posts/<username>")
 @login_required
@@ -53,6 +56,7 @@ def create_post():
 @views.route("/dashboard")
 @login_required
 def dashboard():
-    return render_template("dashboard.html", user=current_user)
+    posts = Post.query.all()
+    return render_template("dashboard.html", user=current_user, posts = posts)
 
 

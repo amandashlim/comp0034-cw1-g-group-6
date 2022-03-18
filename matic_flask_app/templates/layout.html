@@ -42,9 +42,9 @@
         <ul class="navbar-nav ms-auto">
             {% if user.is_authenticated %}
         <li class="nav-item active">
-            <a class="nav-item nav-link" href="/user" style = "color:#ffffff" >My Account</a></li>
+            <a class="nav-item nav-link" href="/{{user.username}}" style = "color:#ffffff" >My Account</a></li>
             <li class="nav-item active">
-            <a class="nav-item nav-link" href="#" style = "color:#ffffff" >My Posts</a></li>
+            <a class="nav-item nav-link" href="/posts/{{user.username}}" style = "color:#ffffff" >My Posts</a></li>
                 <li class="nav-item active">
             <a class="nav-item nav-link" href="/logout" style = "color:#ffffff" >Logout</a></li>
             </li>
