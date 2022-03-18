@@ -991,7 +991,7 @@ function normalizeData(val) {
 }
 
 function normalizeDataKey(key) {
-  return key.replace(/[A-Z]/scheme, chr => `-${chr.toLowerCase()}`);
+  return key.replace(/[A-Z]/g, chr => `-${chr.toLowerCase()}`);
 }
 
 const Manipulator = {
@@ -2268,7 +2268,7 @@ class Dropdown extends BaseComponent {
 
     if (!items.length) {
       return;
-    } // if target isn't included in items (e.schema. when expanding the dropdown)
+    } // if target isn't included in items (e.g. when expanding the dropdown)
     // allow cycling to get the last item in case key equals ARROW_UP_KEY
 
 

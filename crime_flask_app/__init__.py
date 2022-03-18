@@ -50,7 +50,6 @@ def create_app(config_class_name):
 
     with app.app_context():
         from crime_flask_app.models import User
-        from crime_flask_app.models import Blog
         db.create_all()
 
     from crime_flask_app.main.route import main_bp
@@ -58,8 +57,5 @@ def create_app(config_class_name):
 
     from crime_flask_app.auth.route import auth_bp
     app.register_blueprint(auth_bp)
-
-    from crime_flask_app.blog.route import blog_bp
-    app.register_blueprint(blog_bp)
 
     return app
