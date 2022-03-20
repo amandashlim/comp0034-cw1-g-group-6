@@ -67,9 +67,3 @@ def sign_up():
 def logout():
     logout_user()
     return redirect(url_for("views.home"))
-
-# write this after
-
-@auth.route("/profile")
-def profile():
-    return "profile"
