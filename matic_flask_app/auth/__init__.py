@@ -17,3 +17,8 @@ def create_app():
 
     from .auth import main as main_blueprint
     app.register_blueprint(main_blueprint)
+
+    return app
+
+app = create_app()
+

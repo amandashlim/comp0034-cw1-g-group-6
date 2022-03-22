@@ -1,12 +1,32 @@
-{% extends 'layout.html' %}
-{% from "_formhelpers.html" import render_field %}
-{% block content %}
 
-    <form method=post action="{{ url_for('auth.login') }}">
-        {{ form.csrf_token }}
-        {{ render_field(form.email, class="form-control") }}
-        {{ render_field(form.password, class="form-control") }}
-        {{ render_field(form.remember, class="form-check-input") }}
-    <p><button type="submit" class="btn btn-primary">Login</button></p>
-    </form>
-{% endblock %}
+<div class = "column is-5 offset is-half">
+    <h1 class = "title">User Login</h1>
+    <div class = "box">
+        <form method = "POST" action = "/login">
+            <div class="field">
+                <div class="control">
+                    <h4 class = "text">Please enter your information below to login to your account:</h4>
+                    <input class="input is-large" type="email" name="email" placeholder="Email Address" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox" name="remember">
+                    Remember me
+                </label>
+            </div>
+            <button type = "submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
