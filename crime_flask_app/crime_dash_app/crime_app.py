@@ -8,7 +8,7 @@ import dash_bootstrap_components as dbc
 from dash import dcc, Output, Input
 from dash import html
 from crime_dash_app.visualization import all
-
+from flask_login import login_required
 
 # Define list of data sources
 v = all()
@@ -28,7 +28,7 @@ for i in range(0, len(v.date_list)):
 
 selections = set()
 def init_dashboard(flask_app):
-    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server=flask_app)
+    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server=flask_app, url_base_pathname="/dashboard/")
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
     app.layout = html.Div(className="web_app", children=[
@@ -144,6 +144,13 @@ def init_dashboard(flask_app):
     ])
 ])
     init_callback(app)
+
+    for view_function in app.server.view_functions:
+        if view_function.startswith(app.config.url_base_pathname):
+            app.server.view_functions[view_function] = login_required(app.server.view_functions[view_function])
+
+    app.layout = html.Div(id='dash-container')
+
     return app.server
 
 def init_callback(app):

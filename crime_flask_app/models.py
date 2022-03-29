@@ -1,4 +1,4 @@
-from matic_flask_app import db
+from crime_flask_app import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 

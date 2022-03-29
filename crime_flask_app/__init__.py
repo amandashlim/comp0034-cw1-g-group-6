@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
-from flask_login import LoginManager
+from flask_login import LoginManager, login_required
+import dash
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -10,18 +11,22 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "test"
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+
     db.init_app(app)
 
-    from matic_flask_app.main.views import views
-    from matic_flask_app.auth.auth import auth
+    from crime_flask_app.main.views import views
+    from crime_flask_app.auth.auth import auth
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from matic_flask_app.models import User, Post
+    from crime_flask_app.models import User, Post
 
     create_database(app)
 
+    from crime_flask_app.crime_dash_app import crime_app
+
+    crime_app.init_dashboard(app)
 
     login_manager = LoginManager()
     login_manager.login_view = "auth.login"
@@ -34,5 +39,5 @@ def create_app():
     return app
 
 def create_database(app):
-    if not path.exists("matic_flask_app/" + DB_NAME):
+    if not path.exists("crime_flask_app/" + DB_NAME):
         db.create_all(app=app)
