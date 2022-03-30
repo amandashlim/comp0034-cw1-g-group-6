@@ -1,4 +1,4 @@
-from matic_flask_app import create_app
+from crime_flask_app import create_app
 
 m_app = create_app()
 

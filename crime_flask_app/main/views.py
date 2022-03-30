@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask
 from flask_login import login_required, current_user
-from matic_flask_app.models import Post, User
-from matic_flask_app import db
+from crime_flask_app.models import Post, User
+from crime_flask_app import db
 
 views = Blueprint("views",__name__)
 
@@ -53,7 +53,7 @@ def create_post():
 
     return render_template("create_post.html", user=current_user)
 
-@views.route("/dashboard")
+@views.route("/dash")
 @login_required
 def dashboard():
     posts = Post.query.all()
