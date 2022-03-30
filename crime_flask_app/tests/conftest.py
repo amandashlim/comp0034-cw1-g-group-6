@@ -13,5 +13,8 @@ def user_details():
     }
     yield user_details
 
-@pytest.fixtures(scope = 'module')
-def test_user():
+
+
+
+
+
