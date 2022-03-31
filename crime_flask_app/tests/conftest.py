@@ -13,6 +13,7 @@ def user_details():
     }
     yield user_details
 
+def test_user():
 
 
 

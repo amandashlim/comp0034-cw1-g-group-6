@@ -7,3 +7,9 @@ def test_new_user():
     assert user.password == 'police1'
     assert user.username == 'johns'
 
+#def test_home_page():
+
+def test_request_example(client):
+    response = client.get("/login")
+    assert b"<h2>Hello, World!</h2>" in response.data
+
