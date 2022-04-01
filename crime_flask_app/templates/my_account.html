@@ -1,20 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
-<!-- {{user.username}}-->
-<br/>
-<!--Big header of the page -->
-<h2>Welcome, {{user.username}}</h2>
+<div class="card">
+    <!-- Small title at the top of the card -->
+    <div class="card-header">
+        My Account
+    </div>
+    <div class="card-body">
+        <!-- Big title of the card -->
+        <h5 class="card-title">Welcome, {{user.username}}</h5>
+        <!-- Supporting text -->
+        <p class="card-text">
+            <!--User information -->
+            <!--add profile pic here -->
+            <strong>User ID: </strong>{{user.id}}<br/>
+            <strong>Email: </strong>{{user.email}}<br/>
+            <strong>Username: </strong>{{user.username}}<br/>
+            <strong>Date Joined: </strong>{{user.date_created}}<br/>
+        </p>
 
-<!--User information -->
-<strong>User ID: </strong>{{user.id}}<br/>
-<strong>Email: </strong>{{user.email}}<br/>
-<strong>Username: </strong>{{user.username}}<br/>
-<strong>Date Joined: </strong>{{user.date_created}}<br/>
+        <!-- Logout button -->
+        <a href="{{ url_for('auth.logout')}}" class="btn-secondary">Logout</a>
+    </div>
+</div>
 
-<!--add profile pic also -->
-
-<!--Logout button -->
-<a href="{{ url_for('auth.logout')}}">Logout</a>
 <br/>
 <br/>
 
