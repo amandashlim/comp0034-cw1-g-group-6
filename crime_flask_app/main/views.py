@@ -9,7 +9,10 @@ views = Blueprint("views",__name__)
 @views.route("/")
 @views.route("/home")
 def home():
-    posts = Post.query.filter_by(author=current_user.id)
+    if current_user.is_authenticated:
+        posts = Post.query.filter_by(author=current_user.id)
+    else:
+        posts = None
     return render_template("home.html", user=current_user, posts=posts)
 
 @views.route("/<username>")
