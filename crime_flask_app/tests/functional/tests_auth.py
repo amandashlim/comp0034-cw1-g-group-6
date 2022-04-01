@@ -1,0 +1,1 @@
+from crime_flask_app import create_app
