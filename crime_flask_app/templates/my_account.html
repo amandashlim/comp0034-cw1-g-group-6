@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- {{user.username}}-->
+<br/>
+<!--Big header of the page -->
+<h2>Welcome, {{user.username}}</h2>
+
+<!--User information -->
+<strong>User ID: </strong><br/>
+<strong>Email: </strong><br/>
+<strong>Username: </strong><br/>
+<strong>Date User Created: </strong><br/>
+<!--add profile pic also -->
+
+<!--Logout button -->
+<a href="{{ url_for('auth.logout')}}">Logout</a>
+<br/>
+<br/>
+
+
+{% endblock %}

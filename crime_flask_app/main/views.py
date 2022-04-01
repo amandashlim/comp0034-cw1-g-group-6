@@ -19,7 +19,7 @@ def home():
 @login_required
 def user(username):
     posts = Post.query.all()
-    return render_template("user.html",user=current_user, posts=posts, username=username)
+    return render_template("my_account.html",user=current_user, posts=posts, username=username)
 
 @views.route("/posts/<username>")
 @login_required
