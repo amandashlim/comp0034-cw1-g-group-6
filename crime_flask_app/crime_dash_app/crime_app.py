@@ -9,8 +9,8 @@ from dash import dcc, Output, Input
 from dash import html
 from crime_dash_app.visualization import all
 from flask_login import login_required
+from crime_flask_app.templates.dash_layout import html_layout
 
-# Define list of data sources
 v = all()
 data = {"Raw": v.df,
         "Population - 2020 GLA Estimate": v.pop2020_df,
@@ -18,34 +18,40 @@ data = {"Raw": v.df,
         "Workday Population": v.workday_df,
         "Total Daytime Population": v.daytime_df}
 
-# Specify stylesheets
-external_stylesheets = [dbc.themes.BOOTSTRAP]
-
 # Define date slider items
 date_slider_dict = {}
 for i in range(0, len(v.date_list)):
     date_slider_dict[i] = {"label": v.date_list[i], "style": {"transform": "rotate(45deg)"}}
 
 selections = set()
+
+# Define list of data sources
 def init_dashboard(flask_app):
-    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server=flask_app, url_base_pathname="/dashboard/")
+
+    v = all()
+    data = {"Raw": v.df,
+        "Population - 2020 GLA Estimate": v.pop2020_df,
+        "Population - 2011 Census": v.pop2011_df,
+        "Workday Population": v.workday_df,
+        "Total Daytime Population": v.daytime_df}
+
+# Define date slider items
+    date_slider_dict = {}
+    for i in range(0, len(v.date_list)):
+        date_slider_dict[i] = {"label": v.date_list[i], "style": {"transform": "rotate(45deg)"}}
+
+    selections = set()
+
+    app = dash.Dash(__name__,
+                    external_stylesheets = [dbc.themes.BOOTSTRAP],
+                    server=flask_app,
+                    url_base_pathname="/dashboard/")
 
 # assume you have a "long-form" data frame see https://plotly.com/python/px-arguments/ for more options
-    app.layout = html.Div(className="web_app", children=[
-    dcc.Store(id="selections"),
-    # Top row
-    dbc.Row(className="header", children=[
-        # Met Logo
-        dbc.Col(html.Img(srcSet=app.get_asset_url('met_logo.jpeg'),
-                         style={"height": "5vh"}),
-                width="auto"),  # The width changes
-        # Title of the web crime_dash_app
-        dbc.Col(html.H2("Crime in London Overview Dashboard", id="main_header"), width=8)
-    ],
-            align="center"  # Vertically center the elements within this row
-            ),
-    # Everything else row (main web crime_dash_app content)
-    dbc.Row(className="main_content", children=[
+    app.index_string = html_layout
+    app.layout = html.Div(children=[
+        dcc.Store(id="selections"),
+        dbc.Row(className="main_content", children=[
 
         # Display Settings Column
         dbc.Col(className="container", id="display_settings", children=[
@@ -141,15 +147,13 @@ def init_dashboard(flask_app):
                 # html.H4("Test Line")
             ])],
                 width=3)
-    ])
-])
+    ])],
+        id = "dash-container")
     init_callback(app)
 
     for view_function in app.server.view_functions:
         if view_function.startswith(app.config.url_base_pathname):
             app.server.view_functions[view_function] = login_required(app.server.view_functions[view_function])
-
-    app.layout = html.Div(id='dash-container')
 
     return app.server
 

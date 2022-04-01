@@ -1,25 +1,28 @@
 TODO:
-- Main page: - Joe and Matic
+- Main page: - Joe
     - Who is the app meant for
     - Brief explanation of the app
     - Embed youtube video
     - Prompt to Register and Login page
 
-- Login page - Francie and Amanda
-- Register page - Francie and Amanda
+- Login page
+- Register page
+After Login or register open dashboard
+When logged in the user can see the main page, the dashboard, the forum page, and the edit user page
 
-AFTER LOGIN OR REGISTER
+- Dashboard (just import): - Matic
+    - Hidden if not logged in
 
-- Dashboard (just import) - Joe and Matic
-
-- User page (edit account): - Francie and Amanda
+- User page (edit account):
+-   Hidden if not logged in
     - Change password
     - Change email
     - Change name
     - Upload picture
     - Change picture
 
-- Forum (post posts): - Joe and Matic
+- Forum (post posts): - Matic
+-   Hidden if not logged in
     - Create a new post
     - Edit current post
     - Comment on a post
@@ -28,37 +31,3 @@ AFTER LOGIN OR REGISTER
     - Delete post
     - Tagging (like reddit (to filter))
     - Filter posts (by tags)
-
-- Testing - Francie & Amanda
-
-STUFF WE NEED
-Flask App
-•	HTML, CSS (Bootstrap or other third party library) and Jinja2
-•	Python using the Flask micro-framework
-•	Interaction with a SQL database (SQLite is preferred though MySQL or Postgresql are accepted)
-•	Has a responsive design. Responsive design means that it displays reasonably on devices of different dimensions such as mobile phone and laptop computer. This can be achieved using a 3rd party library such as Bootstrap.
-•	Allows your Dash app to be launched as a route in the web app.
-•	Provides signup/login/logout and restriction of some content to logged in users.
-•	Captures and stores data entered by users of the app.
-•	Uses and/or displays data stored in a SQLite database.
-•	TWO additional features: user profiles and forums
-- Also see the rubric (blueprints, security concerns, etc.)
-
-Readme
-•	URL to your GitHub repository
-•	URL to your video demo (optional)
-•	Any set-up instructions required to be completed to run your app
-
-Testing
-- Include automated tests for your web application.
-- Create a test directory in your project and save your tests to this directory.
-- Create unit tests (e.schema. pytest, unittest, Flask-Testing), integration tests (e.schema. Selenium webdriver) or a combination of the two.
-- You do not need to test the Dash app functionality unless you wish to.
-- Consider the extent to which the tests cover the web application code.
-- Consider the quality of the tests (naming convention, appropriate use of assertions).
-- Test assertions should be written to pass, that is, if a test fails it should indicate a problem has been found with the code. Do not write tests to purposely fail.
-
-Testing can be extended by:
-•	Use of continuous integration such as GitHub Actions workflow
-•	Use of fixtures, particularly where these go beyond the fixtures provided in the course materials
-•	Increasing the test coverage, or the number of tests e.schema. by considering edge cases and error conditions
