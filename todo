@@ -13,13 +13,17 @@ When logged in the user can see the main page, the dashboard, the forum page, an
 - Dashboard (just import): - Matic
     - Hidden if not logged in
 
-- User page (edit account):
+- User page (edit account): - Amanda
 -   Hidden if not logged in
     - Change password
     - Change email
     - Change name
     - Upload picture
     - Change picture
+    - Delete account
+
+Other:
+- use userform class on the login page?
 
 - Forum (post posts): - Matic
 -   Hidden if not logged in

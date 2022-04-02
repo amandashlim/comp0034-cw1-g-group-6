@@ -15,11 +15,16 @@ def home():
         posts = None
     return render_template("home.html", user=current_user, posts=posts)
 
+# Route for the my account page
 @views.route("/<username>")
 @login_required
 def user(username):
     posts = Post.query.all()
     return render_template("my_account.html",user=current_user, posts=posts, username=username)
+
+# Route for update user info page
+@views.route('/update/<int:id', methods=['GET', 'POST'])
+
 
 @views.route("/posts/<username>")
 @login_required

@@ -22,5 +22,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\King\PycharmProjects\comp0034-cw1-g-group-6\crime_flask_app\blog\database_blog.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="database" uuid="6d6c26b9-49a3-42b4-9b40-731165996380">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/crime_flask_app/database.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
