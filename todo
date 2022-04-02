@@ -22,8 +22,10 @@ When logged in the user can see the main page, the dashboard, the forum page, an
     - Change picture
     - Delete account
 
-Other:
+Questions from Amanda:
 - use userform class on the login page?
+- Do we want to add users this way: https://www.youtube.com/watch?v=Q2QmST-cSwc&list=PLCC34OHNcOtolz2Vd9ZSeSXWc8Bq23yEz&index=9&ab_channel=Codemy.com
+- admin
 
 - Forum (post posts): - Matic
 -   Hidden if not logged in

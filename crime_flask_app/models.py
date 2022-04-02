@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     posts = db.relationship("Post", backref='user',passive_deletes = True)
     #photo = db.Column(db.String)
 
-# Form class to be able to add users to the database
+# Form class to be able to add/update users to the database
 class UserForm(FlaskForm):
     # TODO: Change this to an email validator
     email = StringField("Email", validators=[DataRequired()])

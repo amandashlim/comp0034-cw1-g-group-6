@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask
 from flask_login import login_required, current_user
-from crime_flask_app.models import Post, User
+from crime_flask_app.models import Post, User, UserForm
 from crime_flask_app import db
 
 views = Blueprint("views",__name__)
@@ -22,9 +22,36 @@ def user(username):
     posts = Post.query.all()
     return render_template("my_account.html",user=current_user, posts=posts, username=username)
 
-# Route for update user info page
-@views.route('/update/<int:id', methods=['GET', 'POST'])
+# Update Database Record
+@views.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    '''Updates the record for a user. ID refers to the user id'''
+    form = UserForm()
+    # Define which user to update
+    id_to_update = User.query.get_or_404(id)
 
+    # If the user is filling out the form (aka. if they're updating the profile)
+    if request.method == "POST":
+        # These come from the UserForm class
+        id_to_update.username = request.form.username
+        id_to_update.email = request.form.email
+        try:
+            db.session.commit()
+            flash("User Updated Successfully!")
+            return render_template("update.html",
+                                   form=form,
+                                   id_to_update = id_to_update
+                                   )
+        except:
+            flash("Looks like something went wrong... try again!")
+            return render_template("update.html",
+                                   form=form,
+                                   id_to_update=id_to_update)
+    # If they are not posting
+    else:
+        return render_template("update.html",
+                               form=form,
+                               id_to_update=id_to_update)
 
 @views.route("/posts/<username>")
 @login_required
