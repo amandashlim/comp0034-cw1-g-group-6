@@ -1,5 +1,4 @@
 import pytest
-from crime_flask_app import create_app
 from crime_flask_app.models import User
 from crime_flask_app import create_app, db
 
@@ -8,7 +7,6 @@ def app():
     app = create_app()
     app.config.update({
         "TESTING": True,
-
     })
 
     yield app
