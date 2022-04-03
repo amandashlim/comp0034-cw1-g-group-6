@@ -1,3 +1,4 @@
+<!--Navbar stuff-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,12 +47,13 @@
             <li class="nav-item active">
             <a class="nav-item nav-link" href="/posts/{{user.username}}" style = "color:#ffffff" >My Posts</a></li>
                 <li class="nav-item active">
-            <a class="nav-item nav-link" href="/logout" style = "color:#ffffff" >Logout</a></li>
+            <a href="/logout">
+                <button type="button" class="btn btn-sm btn-secondary">Logout</button></a></li>
             </li>
         {% else%}
             <li class="nav-item">
             <a href="/login">
-                <button type="button" class="btn btn-sm btn-secondary">Login</button></a>
+                <button type="button" class="btn btn-sm btn-secondary">Login</button></a> <!-- Button formatting-->
             <a href="/signup">
                 <button type="button" class="btn btn-sm btn-secondary">Sign Up</button></a>
         {%endif%}
