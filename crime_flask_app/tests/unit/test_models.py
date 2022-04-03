@@ -10,6 +10,6 @@ def test_new_user():
 #def test_home_page():
 
 def test_request_example(client):
-    response = client.get("/login")
-    assert b"<h2>Hello, World!</h2>" in response.data
+    response = client.get("/home")
+    assert b"<h1>Visualisations Design Explanations</h1>" in response.data
 

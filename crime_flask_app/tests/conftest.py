@@ -1,9 +1,23 @@
 import pytest
+from crime_flask_app import create_app
 from crime_flask_app.models import User
 from crime_flask_app import create_app, db
 
+@pytest.fixture()
+def app():
+    app = create_app()
+    app.config.update({
+        "TESTING": True,
 
-@pytest.fixtures(scope = 'module')
+    })
+
+    yield app
+
+@pytest.fixture()
+def client(app):
+    return app.test_client()
+
+@pytest.fixture(scope = 'module')
 def user_details():
     user_details = {
         'first_name': 'Amelie',
@@ -13,7 +27,6 @@ def user_details():
     }
     yield user_details
 
-def test_user():
 
 
 
