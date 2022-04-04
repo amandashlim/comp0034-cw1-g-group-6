@@ -50,7 +50,7 @@ def test_heading_homepage(client):
     response = client.get("/home")
     assert b'Visualisations Design Explanations' in response.data
 
-
+'''
 def test_user_login_success(user_details, test_client, app, db):
     """
     GIVEN a user with a valid username and password
@@ -61,7 +61,8 @@ def test_user_login_success(user_details, test_client, app, db):
     db.session.commit()
     #response = login(test_client, email=user_details.email, password=user_details.password)
     #assert response.status_code == 200
-
+'''
+'''
 def test_dashboard_navigation(client):
     """
     GIVEN a user is logged in
@@ -76,3 +77,4 @@ def test_dashboard_navigation(client):
     assert " <a href=\"/dashboard/\">logout</a>" in html
     assert " <a href=\"/dashboard/\">my_account</a>" in html
     assert " <a href=\"/dashboard/\">user_posts</a>" in html
+'''
