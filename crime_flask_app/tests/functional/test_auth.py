@@ -11,37 +11,6 @@ def login(client, email, password):
 def logout(client):
     return client.get('/logout', follow_redirects=True)
 
-def test_index_page_valid(test_client):
-    """
-    GIVEN a Flask application is running
-    WHEN the '/' home page is requested (HTTP GET request)
-    THEN a success response code (200) is received ()
-    """
-    response = test_client.get("/")
-    assert response.status_code == 200
-
-
-def test_no_login_page_valid(test_client, app_paths_no_login):
-    """
-    GIVEN a Flask application is running and user is not logged in
-    WHEN pages that dont require login are requested (HTTP GET request)
-    THEN a success response code (200) is received ()
-    """
-    for i in app_paths_no_login:
-        response = test_client.get(i)
-        assert response.status_code == 200
-
-
-def test_no_login_page_invalid(test_client, app_paths_login):
-    """
-    GIVEN a Flask application is running and user is not logged in
-    WHEN pages that require login are requested (HTTP GET request)
-    THEN a redirect response code (302) or permanent redirect response (308) is received ()
-    """
-    for i in app_paths_login:
-        response = test_client.get(i)
-        assert response.status_code in [302,308]
-
 
 def test_no_login_page_invalid(client, app_paths_login, app_paths_no_login):
     """
