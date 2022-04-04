@@ -1,0 +1,10 @@
+https://testdriven.io/blog/flask-pytest/
+https://github.com/nicholsons/comp0034_week9/blob/master/tests/functional/test_auth.py
+https://github.com/nicholsons/comp0034_week9/blob/master/activities/lab9.md
+https://gitlab.com/-/ide/project/patkennedy79/flask_user_management_example/tree/main/-/tests/conftest.py/
+https://www.patricksoftwareblog.com/unit-testing-a-flask-application/
+https://flask.palletsprojects.com/en/2.0.x/testing/
+https://flask.palletsprojects.com/en/2.1.x/testing/
+https://flask.palletsprojects.com/en/1.1.x/testing/
+https://codethechange.stanford.edu/guides/guide_flask_unit_testing.html
+https://www.youtube.com/watch?v=OcD52lXq0e8

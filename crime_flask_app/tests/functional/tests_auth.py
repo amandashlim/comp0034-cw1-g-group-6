@@ -11,21 +11,6 @@ def logout(client):
     return client.get('/logout', follow_redirects=True)
 
 
-def test_dashboard_navigation():
-    """
-    GIVEN a user is logged in
-    WHEN the user accesses the dashboard page
-    THEN the links to the login, blog, home, logout, my_account and user_posts should be in the navigation bar
-    """
-    access_dashboard = client.get("/dashboard")
-    html = access_dashboard.data.decode()
-    assert " <a href=\"/dashboard/\">login</a>" in html
-    assert " <a href=\"/dashboard/\">blog</a>" in html
-    assert " <a href=\"/dashboard/\">home</a>" in html
-    assert " <a href=\"/dashboard/\">logout</a>" in html
-    assert " <a href=\"/dashboard/\">my_account</a>" in html
-    assert " <a href=\"/dashboard/\">user_posts</a>" in html
-
 def test_login_redirect(client):
     """
     GIVEN a user with an account is on the home homepage
