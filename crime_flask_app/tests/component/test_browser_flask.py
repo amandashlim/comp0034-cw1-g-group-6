@@ -8,7 +8,7 @@ class TestMyAppBrowser:
         self.driver.get("http://127.0.0.1:5000/")
         assert self.driver.title == 'Home'
 
-    def test_signup_succeeds(self, user_data):
+    def test_signup_succeeds(self):
         """
         Test that a user can create an account using the signup form if all fields are filled out correctly,
         and that they are redirected to the index page.
