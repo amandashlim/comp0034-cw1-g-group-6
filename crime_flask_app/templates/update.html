@@ -1,10 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<!--If the user is trying to access editing their own profile -->
-{% if id == user.id %}
-	<h1>Update User...</h1>
-	<br/>
+<h1>Update User...</h1>
+<br/>
 <div class="shadow p-3 mb-5 bg-body rounded">
 	<form action="/update/{{ id_to_update.id }}" method="POST">
 		{{ form.hidden_tag() }}
@@ -23,24 +21,8 @@
 		
 		{{ form.submit(class="btn btn-secondary") }}
 
-		<a href="{{ url_for('delete', id=id)}}" class="btn btn-danger">Delete</a>
-
-
 	</form>
 </div>
 <br/><br/><br/>
-
-<!--If the user is trying to access editing another person's profile -->
-{% else %}
- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-	  Sorry! You Can't Edit This User...
-	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-
-	<h2>Access Denied!</h2>
-	<p>Sorry, you cannot access this user profile...</p>
-
-{% endif %}
-
 
 {% endblock %}
