@@ -16,9 +16,9 @@ class TestMyAppBrowser:
         """
         #Check if user is loged in
         # Go to the home page
-        self.driver.get('http://127.0.0.1:5000/')
-        if current_user.is_authenticated:
-            self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/home')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
@@ -52,10 +52,9 @@ class TestMyAppBrowser:
         and that they are redirected to the index page.
         """
         # Go to the home page
-        self.driver.get('http://127.0.0.1:5000/')
-
-        if current_user.is_authenticated:
-            self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/home')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
@@ -86,10 +85,9 @@ class TestMyAppBrowser:
         and that they are redirected to the index page.
         """
         # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/')
-
-        if current_user.is_authenticated:
-            self.driver.get('http://127.0.0.1:5000/logout')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
@@ -124,10 +122,9 @@ class TestMyAppBrowser:
         and that they are redirected to the index page.
         """
         # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/')
-
-        if current_user.is_authenticated:
-            self.driver.get('http://127.0.0.1:5000/logout')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
