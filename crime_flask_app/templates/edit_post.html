@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{%block title%}
+<title>Edit Post</title>
+{%endblock%}
+
+{% block content%}
+<h1 align="center">Edit Post</h1>
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		{{ form.title.label(class="form-label") }}
+		{{ form.title(class="form-control") }}
+		<br/>
+
+		{{ form.text.label(class="form-label") }}
+		{{ form.text(class="form-control", rows="10") }}
+		<br/>
+
+		<div align="center">
+    <a href="blog_posts.html">
+    <button type="submit" class="btn btn-lg btn-primary">Submit</button></a>
+  </div>
+
+	</form>
+</div>
+<div align="center">
+  <a href="/blog"
+    ><button type="button" class="btn btn-lg btn-secondary">Back</button></a>
+</div>
+{%endblock%}

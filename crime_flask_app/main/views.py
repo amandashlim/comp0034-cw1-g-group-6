@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask, jsonify
 from flask_login import login_required, current_user
-from crime_flask_app.models import Post, User, UserForm
+from crime_flask_app.models import Post, User, UserForm, PostForm, Comment, Like, Dislike, Like_Comment
 from crime_flask_app import db
 
-views = Blueprint("views",__name__)
+views = Blueprint("views", __name__)
 
 
 @views.route("/")
@@ -15,12 +15,14 @@ def home():
         posts = None
     return render_template("home.html", user=current_user, posts=posts)
 
+
 # Route for the my account page
 @views.route("/<username>")
 @login_required
 def user(username):
     posts = Post.query.all()
-    return render_template("my_account.html",user=current_user, posts=posts, username=username)
+    return render_template("my_account.html", user=current_user, posts=posts, username=username)
+
 
 # Update Database Record
 @views.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -42,7 +44,7 @@ def update(id):
             flash("User Updated Successfully!")
             return render_template("update.html",
                                    form=form,
-                                   id_to_update = id_to_update
+                                   id_to_update=id_to_update
                                    )
         except:
             flash("Looks like something went wrong... try again!")
@@ -55,6 +57,7 @@ def update(id):
                                form=form,
                                id_to_update=id_to_update)
 
+
 @views.route("/posts/<username>")
 @login_required
 def user_posts(username):
@@ -64,8 +67,9 @@ def user_posts(username):
         flash('No user with that username exists.', category='error')
         return redirect(url_for('views.home'))
 
-    posts = Post.query.filter_by(author=user.id).all()
+    posts = user.posts
     return render_template("user_posts.html", user=current_user, posts=posts, username=username)
+
 
 @views.route("/blog")
 @login_required
@@ -73,27 +77,132 @@ def blog():
     posts = Post.query.all()
     return render_template('blog_posts.html', user=current_user, posts=posts)
 
-@views.route("/create_post", methods=["GET","POST"])
+
+@views.route("/create_post", methods=["GET", "POST"])
 @login_required
 def create_post():
-    if request.method=="POST":
+    if request.method == "POST":
         text = request.form.get("text")
+        title = request.form.get("title")
 
         if not text:
-            flash("Please type in the post",category='error')
+            flash("Please type in the post", category='error')
         else:
-            post = Post(text=text, author=current_user.id)
+            post = Post(title=title, text=text, author=current_user.id)
             db.session.add(post)
             db.session.commit()
-            flash("Post Created",category='success')
-
+            flash("Post Created", category='success')
 
     return render_template("create_post.html", user=current_user)
 
-@views.route("/dash")
+
+@views.route("/delete-post/<id>")
 @login_required
-def dashboard():
-    posts = Post.query.all()
-    return render_template("dashboard.html", user=current_user, posts = posts)
+def delete_post(id):
+    post = Post.query.filter_by(id=id).first()
+
+    if not post:
+        flash("This post does not exist", category='error')
+    elif current_user.id != post.author:
+        flash("You do not have the permissions to delete this post", category='error')
+    else:
+        db.session.delete(post)
+        db.session.commit()
+        flash("Post successfully deleted", category='success')
+    return redirect(url_for('views.blog'))
 
 
+@views.route("/edit-post/<id>", methods=['GET', 'POST'])
+@login_required
+def edit_post(id):
+    post = Post.query.filter_by(id=id).first()
+    user = current_user
+    form = PostForm()
+    if not post:
+        flash("This post does not exist", category='error')
+    elif current_user.id != post.author:
+        flash("You do not have the permissions to delete this post", category='error')
+    else:
+        if form.validate_on_submit():
+            post.title  = form.title.data
+            post.text = form.text.data
+
+            db.session.add(post)
+            db.session.commit()
+            flash("Post successfully updated", category='success')
+            return redirect(url_for('views.blog'))
+        form.text.data = post.text
+        form.title.data = post.title
+        return render_template("edit_post.html", form=form, user=user)
+
+@views.route("/create-comment/<post_id>", methods=["POST"])
+@login_required
+def create_comment(post_id):
+    text = request.form.get("text")
+    if text is None:
+        flash("Please write a comment", category='error')
+    else:
+        post = Post.query.filter_by(id=post_id)
+        if post:
+            comment = Comment(text = text, author=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+            flash("Comment posted", category='success')
+    return redirect(url_for("views.blog"))
+
+@views.route("/like-post/<post_id>", methods=['GET'])
+@login_required
+def like(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    like = Like.query.filter_by(
+        author=current_user.id, post_id=post_id).first()
+
+    if not post:
+        flash("Post doesnt exist", category='error')
+    elif like:
+        db.session.delete(like)
+        db.session.commit()
+    else:
+        like = Like(author=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+
+    return redirect(url_for("views.blog"))
+
+@views.route("/dislike-post/<post_id>", methods=['GET'])
+@login_required
+def dislike(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    dislike = Dislike.query.filter_by(
+        author=current_user.id, post_id=post_id).first()
+
+    if not post:
+        flash("Post doesnt exist", category='error')
+    elif dislike:
+        db.session.delete(dislike)
+        db.session.commit()
+    else:
+        dislike = Dislike(author=current_user.id, post_id=post_id)
+        db.session.add(dislike)
+        db.session.commit()
+
+    return redirect(url_for("views.blog"))
+
+@views.route("/comment_like-post/<comment_id>", methods=['GET'])
+@login_required
+def comment_like(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+    like_comment = Like_Comment.query.filter_by(
+        author=current_user.id, comment_id=comment_id).first()
+
+    if not comment:
+        flash("Comment doesnt exist", category='error')
+    elif like_comment:
+        db.session.delete(like_comment)
+        db.session.commit()
+    else:
+        like_comment = Like_Comment(author=current_user.id, comment_id=comment_id)
+        db.session.add(like_comment)
+        db.session.commit()
+
+    return redirect(url_for("views.blog"))

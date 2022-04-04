@@ -44,7 +44,7 @@ def sign_up():
         elif username_exists:
             flash('Username is already in use.', category='error')
         elif password1 != password2:
-            flash('Password don\'t match!', category='error')
+            flash('Passwords don\'t match!', category='error')
         elif len(username) < 2:
             flash('Username is too short.', category='error')
         elif len(password1) < 6:
@@ -57,7 +57,7 @@ def sign_up():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            flash('User created!')
+            flash('User created!', category='success')
             return redirect(url_for('views.home'))
 
     return render_template("signup.html",user=current_user)
