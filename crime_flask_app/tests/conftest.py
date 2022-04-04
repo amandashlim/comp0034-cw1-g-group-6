@@ -72,6 +72,19 @@ def run_app(app):
     yield process
     process.terminate()
 
+
+@pytest.fixture()
+def sign_up_list():
+    credential_dict = {'email':["pepe1@gmail.com","povey.grovey@hotmail.com",
+                                "damn_crackers@ritz.salt","channel5newsbaby@awesome.yt",
+                                "bReXiT_wAs_gOoD@dumb.ville"],
+                       'username':["peperonicoli","pepe1","iTs_a_sLuR","5","BadKindOfBJ"],
+                       "password1":["123456","235346","cracker","AMURICA","BJ"],
+                       "password2":["123456","235346","saltine","AMURICA","BJ"],
+                       "error_messages":['Email is already in use.',"Username is already in use.",
+                                         "Passwords don\'t match!","Username is too short.",
+                                         "Password is too short."]}
+    yield credential_dict
 '''
 @pytest.fixture(scope='session')
 def db(app):
