@@ -13,6 +13,19 @@
       {%else%}
       <a>Author: {{post.user.username}}</a>
       {% endif %}
+      <div>
+        {{post.likes|length - post.dislikes|length}}
+        {% if user.id in post.likes|map(attribute="author")|list%}
+        <a href="/like-post/{{post.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
+        {% else%}
+        <a href="/like-post/{{post.id}}"><i class="fa-regular fa-thumbs-up"></i></a>
+        {%endif%}
+        {% if user.id in post.dislikes|map(attribute="author")|list%}
+        <a href="/dislike-post/{{post.id}}"><i class="fa-solid fa-thumbs-down"></i></a>
+        {% else%}
+        <a href="/dislike-post/{{post.id}}"><i class="fa-regular fa-thumbs-down"></i></a>
+        {%endif%}
+      </div>
       {% if user.id == post.author %}
       <div class="btn-group">
         <button
@@ -36,8 +49,84 @@
     </div>
     <div class="card-body">
       <div class="card-text">{{post.text}}</div>
+      <div class="card-footer text-muted">Created: {{post.date_created}}</div>
+      <br/>
+      <div>
+      {%if post.comments|length == 0%}
+        <small class="text-muted">No comments yet</small>
+        {%elif post.comments|length < 3%}
+        <div>
+        <div class ='card'>
+          <div class="card-body">
+            {%for comment in post.comments %}
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+              <a href="/posts/{{comment.user.username}}">{{comment.user.username}} said:</a>
+              {{comment.text}}
+                </div>
+              <div>
+                {{comment.comment_likes|length}}
+                {% if user.id in comment.comment_likes|map(attribute="author")|list%}
+                <a href="/comment_like-post/{{comment.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
+                {% else%}
+                <a href="/comment_like-post/{{comment.id}}"><i class="fa-regular fa-thumbs-up"></i></a>
+                {%endif%}
+                <small class="text-muted">{{comment.date_created}}</small>
+              </div>
+            </div>
+            {%endfor%}
+          </div>
+        </div>
+      </div>
+        {%elif post.comments|length >=3%}
+        <div>
+        <div class ='card'>
+          <div class="card-body">
+            {%for comment in post.comments[:3] %}
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+              <a href="/posts/{{comment.user.username}}">{{comment.user.username}} said:</a>
+              {{comment.text}}
+                </div>
+              <div>
+                <small class="text-muted">{{comment.date_created}}</small>
+              </div>
+            </div>
+            {%endfor%}
+          </div>
+        </div>
+          <div class="collapse" id="comments-{{post.id}}">
+        <div class ='card'>
+          <div class="card-body" id="comments-expanded-{{post.id}}">
+            {%for comment in post.comments[3:] %}
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+              <a href="/posts/{{comment.user.username}}">{{comment.user.username}} said:</a>
+              {{comment.text}}
+                </div>
+              <div>
+                <small class="text-muted">{{comment.date_created}}</small>
+              </div>
+            </div>
+            {%endfor%}
+          </div>
+        </div>
+      </div>
+
+
+      </div>
+        <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+          <small>View {{post.comments[3:]|length}} more comments</small>
+        </a>
+        {%endif%}
+
+      <form class="input-group mb-3" method="POST" action="/create-comment/{{post.id}}">
+        <input type="text" id="text" name="text" class="form-control" placeholder="Share your thoughts"/>
+        <button type="submit" class="btn btn-primary">Comment</button>
+
+      </form>
+        </div>
     </div>
-    <div class="card-footer text-muted">{{post.date_created}}</div>
   </div>
   {% endfor %}
 </div>

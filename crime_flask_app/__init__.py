@@ -20,7 +20,7 @@ def create_app():
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from crime_flask_app.models import User, Post
+    from crime_flask_app.models import User, Post, Comment, Like, Dislike, Like_Comment
 
     create_database(app)
 

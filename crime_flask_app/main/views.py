@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask, jsonify
 from flask_login import login_required, current_user
-from crime_flask_app.models import Post, User, UserForm, PostForm
+from crime_flask_app.models import Post, User, UserForm, PostForm, Comment, Like, Dislike, Like_Comment
 from crime_flask_app import db
 
 views = Blueprint("views", __name__)
@@ -133,9 +133,74 @@ def edit_post(id):
         form.title.data = post.title
         return render_template("edit_post.html", form=form, user=user)
 
-
-@views.route("/dash")
+@views.route("/create-comment/<post_id>", methods=["POST"])
 @login_required
-def dashboard():
-    posts = Post.query.all()
-    return render_template("dashboard.html", user=current_user, posts=posts)
+def create_comment(post_id):
+    text = request.form.get("text")
+    if text is None:
+        flash("Please write a comment", category='error')
+    else:
+        post = Post.query.filter_by(id=post_id)
+        if post:
+            comment = Comment(text = text, author=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+            flash("Comment posted", category='success')
+    return redirect(url_for("views.blog"))
+
+@views.route("/like-post/<post_id>", methods=['GET'])
+@login_required
+def like(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    like = Like.query.filter_by(
+        author=current_user.id, post_id=post_id).first()
+
+    if not post:
+        flash("Post doesnt exist", category='error')
+    elif like:
+        db.session.delete(like)
+        db.session.commit()
+    else:
+        like = Like(author=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+
+    return redirect(url_for("views.blog"))
+
+@views.route("/dislike-post/<post_id>", methods=['GET'])
+@login_required
+def dislike(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    dislike = Dislike.query.filter_by(
+        author=current_user.id, post_id=post_id).first()
+
+    if not post:
+        flash("Post doesnt exist", category='error')
+    elif dislike:
+        db.session.delete(dislike)
+        db.session.commit()
+    else:
+        dislike = Dislike(author=current_user.id, post_id=post_id)
+        db.session.add(dislike)
+        db.session.commit()
+
+    return redirect(url_for("views.blog"))
+
+@views.route("/comment_like-post/<comment_id>", methods=['GET'])
+@login_required
+def comment_like(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+    like_comment = Like_Comment.query.filter_by(
+        author=current_user.id, comment_id=comment_id).first()
+
+    if not comment:
+        flash("Comment doesnt exist", category='error')
+    elif like_comment:
+        db.session.delete(like_comment)
+        db.session.commit()
+    else:
+        like_comment = Like_Comment(author=current_user.id, comment_id=comment_id)
+        db.session.add(like_comment)
+        db.session.commit()
+
+    return redirect(url_for("views.blog"))
