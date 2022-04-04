@@ -2,6 +2,7 @@ import pytest
 from crime_flask_app.models import User
 from crime_flask_app import create_app, db
 
+
 @pytest.fixture()
 def app():
     app = create_app()
@@ -11,9 +12,11 @@ def app():
 
     yield app
 
+
 @pytest.fixture()
 def client(app):
     return app.test_client()
+
 
 @pytest.fixture(scope = 'module')
 def user_details():
@@ -27,6 +30,16 @@ def user_details():
 
 
 
+'''
+@pytest.fixture
+def client():
+    db_fd, flaskr.app.config['DATABASE'] = tempfile.mkstemp()
+    flaskr.app.config['TESTING'] = True
 
+    with flaskr.app.test_client() as client:
+        with flaskr.app.app_context():
+            flaskr.init_db()
+        yield client
+'''
 
 
