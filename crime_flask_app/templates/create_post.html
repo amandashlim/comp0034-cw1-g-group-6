@@ -1,17 +1,26 @@
 {% extends "layout.html" %}
+{%block title%}
+<title>Create Post</title>
+{%endblock%}
+
 {% block content%}
 <h1 align="center">Make a Post</h1>
 
 <form method="POST">
+  <a>Post Title</a>
+  <textarea name="title" id="title" class="form-control"></textarea>
+  <br/>
+  <a>Post Content</a>
   <textarea name="text" id="text" class="form-control"></textarea>
   <br />
   <div align="center">
-    <button type="submit" class="btn btn-lg btn-primary">Post</button>
+    <a href="blog_posts.html">
+    <button type="submit" class="btn btn-lg btn-primary">Post</button></a>
   </div>
 </form>
 <br />
 <div align="center">
-  <a href="/home"
+  <a href="/blog"
     ><button type="button" class="btn btn-lg btn-secondary">Back</button></a
   >
 </div>

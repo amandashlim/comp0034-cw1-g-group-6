@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+{%block title%}
+<title>User Profile</title>
+{%endblock%}
 {% block content %}
 <!--User information card -->
 <div class="card">
@@ -20,7 +23,8 @@
         </p>
 
         <!-- Logout button -->
-        <a href="{{ url_for('auth.logout')}}" class="btn-secondary">Logout</a>
+        <a href="{{ url_for('auth.logout')}}">
+                <button type="button" class="btn btn-sm btn-secondary">Logout</button></a>
     </div>
 </div>
 
