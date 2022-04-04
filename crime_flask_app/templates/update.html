@@ -1,17 +1,8 @@
+{% extends "layout.html" %}
 {% block content %}
 
-{% for message in get_flashed_messages() %}
-	
-	<div class="alert alert-warning alert-dismissible fade show" role="alert">
-	  {{ message }}
-	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-
-	
-{% endfor %}
-
+<!--If the user is trying to access editing their own profile -->
 {% if id == user.id %}
-
 	<h1>Update User...</h1>
 	<br/>
 <div class="shadow p-3 mb-5 bg-body rounded">
@@ -39,6 +30,7 @@
 </div>
 <br/><br/><br/>
 
+<!--If the user is trying to access editing another person's profile -->
 {% else %}
  <div class="alert alert-warning alert-dismissible fade show" role="alert">
 	  Sorry! You Can't Edit This User...
