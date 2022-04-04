@@ -49,15 +49,15 @@
             <li class="nav-item active">
             <a class="nav-item nav-link" href="/posts/{{user.username}}" style = "color:#ffffff" >My Posts</a></li>
                 <li class="nav-item active">
-            <a href="/logout">
+            <a href="/logout" id="nav-logout">
                 <button type="button" class="btn btn-sm btn-secondary">Logout</button></a></li>
             </li>
         {% else%}
             <li class="nav-item">
-            <a href="/login">
+            <a href="/login" id="nav-login">
                 <button type="button" class="btn btn-sm btn-secondary">Login</button></a> <!-- Button formatting-->
-            <a href="/signup">
-                <button type="button" class="btn btn-sm btn-secondary">Sign Up</button></a>
+            <a href="/signup" id="nav-signup">
+                <button type="button" class="btn btn-sm btn-secondary" id="nav-signup-btn">Sign Up</button></a>
         {%endif%}
         </ul>
     </div>
@@ -66,12 +66,12 @@
       {% if messages %}
         {% for category, message in messages %}
         {% if category == "error" %}
-        <div class="alert alert-danger alter-dismissible fade show" role="alert">
+        <div class="alert alert-danger alter-dismissible fade show" role="alert" id="error-flash">
           {{ message }}
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
         {% else %}
-        <div class="alert alert-success alter-dismissible fade show" role="alert">
+        <div class="alert alert-success alter-dismissible fade show" role="alert" id="success-flash">
           {{ message }}
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>

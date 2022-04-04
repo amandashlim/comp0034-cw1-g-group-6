@@ -27,7 +27,7 @@ def test_no_login_page_invalid(client, app_paths_login, app_paths_no_login):
             response = client.get(i)
         assert response.status_code == 200
 
-
+'''
 def test_login_redirect(client):
     """
     GIVEN a user with an account is on the home homepage
@@ -47,3 +47,4 @@ def test_logout_redirect(client):
     response = client.get("/logout")
     assert len(response.history) == 1
     assert response.request.path == "/home"
+'''
