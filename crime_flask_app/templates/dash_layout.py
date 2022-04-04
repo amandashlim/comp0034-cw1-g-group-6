@@ -1,5 +1,7 @@
 import codecs
+from pathlib import Path
 
-f = codecs.open("templates/dashboard.html","r")
+filepath = Path(__file__).parent.joinpath("dashboard.html" )
+f = codecs.open(filepath,"r")
 
 html_layout = f.read()
