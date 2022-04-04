@@ -1,5 +1,3 @@
-{% extends 'base.html' %}
-
 {% block content %}
 
 {% for message in get_flashed_messages() %}
@@ -12,22 +10,22 @@
 	
 {% endfor %}
 
-{% if id == current_user.id %}
+{% if id == user.id %}
 
 	<h1>Update User...</h1>
 	<br/>
 <div class="shadow p-3 mb-5 bg-body rounded">
-	<form action="/update/{{ name_to_update.id }}" method="POST">
+	<form action="/update/{{ id_to_update.id }}" method="POST">
 		{{ form.hidden_tag() }}
 
 		{{ form.username.label(class="form-label") }}
 
-		{{ form.username(class="form-control", value=name_to_update.username) }}
+		{{ form.username(class="form-control", value=id_to_update.username) }}
 		<br/>
 
 		{{ form.email.label(class="form-label") }}
 
-		{{ form.email(class="form-control", value=name_to_update.email) }}
+		{{ form.email(class="form-control", value=id_to_update.email) }}
 		<br/>
 
         <!-- password functionality here?-->
