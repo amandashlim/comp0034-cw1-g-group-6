@@ -1,6 +1,7 @@
 from time import sleep
 import pytest
 from selenium.webdriver.common.by import By
+from flask_login import current_user
 
 @pytest.mark.usefixtures('chrome_driver', 'run_app')
 class TestMyAppBrowser:
@@ -13,8 +14,11 @@ class TestMyAppBrowser:
         Test that a user can create an account using the signup form if all fields are filled out correctly,
         and that they are redirected to the index page.
         """
+        #Check if user is loged in
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/')
+        if current_user.is_authenticated:
+            self.driver.get('http://127.0.0.1:5000/logout')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
@@ -36,7 +40,7 @@ class TestMyAppBrowser:
 
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
-        assert self.driver.current_url == 'http://127.0.0.1:5000/'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
 
         # Assert success message is flashed on the index page
         message = self.driver.find_element(By.ID, "success-flash").text
@@ -49,6 +53,9 @@ class TestMyAppBrowser:
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/')
+
+        if current_user.is_authenticated:
+            self.driver.get('http://127.0.0.1:5000/logout')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
@@ -80,6 +87,9 @@ class TestMyAppBrowser:
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/')
+
+        if current_user.is_authenticated:
+            self.driver.get('http://127.0.0.1:5000/logout')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
@@ -115,6 +125,9 @@ class TestMyAppBrowser:
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/')
+
+        if current_user.is_authenticated:
+            self.driver.get('http://127.0.0.1:5000/logout')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
