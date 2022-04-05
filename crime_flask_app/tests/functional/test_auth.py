@@ -27,6 +27,33 @@ def test_no_login_page_invalid(client, app_paths_login, app_paths_no_login):
             response = client.get(i)
         assert response.status_code == 200
 
+def test_homepage_launch():
+    """
+    GIVEN there is a user
+    WHEN the user accesses the link to be directed to the app
+    THEN a success response code (200) is received ()
+    """
+    m_app = create_app()
+    with m_app.test_client() as test_client:
+        response = test_client.get('/')
+        assert response.status_code == 200
+
+def test_login_launch():
+    """
+    GIVEN there is a user
+    WHEN the user accesses the login page
+    THEN a success response code (200) is received () and login, email address and password are on the webpage
+    """
+    m_app = create_app()
+    with m_app.test_client() as test_client:
+        response = test_client.get('/login')
+        assert response.status_code == 200
+        assert b"Login" in response.data
+        assert b"Email Address" in response.data
+        assert b"Password" in response.data
+
+
+
 '''
 def test_login_redirect(client):
     """
