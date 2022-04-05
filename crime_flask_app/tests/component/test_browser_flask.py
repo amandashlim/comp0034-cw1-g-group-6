@@ -137,7 +137,7 @@ class Test1:
         self.driver.find_element(By.ID, "nav-signup-btn").click()
 
         # Test person data
-        for i in range(0, 1):#len(sign_up_list['email'])):
+        for i in range(0, 2):#len(sign_up_list['email'])):
             print(i)
             email = sign_up_list['email'][i]
             username = sign_up_list['username'][i]
