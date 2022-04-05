@@ -235,7 +235,7 @@ class Test1:
 
         # Check if the post is showing up
         posts = self.driver.find_element(By.ID, "posts").text
-        assert "im a noob" in message
+        assert "im a noob" in posts
 
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
