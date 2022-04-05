@@ -79,47 +79,15 @@ class Test1:
 
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
-        assert self.driver.current_url == 'http://127.0.0.1:5000/'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/signup'
 
         # Assert success message is flashed on the index page
         message = self.driver.find_element(By.ID, "error-flash").text
         assert "Passwords don't match!" in message
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
 
-def test_login_succeeds(chrome_driver, run_app):
-    """
-    Test that a user can create an account using the signup form if all fields are filled out correctly,
-    and that they are redirected to the index page.
-    """
-    # Go to the home page
-    chrome_driver.get('http://127.0.0.1:5000/logout')
-    chrome_driver.implicitly_wait(5)
-    chrome_driver.get('http://127.0.0.1:5000/home')
-
-    # Click signup menu link
-    # See https://www.selenium.dev/documentation/webdriver/waits/
-    chrome_driver.implicitly_wait(5)
-    chrome_driver.find_element(By.ID, "nav-login-btn").click()
-
-    # Test person data
-    email = "pepe1@gmail.com"
-    password = "123456"
-
-    # Fill in registration form
-    chrome_driver.find_element(By.ID, "email").send_keys(email)
-    chrome_driver.find_element(By.ID, "password").send_keys(password)
-    chrome_driver.find_element(By.ID, "btn-signup").click()
-
-    # Assert that browser redirects to index page
-    chrome_driver.implicitly_wait(10)
-    assert chrome_driver.current_url == 'http://127.0.0.1:5000/'
-
-    # Assert success message is flashed on the index page
-    message = chrome_driver.find_element(By.ID, "success-flash").text
-    assert "Logged in!" in message
-
-@pytest.mark.usefixtures('chrome_driver', 'run_app')
-class Test3:
-    def test_signup_passwords_not_matching(self):
+    def test_login_succeeds(self):
         """
         Test that a user can create an account using the signup form if all fields are filled out correctly,
         and that they are redirected to the index page.
@@ -127,25 +95,20 @@ class Test3:
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
-        self.driver.get('http://127.0.0.1:5000/')
+        self.driver.get('http://127.0.0.1:5000/home')
 
         # Click signup menu link
         # See https://www.selenium.dev/documentation/webdriver/waits/
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "nav-signup-btn").click()
-
+        self.driver.find_element(By.ID, "nav-login-btn").click()
 
         # Test person data
-        email = "sterling.archer@isis.com"
-        username = "The Duchess"
-        password1 = "DangerZone"
-        password2 = "Phraaaaaasing"
+        email = "pepe1@gmail.com"
+        password = "123456"
 
         # Fill in registration form
         self.driver.find_element(By.ID, "email").send_keys(email)
-        self.driver.find_element(By.ID, "username").send_keys(username)
-        self.driver.find_element(By.ID, "password1").send_keys(password1)
-        self.driver.find_element(By.ID, "password2").send_keys(password2)
+        self.driver.find_element(By.ID, "password").send_keys(password)
         self.driver.find_element(By.ID, "btn-signup").click()
 
         # Assert that browser redirects to index page
@@ -153,11 +116,11 @@ class Test3:
         assert self.driver.current_url == 'http://127.0.0.1:5000/'
 
         # Assert success message is flashed on the index page
-        message = self.driver.find_element(By.ID, "error-flash").text
-        assert "Passwords don't match!" in message
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "Logged in!" in message
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
 
-@pytest.mark.usefixtures('chrome_driver', 'run_app')
-class Test4:
     def test_signup_errors(self, sign_up_list):
         """
         Test that a user can create an account using the signup form if all fields are filled out correctly,
@@ -194,6 +157,8 @@ class Test4:
             # Assert success message is flashed on the index page
             message = self.driver.find_element(By.ID, "error-flash").text
             assert sign_up_list['error_messages'][i] in message
+            self.driver.get('http://127.0.0.1:5000/logout')
+            self.driver.implicitly_wait(5)
 
 def document_initialised(driver):
     return driver.execute_script("return initialised")
