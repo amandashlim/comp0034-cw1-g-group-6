@@ -52,8 +52,8 @@ def chrome_driver(request):
         For running on your computer: `headless` and `disable-gpu` to be commented out
     """
     options = ChromeOptions()
-    #options.add_argument("--headless")  # use for GitHub Actions CI
-    #options.add_argument('--disable-gpu') # use for GitHub Actions CI
+    options.add_argument("--headless")  # use for GitHub Actions CI
+    options.add_argument('--disable-gpu') # use for GitHub Actions CI
     options.add_argument("--window-size=1920,1080")
     chrome_driver = Chrome(options=options)
     request.cls.driver = chrome_driver
