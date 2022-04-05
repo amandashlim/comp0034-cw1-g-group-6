@@ -8,20 +8,20 @@
 
 <form method="POST">
   <a>Post Title</a>
-  <textarea name="title" id="title" class="form-control"></textarea>
+  <textarea name="title" id="title" class="form-control" id="title-text"></textarea>
   <br/>
   <a>Post Content</a>
-  <textarea name="text" id="text" class="form-control"></textarea>
+  <textarea name="text" id="text" class="form-control" id="content-text"></textarea>
   <br />
   <div align="center">
     <a href="blog_posts.html">
-    <button type="submit" class="btn btn-lg btn-primary">Post</button></a>
+    <button type="submit" class="btn btn-lg btn-primary" id="post-btn">Post</button></a>
   </div>
 </form>
 <br />
 <div align="center">
   <a href="/blog"
-    ><button type="button" class="btn btn-lg btn-secondary">Back</button></a
+    ><button type="button" class="btn btn-lg btn-secondary" id="back-btn">Back</button></a
   >
 </div>
 {%endblock%}
