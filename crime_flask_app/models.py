@@ -25,7 +25,7 @@ class User(db.Model, UserMixin):
     dislikes = db.relationship('Dislike', backref='user', passive_deletes=True)
     comment_likes = db.relationship("Like_Comment", backref='user', passive_deletes=True)
 
-# Form class to be able to add/update users to the database
+# Form class to be able to update users in the database
 class UserForm(FlaskForm):
     # TODO: Change this to an email validator
     email = StringField("Email", validators=[DataRequired()])

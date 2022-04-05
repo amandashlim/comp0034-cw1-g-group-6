@@ -34,9 +34,11 @@ def update(id):
 
     # If the user is filling out the form (aka. if they're updating the profile)
     if request.method == "POST":
-        # These come from the UserForm class
+        # These variables store the updated username and or email
         id_to_update.username = request.form.username
         id_to_update.email = request.form.email
+
+        # Passing the variables to the database
         try:
             db.session.commit()
             flash("User Updated Successfully!")
@@ -49,7 +51,7 @@ def update(id):
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update)
-    # If they are not posting
+    # If they are not posting, just visiting the page
     else:
         return render_template("update.html",
                                form=form,

@@ -1,7 +1,4 @@
 {% extends "layout.html" %}
-{%block title%}
-<title>User Profile</title>
-{%endblock%}
 {% block content %}
 <!--User information card -->
 <div class="card">
@@ -23,8 +20,10 @@
         </p>
 
         <!-- Logout button -->
-        <a href="{{ url_for('auth.logout')}}">
-                <button type="button" class="btn btn-sm btn-secondary">Logout</button></a>
+        <a href="{{ url_for('auth.logout')}}" class="btn-secondary">Logout</a>
+
+        <!-- Edit profile button -->
+        <a href="{{ url_for('views.update', id=user.id)}}" class="btn-primary">Update Profile</a>
     </div>
 </div>
 
