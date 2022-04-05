@@ -46,39 +46,38 @@ class Test1:
         message = self.driver.find_element(By.ID, "success-flash").text
         assert "User created!" in message
 
-@pytest.mark.usefixtures('chrome_driver', 'run_app')
-class Test2:
-    def test_login_succeeds(self):
-        """
-        Test that a user can create an account using the signup form if all fields are filled out correctly,
-        and that they are redirected to the index page.
-        """
-        # Go to the home page
-        self.driver.get('http://127.0.0.1:5000/logout')
-        self.driver.implicitly_wait(5)
-        self.driver.get('http://127.0.0.1:5000/home')
 
-        # Click signup menu link
-        # See https://www.selenium.dev/documentation/webdriver/waits/
-        self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "nav-login-btn").click()
+def test_login_succeeds(chrome_driver, run_app):
+    """
+    Test that a user can create an account using the signup form if all fields are filled out correctly,
+    and that they are redirected to the index page.
+    """
+    # Go to the home page
+    chrome_driver.get('http://127.0.0.1:5000/logout')
+    chrome_driver.implicitly_wait(5)
+    chrome_driver.get('http://127.0.0.1:5000/home')
 
-        # Test person data
-        email = "pepe1@gmail.com"
-        password = "123456"
+    # Click signup menu link
+    # See https://www.selenium.dev/documentation/webdriver/waits/
+    chrome_driver.implicitly_wait(5)
+    chrome_driver.find_element(By.ID, "nav-login-btn").click()
 
-        # Fill in registration form
-        self.driver.find_element(By.ID, "email").send_keys(email)
-        self.driver.find_element(By.ID, "password").send_keys(password)
-        self.driver.find_element(By.ID, "btn-signup").click()
+    # Test person data
+    email = "pepe1@gmail.com"
+    password = "123456"
 
-        # Assert that browser redirects to index page
-        self.driver.implicitly_wait(10)
-        assert self.driver.current_url == 'http://127.0.0.1:5000/'
+    # Fill in registration form
+    chrome_driver.find_element(By.ID, "email").send_keys(email)
+    chrome_driver.find_element(By.ID, "password").send_keys(password)
+    chrome_driver.find_element(By.ID, "btn-signup").click()
 
-        # Assert success message is flashed on the index page
-        message = self.driver.find_element(By.ID, "success-flash").text
-        assert "Logged in!" in message
+    # Assert that browser redirects to index page
+    chrome_driver.implicitly_wait(10)
+    assert chrome_driver.current_url == 'http://127.0.0.1:5000/'
+
+    # Assert success message is flashed on the index page
+    message = chrome_driver.find_element(By.ID, "success-flash").text
+    assert "Logged in!" in message
 
 @pytest.mark.usefixtures('chrome_driver', 'run_app')
 class Test3:
