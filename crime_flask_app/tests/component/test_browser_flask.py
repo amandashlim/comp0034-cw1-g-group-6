@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from flask_login import current_user
 
 @pytest.mark.usefixtures('chrome_driver', 'run_app')
-class TestMyAppBrowser:
+class Test1:
     def test_app_is_running(self):
         self.driver.get("http://127.0.0.1:5000/")
         assert self.driver.title == 'Home'
@@ -46,6 +46,8 @@ class TestMyAppBrowser:
         message = self.driver.find_element(By.ID, "success-flash").text
         assert "User created!" in message
 
+@pytest.mark.usefixtures('chrome_driver', 'run_app')
+class Test2:
     def test_login_succeeds(self):
         """
         Test that a user can create an account using the signup form if all fields are filled out correctly,
@@ -78,7 +80,8 @@ class TestMyAppBrowser:
         message = self.driver.find_element(By.ID, "success-flash").text
         assert "Logged in!" in message
 
-
+@pytest.mark.usefixtures('chrome_driver', 'run_app')
+class Test3:
     def test_signup_passwords_not_matching(self):
         """
         Test that a user can create an account using the signup form if all fields are filled out correctly,
@@ -116,6 +119,8 @@ class TestMyAppBrowser:
         message = self.driver.find_element(By.ID, "error-flash").text
         assert "Passwords don't match!" in message
 
+@pytest.mark.usefixtures('chrome_driver', 'run_app')
+class Test4:
     def test_signup_errors(self, sign_up_list):
         """
         Test that a user can create an account using the signup form if all fields are filled out correctly,
