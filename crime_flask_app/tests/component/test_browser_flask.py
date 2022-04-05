@@ -345,6 +345,8 @@ class Test1:
         like_counter = self.driver.find_element(By.ID, "like-counter-2")
         assert "1" == like_counter
 
+        self.driver.find_element(By.ID, "unlike-post-2").click()
+        self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
