@@ -4,15 +4,11 @@
 <br/>
 <!--User information card -->
 <div class="card">
-    <!-- Small title at the top of the card -->
     <div class="card-header">
         My Account Details
     </div>
     <div class="card-body">
-        <!-- Supporting text -->
         <p class="card-text">
-
-            <!--add profile pic here -->
             <strong>User ID: </strong>{{user.id}}<br/>
             <strong>Email: </strong>{{user.email}}<br/>
             <strong>Username: </strong>{{user.username}}<br/>
@@ -24,6 +20,9 @@
 
         <!-- Edit profile button -->
         <a href="{{ url_for('views.update', id=user.id)}}" class="btn btn-sm btn-primary">Update Profile</a>
+
+        <!-- Delete profile button -->
+        <a href="{{ url_for('views.delete', id=user.id)}}" class="btn btn-sm btn-danger">Delete Profile</a>
     </div>
 </div>
 
