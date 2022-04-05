@@ -203,7 +203,8 @@ class Test1:
 
         # Test if map is showing
         self.driver.implicitly_wait(5)
-        assert "Map" in self.driver.find_element(By.ID, "map_row")
+        map_row = self.driver.find_element(By.ID, "map_row").text
+        assert "Map" in map_row
 
         # Click on blog page
         self.driver.implicitly_wait(5)
