@@ -158,8 +158,8 @@ class Test1:
             # Assert success message is flashed on the index page
             message = self.driver.find_element(By.ID, "error-flash").text
             assert sign_up_list['error_messages'][i] in message
-            self.driver.get('http://127.0.0.1:5000/logout')
-            self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
 
 def document_initialised(driver):
     return driver.execute_script("return initialised")

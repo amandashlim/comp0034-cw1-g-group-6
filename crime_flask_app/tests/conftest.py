@@ -12,11 +12,12 @@ def app():
     app = create_app()
     yield app
 
+
 @pytest.fixture(scope='session')
 def setUp():
     db.create_all()
-    db.session.add(User(email="admin@admin.com",username="admin",password='admin'))
-    db.session.add(Post(title="Admin Test Post Title",text="Admin Test Post Text",author='admin'))
+    db.session.add(User(email="admin@admin.com", username="admin", password='admin'))
+    db.session.add(Post(title="Admin Test Post Title", text="Admin Test Post Text", author='admin'))
     db.session.commit()
 
 
@@ -34,13 +35,13 @@ def client(app):
 
 @pytest.fixture()
 def app_paths_no_login():
-    app_paths = ["/","/home","/login","/signup"]
+    app_paths = ["/", "/home", "/login", "/signup"]
     yield app_paths
 
 
 @pytest.fixture()
 def app_paths_login(username="pepe1"):
-    app_paths = ["/dashboard","/blog","/create_post",f"/{username}",f"posts/{username}"]
+    app_paths = ["/dashboard", "/blog", "/create_post", f"/{username}", f"posts/{username}"]
     yield app_paths
 
 
@@ -53,7 +54,7 @@ def chrome_driver(request):
     """
     options = ChromeOptions()
     options.add_argument("--headless")  # use for GitHub Actions CI
-    options.add_argument('--disable-gpu') # use for GitHub Actions CI
+    options.add_argument('--disable-gpu')  # use for GitHub Actions CI
     options.add_argument("--window-size=1920,1080")
     chrome_driver = Chrome(options=options)
     request.cls.driver = chrome_driver
@@ -75,16 +76,18 @@ def run_app(app):
 
 @pytest.fixture()
 def sign_up_list():
-    credential_dict = {'email':["pepe1@gmail.com","povey.grovey@hotmail.com",
-                                "damn_crackers@ritz.salt","channel5newsbaby@awesome.yt",
-                                "bReXiT.wAs.gOoD@dumb.ville"],
-                       'username':["peperonicoli","pepe1","ritz","5","BadbadbadBJ"],
-                       "password1":["123456","235346","cracker","AMURICA","BJ"],
-                       "password2":["123456","235346","saltine","AMURICA","BJ"],
-                       "error_messages":['Email is already in use.',"Username is already in use.",
-                                         "Passwords don\'t match!","Username is too short.",
-                                         "Password is too short."]}
+    credential_dict = {'email': ["pepe1@gmail.com", "povey.grovey@hotmail.com",
+                                 "damn_crackers@ritz.salt", "channel5newsbaby@awesome.yt",
+                                 "bReXiT.wAs.gOoD@dumb.ville"],
+                       'username': ["peperonicoli", "pepe1", "ritz", "5", "BadbadbadBJ"],
+                       "password1": ["123456", "235346", "cracker", "AMURICA", "BJ"],
+                       "password2": ["123456", "235346", "saltine", "AMURICA", "BJ"],
+                       "error_messages": ['Email is already in use.', "Username is already in use.",
+                                          "Passwords don\'t match!", "Username is too short.",
+                                          "Password is too short."]}
     yield credential_dict
+
+
 '''
 @pytest.fixture(scope='session')
 def db(app):
