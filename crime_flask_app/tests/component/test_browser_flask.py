@@ -277,7 +277,7 @@ class Test1:
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "post_dropdown-btn").click
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "edit-btn").click()
+        self.driver.find_element(By.ID, "edit_btn_li").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/edit-post/1'
 
         # Edit the post
