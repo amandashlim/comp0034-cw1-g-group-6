@@ -5,13 +5,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
-from sqlalchemy import Column, ForeignKey, Integer, Unicode
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
-#from sqlalchemy_imageattach.entity import Image, image_attachment
-
-#Base = declarative_base()
-
 # User Class
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

@@ -23,8 +23,30 @@ def user(username):
     posts = Post.query.all()
     return render_template("my_account.html", user=current_user, posts=posts, username=username)
 
+# Route for deleting a database record
+@views.route('/delete/<int:id>')
+def delete(id):
+    id_to_delete = User.query.get_or_404(id)
+    form = UserForm()
 
-# Update Database Record
+    try:
+        db.session.delete(id_to_delete)
+        db.session.commit()
+        flash("User deleted successfully!")
+        # Returns to the home page
+        return render_template("home.html",
+                               form=form,
+                               id_to_delete=id_to_delete,
+                               user=current_user)
+    except:
+        flash("Oops! There was a problem deleting the user. Please try again.")
+        # Stays on the my account page
+        return render_template("my_account.html",
+                               form=form,
+                               id_to_delete=id_to_delete,
+                               user=current_user)
+
+# Route for updating a database record
 @views.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     '''Updates the record for a user. ID refers to the user id'''
