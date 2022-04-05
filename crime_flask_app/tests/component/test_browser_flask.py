@@ -275,6 +275,8 @@ class Test1:
 
         # Click edit post
         self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "post_dropdown-btn").click
+        self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "edit-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/edit-post/1'
 
@@ -290,8 +292,8 @@ class Test1:
         # Goto user posts and check if the post was edited
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my_post-btn").click()
-        post_title = self.driver.find_element(By.ID, "post_title").text
-        post_text = self.driver.find_element(By.ID, "post_text").text
+        post_title = self.driver.find_element(By.ID, "post_1_title").text
+        post_text = self.driver.find_element(By.ID, "post_1_text").text
         assert edit_title in post_title
         assert edit_text in post_text
 
