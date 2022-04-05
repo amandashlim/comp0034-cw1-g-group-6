@@ -240,5 +240,65 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
+    def test_existing_user_edit_post(self):
+        """
+        Test when an existing user: opens the website it loads correctly,
+                           loges in successfully,
+                           views his post
+                           edits his post successfully
+        """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click signup menu link
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "pepe1@gmail.com"
+        password = "123456"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Goto user blog page
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_post-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/posts/pepe1'
+
+        # Click edit post
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "edit-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/edit-post/1'
+
+        # Edit the post
+        edit_title = "Pepe Edited a post"
+        edit_text = "Pepe is editing babyyy"
+        self.driver.find_element(By.ID, "title").send_keys(edit_title)
+        self.driver.find_element(By.ID, "text").send_keys(edit_text)
+        self.driver.find_element(By.ID, "edit_submit-btn").click()
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "Post successfully updated" in message
+
+        # Goto user posts and check if the post was edited
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_post-btn").click()
+        post_title = self.driver.find_element(By.ID, "post_title").text
+        post_text = self.driver.find_element(By.ID, "post_text").text
+        assert edit_title in post_title
+        assert edit_text in post_text
+
+
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
+
 def document_initialised(driver):
     return driver.execute_script("return initialised")
