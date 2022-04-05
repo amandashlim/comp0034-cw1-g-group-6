@@ -35,8 +35,8 @@ def update(id):
     # If the user is filling out the form (aka. if they're updating the profile)
     if request.method == "POST":
         # These variables store the updated username and or email
-        id_to_update.username = request.form.username
-        id_to_update.email = request.form.email
+        id_to_update.username = request.form["username"]
+        id_to_update.email = request.form["email"]
 
         # Passing the variables to the database
         try:
