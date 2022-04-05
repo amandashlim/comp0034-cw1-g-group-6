@@ -342,7 +342,7 @@ class Test1:
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "like-post-2").click()
         self.driver.implicitly_wait(5)
-        like_counter = self.driver.find_element(By.ID, "like-counter-2")
+        like_counter = self.driver.find_element(By.ID, "like-counter-2").text
         assert "1" == like_counter
 
         self.driver.find_element(By.ID, "unlike-post-2").click()
