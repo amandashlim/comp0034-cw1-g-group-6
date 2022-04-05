@@ -118,7 +118,8 @@ class Test1:
         # Click on my account to see if logged in
         self.driver.find_element(By.ID, "my_account-btn").click
         self.driver.implicitly_wait(10)
-        user_card = self.driver.find_element(By.ID, "user_card").text
+        assert self.driver.current_url == "http://127.0.0.1:5000/pepe1"
+        user_card = self.driver.find_element(By.ID, "user_info_card").text
         assert email in user_card
 
         # Assert success message is flashed on the index page
