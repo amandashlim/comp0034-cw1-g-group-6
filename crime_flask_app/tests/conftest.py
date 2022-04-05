@@ -52,8 +52,8 @@ def chrome_driver(request):
         For running on your computer: `headless` and `disable-gpu` to be commented out
     """
     options = ChromeOptions()
-    options.add_argument("--headless")  # use for GitHub Actions CI
-    options.add_argument('--disable-gpu') # use for GitHub Actions CI
+    #options.add_argument("--headless")  # use for GitHub Actions CI
+    #options.add_argument('--disable-gpu') # use for GitHub Actions CI
     options.add_argument("--window-size=1920,1080")
     chrome_driver = Chrome(options=options)
     request.cls.driver = chrome_driver
@@ -77,8 +77,8 @@ def run_app(app):
 def sign_up_list():
     credential_dict = {'email':["pepe1@gmail.com","povey.grovey@hotmail.com",
                                 "damn_crackers@ritz.salt","channel5newsbaby@awesome.yt",
-                                "bReXiT_wAs_gOoD@dumb.ville"],
-                       'username':["peperonicoli","pepe1","iTs_a_sLuR","5","Bad_bad_bad_BJ"],
+                                "bReXiT.wAs.gOoD@dumb.ville"],
+                       'username':["peperonicoli","pepe1","iTsasLuR","5","BadbadbadBJ"],
                        "password1":["123456","235346","cracker","AMURICA","BJ"],
                        "password2":["123456","235346","saltine","AMURICA","BJ"],
                        "error_messages":['Email is already in use.',"Username is already in use.",

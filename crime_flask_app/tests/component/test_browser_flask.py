@@ -113,7 +113,7 @@ class Test1:
 
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
-        assert self.driver.current_url == 'http://127.0.0.1:5000/login'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/'
 
         # Assert success message is flashed on the index page
         message = self.driver.find_element(By.ID, "success-flash").text
