@@ -138,7 +138,6 @@ class Test1:
 
         # Test person data
         for i in range(0, len(sign_up_list['email'])):
-            print(i)
             email = sign_up_list['email'][i]
             username = sign_up_list['username'][i]
             password1 = sign_up_list['password1'][i]
@@ -158,6 +157,86 @@ class Test1:
             # Assert success message is flashed on the index page
             message = self.driver.find_element(By.ID, "error-flash").text
             assert sign_up_list['error_messages'][i] in message
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
+    def test_new_user_path(self, sign_up_list):
+        """
+        Test when a new user: opens the website it loads correctly,
+                            signs up successfully,
+                            opens the dashapp and looks at the line chart,
+                            and posts a new blog post asking a question
+        """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click signup menu link
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-signup-btn").click()
+
+        # Test person data
+        email = "new.user@noob.ua"
+        username = "im a noob"
+        password1 = "qwerty"
+        password2 = "qwerty"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "username").send_keys(username)
+        self.driver.find_element(By.ID, "password1").send_keys(password1)
+        self.driver.find_element(By.ID, "password2").send_keys(password2)
+        self.driver.find_element(By.ID, "btn-signup").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Assert success message is flashed on the index page
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "User created!" in message
+
+        # Open the dashboard page
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-dashboard-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/dashboard/'
+
+        # Select the Line graph on the page
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "react-select-2--value-item").send_keys("Line")
+        assert "Line Chart" in self.driver.find_element(By.ID, "line_row")
+
+        # Click on blog page
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "dash_nav-blog-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/blog'
+
+        # Click on Create a new post
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "create_post-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/create_post'
+
+        # Write a title and content
+        self.driver.implicitly_wait(5)
+        title = "This is a post title"
+        content = "This is the content"
+        self.driver.find_element(By.ID, "title-text").send_keys(title)
+        self.driver.find_element(By.ID, "content-text").send_keys(content)
+        self.driver.find_element(By.ID, "post-btn").click()
+
+        # Check if the post is created
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "Post Created" in message
+
+        # Press the back button
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "back-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/blog'
+
+        # Check if the post is showing up
+        posts = self.driver.find_element(By.ID, "posts").text
+        assert "im a noob" in message
+
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
