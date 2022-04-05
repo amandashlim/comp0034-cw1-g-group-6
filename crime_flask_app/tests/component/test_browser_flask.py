@@ -65,8 +65,8 @@ class Test1:
 
 
         # Test person data
-        email = "sterling.archer@isis.com"
-        username = "The Duchess"
+        email = "lana.kane@isis.com"
+        username = "Monster Hands"
         password1 = "DangerZone"
         password2 = "Phraaaaaasing"
 
@@ -113,7 +113,7 @@ class Test1:
 
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
-        assert self.driver.current_url == 'http://127.0.0.1:5000/'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/login'
 
         # Assert success message is flashed on the index page
         message = self.driver.find_element(By.ID, "success-flash").text
@@ -152,7 +152,7 @@ class Test1:
 
             # Assert that browser redirects to index page
             self.driver.implicitly_wait(10)
-            assert self.driver.current_url == 'http://127.0.0.1:5000/'
+            assert self.driver.current_url == 'http://127.0.0.1:5000/signup'
 
             # Assert success message is flashed on the index page
             message = self.driver.find_element(By.ID, "error-flash").text
