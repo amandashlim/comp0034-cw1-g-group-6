@@ -305,6 +305,48 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
+    def test_existing_user_liking_a_post(self):
+        """Test when an existing user: opens the website it loads correctly,
+                                   loges in successfully,
+                                   views blog posts
+                                   likes the second post
+                                   the like counter changes
+                                   """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click signup menu link
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "pepe1@gmail.com"
+        password = "123456"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Goto user blog page
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-blog-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/blog'
+
+        # Edit the post
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "like-post-2").click()
+        self.driver.implicitly_wait(5)
+        like_counter = self.driver.find_element(By.ID, "like-counter-2")
+        assert "1" == like_counter
+
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
 
 def document_initialised(driver):
     return driver.execute_script("return initialised")

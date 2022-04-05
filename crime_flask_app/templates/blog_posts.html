@@ -14,16 +14,16 @@
       <a>Author: {{post.user.username}}</a>
       {% endif %}
       <div>
-        {{post.likes|length - post.dislikes|length}}
+        <a id="like-counter-{{post.id}}">{{post.likes|length - post.dislikes|length}}</a>
         {% if user.id in post.likes|map(attribute="author")|list%}
-        <a href="/like-post/{{post.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
+        <a href="/like-post/{{post.id}}" id="unlike-post-{{post.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
         {% else%}
-        <a href="/like-post/{{post.id}}"><i class="fa-regular fa-thumbs-up"></i></a>
+        <a href="/like-post/{{post.id}}" id="like-post-{{post.id}}"><i class="fa-regular fa-thumbs-up"></i></a>
         {%endif%}
         {% if user.id in post.dislikes|map(attribute="author")|list%}
-        <a href="/dislike-post/{{post.id}}"><i class="fa-solid fa-thumbs-down"></i></a>
+        <a href="/dislike-post/{{post.id}}" id="undislike-post-{{post.id}}"><i class="fa-solid fa-thumbs-down"></i></a>
         {% else%}
-        <a href="/dislike-post/{{post.id}}"><i class="fa-regular fa-thumbs-down"></i></a>
+        <a href="/dislike-post/{{post.id}}" id="dislike-post-{{post.id}}"><i class="fa-regular fa-thumbs-down"></i></a>
         {%endif%}
       </div>
       {% if user.id == post.author %}
