@@ -78,7 +78,7 @@ def sign_up_list():
     credential_dict = {'email':["pepe1@gmail.com","povey.grovey@hotmail.com",
                                 "damn_crackers@ritz.salt","channel5newsbaby@awesome.yt",
                                 "bReXiT.wAs.gOoD@dumb.ville"],
-                       'username':["peperonicoli","pepe1","iTsasLuR","5","BadbadbadBJ"],
+                       'username':["peperonicoli","pepe1","ritz","5","BadbadbadBJ"],
                        "password1":["123456","235346","cracker","AMURICA","BJ"],
                        "password2":["123456","235346","saltine","AMURICA","BJ"],
                        "error_messages":['Email is already in use.',"Username is already in use.",
