@@ -44,18 +44,20 @@ def update(id):
             flash("User Updated Successfully!")
             return render_template("update.html",
                                    form=form,
-                                   id_to_update=id_to_update
-                                   )
+                                   id_to_update=id_to_update,
+                                   user=current_user)
         except:
             flash("Looks like something went wrong... try again!")
             return render_template("update.html",
                                    form=form,
-                                   id_to_update=id_to_update)
+                                   id_to_update=id_to_update,
+                                   user=current_user)
     # If they are not posting, just visiting the page
     else:
         return render_template("update.html",
                                form=form,
-                               id_to_update=id_to_update)
+                               id_to_update=id_to_update,
+                               user=current_user)
 
 
 @views.route("/posts/<username>")
