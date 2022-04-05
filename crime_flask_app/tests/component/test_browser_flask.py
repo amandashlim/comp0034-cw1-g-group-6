@@ -50,8 +50,8 @@ class Test1:
 
     def test_signup_passwords_not_matching(self):
         """
-        Test that a user can create an account using the signup form if all fields are filled out correctly,
-        and that they are redirected to the index page.
+        Test when a user tries to signup and the inputed passwords dont match
+        theres an error message
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/logout')
@@ -89,8 +89,8 @@ class Test1:
 
     def test_login_succeeds(self):
         """
-        Test that a user can create an account using the signup form if all fields are filled out correctly,
-        and that they are redirected to the index page.
+        Test that when a user logsin with correct credentials the correct success
+        message is displayed and the user is logged in
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/logout')
@@ -115,16 +115,25 @@ class Test1:
         self.driver.implicitly_wait(10)
         assert self.driver.current_url == 'http://127.0.0.1:5000/home'
 
+        # Click on my account to see if logged in
+        self.driver.find_element(By.ID, "my_account-btn").click
+        self.driver.implicitly_wait(10)
+        user_card = self.driver.find_element(By.CSS_SELECTOR, "p.card-text").text
+        assert email in user_card
+
         # Assert success message is flashed on the index page
         message = self.driver.find_element(By.ID, "success-flash").text
         assert "Logged in!" in message
+
+
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
     def test_signup_errors(self, sign_up_list):
         """
-        Test that a user can create an account using the signup form if all fields are filled out correctly,
-        and that they are redirected to the index page.
+        Test that when a user tryes to sign up with email thats already in use,
+        or username thats already in use, or has a too short username, or the passwords dont match
+        the website will return the appropriate error message
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/logout')

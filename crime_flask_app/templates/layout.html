@@ -47,7 +47,7 @@
         <ul class="navbar-nav ms-auto">
             {% if user.is_authenticated %}
         <li class="nav-item active">
-            <a class="nav-item nav-link" href="/{{user.username}}" style = "color:#ffffff" >My Account</a></li>
+            <a class="nav-item nav-link" href="/{{user.username}}" style = "color:#ffffff" id="my_account-btn">My Account</a></li>
             <li class="nav-item active">
             <a class="nav-item nav-link" href="/posts/{{user.username}}" style = "color:#ffffff" id="my_post-btn">My Posts</a></li>
                 <li class="nav-item active">
