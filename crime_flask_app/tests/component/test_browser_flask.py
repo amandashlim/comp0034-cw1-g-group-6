@@ -160,7 +160,7 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
-    def test_new_user_path(self, sign_up_list):
+    def test_new_user_path(self):
         """
         Test when a new user: opens the website it loads correctly,
                             signs up successfully,
@@ -201,10 +201,9 @@ class Test1:
         self.driver.find_element(By.ID, "nav-dashboard-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/dashboard/'
 
-        # Select the Line graph on the page
+        # Test if map is showing
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "react-select-2--value-item").send_keys("Line")
-        assert "Line Chart" in self.driver.find_element(By.ID, "line_row")
+        assert "Map" in self.driver.find_element(By.ID, "map_row")
 
         # Click on blog page
         self.driver.implicitly_wait(5)
