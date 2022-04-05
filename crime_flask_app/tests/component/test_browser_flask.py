@@ -273,14 +273,9 @@ class Test1:
         self.driver.find_element(By.ID, "my_post-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/posts/pepe1'
 
-        # Click edit post
-        self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "post_dropdown-btn").click
-        self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "edit_btn_li").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/edit-post/1'
-
         # Edit the post
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/edit-post/1')
         edit_title = "Pepe Edited a post"
         edit_text = "Pepe is editing babyyy"
         self.driver.find_element(By.ID, "title").send_keys(edit_title)
