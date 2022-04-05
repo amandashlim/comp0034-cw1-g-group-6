@@ -45,7 +45,45 @@ class Test1:
         # Assert success message is flashed on the index page
         message = self.driver.find_element(By.ID, "success-flash").text
         assert "User created!" in message
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
 
+    def test_signup_passwords_not_matching(self):
+        """
+        Test that a user can create an account using the signup form if all fields are filled out correctly,
+        and that they are redirected to the index page.
+        """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click signup menu link
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-signup-btn").click()
+
+
+        # Test person data
+        email = "sterling.archer@isis.com"
+        username = "The Duchess"
+        password1 = "DangerZone"
+        password2 = "Phraaaaaasing"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "username").send_keys(username)
+        self.driver.find_element(By.ID, "password1").send_keys(password1)
+        self.driver.find_element(By.ID, "password2").send_keys(password2)
+        self.driver.find_element(By.ID, "btn-signup").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/'
+
+        # Assert success message is flashed on the index page
+        message = self.driver.find_element(By.ID, "error-flash").text
+        assert "Passwords don't match!" in message
 
 def test_login_succeeds(chrome_driver, run_app):
     """
