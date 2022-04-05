@@ -220,8 +220,8 @@ class Test1:
         self.driver.implicitly_wait(5)
         title = "This is a post title"
         content = "This is the content"
-        self.driver.find_element(By.ID, "title-text").send_keys(title)
-        self.driver.find_element(By.ID, "content-text").send_keys(content)
+        self.driver.find_element(By.ID, "title").send_keys(title)
+        self.driver.find_element(By.ID, "text").send_keys(content)
         self.driver.find_element(By.ID, "post-btn").click()
 
         # Check if the post is created
