@@ -109,7 +109,7 @@ class Test1:
         # Fill in registration form
         self.driver.find_element(By.ID, "email").send_keys(email)
         self.driver.find_element(By.ID, "password").send_keys(password)
-        self.driver.find_element(By.ID, "btn-signup").click()
+        self.driver.find_element(By.ID, "btn-login").click()
 
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
@@ -138,6 +138,7 @@ class Test1:
 
         # Test person data
         for i in range(0, len(sign_up_list['email'])):
+            print(i)
             email = sign_up_list['email'][i]
             username = sign_up_list['username'][i]
             password1 = sign_up_list['password1'][i]
