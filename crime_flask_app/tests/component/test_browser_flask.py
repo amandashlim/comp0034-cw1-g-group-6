@@ -172,7 +172,7 @@ class Test1:
         """
         Test when a new user: opens the website it loads correctly,
                             signs up successfully,
-                            opens the dashapp and looks at the line chart,
+                            opens the dashapp and looks at the map chart,
                             and posts a new blog post asking a question
         """
         # Go to the home page
