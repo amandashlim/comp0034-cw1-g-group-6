@@ -30,22 +30,16 @@ def test_no_login_page_invalid(test_client, app_paths_login):
         assert response.status_code in [302,308]
 
 
-def test_dashboard_navigation(client):
+def test_dashboard_dash_render(client):
     """
     GIVEN a user is logged in
     WHEN the user accesses the dashboard page
-    THEN the links to the login, blog, home, logout, my_account and user_posts should be in the navigation bar
+    THEN the webpage should display the render of the dash app
     """
     with client:
         client.post('/login',
                     data = dict(email='pepe1@gmail.com', password='123456'),
                     follow_redirects=True)
-        access_dashboard = client.get("/dashboard")
+        access_dashboard = client.get("/dashboard/")
         html = access_dashboard.data.decode()
-        print(access_dashboard.data)
-        #assert " <a href=\"/dashboard/\">login</a>" in html
-        #assert " <a href=\"/dashboard/\">blog</a>" in html
-        #assert " <a href=\"/dashboard/\">home</a>" in html
-        #assert " <a href=\"/dashboard/\">logout</a>" in html
-        #assert " <a href=\"/dashboard/\">my_account</a>" in html
-        #assert " <a href=\"/dashboard/\">user_posts</a>" in html
+        assert '<script id="_dash-renderer" type="application/javascript">var renderer = new DashRenderer();</script>' in html
