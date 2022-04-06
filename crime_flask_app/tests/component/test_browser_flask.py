@@ -115,17 +115,15 @@ class Test1:
         self.driver.implicitly_wait(10)
         assert self.driver.current_url == 'http://127.0.0.1:5000/home'
 
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "Logged in!" in message
+
         # Click on my account to see if logged in
         self.driver.find_element(By.ID, "my_account-btn").click()
         self.driver.implicitly_wait(10)
         assert self.driver.current_url == "http://127.0.0.1:5000/pepe1"
         user_card = self.driver.find_element(By.ID, "user_info_card").text
         assert email in user_card
-
-        # Assert success message is flashed on the index page
-        message = self.driver.find_element(By.ID, "success-flash").text
-        assert "Logged in!" in message
-
 
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
