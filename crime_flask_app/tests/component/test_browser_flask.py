@@ -509,7 +509,6 @@ class Test1:
         # Test person data
         email = "amanda@gmail.com"
         username = "amanda"
-        # id = 10
         new_email = "notamanda@gmail.com"
         password = "amanda2"
 
@@ -520,6 +519,7 @@ class Test1:
 
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
+        print(self.driver.find_element(By.ID, "error-flash").text)
         assert self.driver.current_url == 'http://127.0.0.1:5000/home'
 
         # Goto my account page for amanda
