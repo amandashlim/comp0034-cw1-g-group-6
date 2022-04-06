@@ -361,7 +361,7 @@ class Test1:
 
         # Test person data
         email = "amanda@gmail.com"
-        old_username = "amanda"
+        # old_username = "amanda"
         # id = 10
         new_username = "notamanda"
         password = "amanda2"
@@ -382,7 +382,7 @@ class Test1:
 
         # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "update-profile-btn").click()
+        self.driver.find_element(By.ID, "my-account-update-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
 
         # Fill in update profile form, changing ONLY username
@@ -398,8 +398,8 @@ class Test1:
 
         # Check username element on my account has updated
         username_shown = self.driver.find_element(By.ID, "username").text
-        assert username_shown is not "amanda" # Check that username is no longer the old username
-        assert username_shown is "notamanda" # Check that it has changed to the username entered
+        assert username_shown != "amanda"  # Check that username is no longer the old username
+        assert username_shown == "notamanda"  # Check that it has changed to the username entered
 
         self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
@@ -438,7 +438,7 @@ class Test1:
 
         # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "update-profile-btn").click()
+        self.driver.find_element(By.ID, "my-account-update-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
 
         # Fill in update profile form, changing ONLY email
@@ -446,15 +446,80 @@ class Test1:
         self.driver.find_element(By.ID, "username").send_keys(username)
         self.driver.find_element(By.ID, "update-submit-btn").click()
 
+        # Goto my account page for amanda
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/amanda'
+
         # Check that email element on my account has updated
         email_shown = self.driver.find_element(By.ID, "email").text
-        assert email_shown is not "amanda@gmail.com"  # Check that it hasn't stayed the same
-        assert email_shown is "notamanda@gmail.com"  # Check that it has changed
+        assert email_shown != "amanda@gmail.com"  # Check that it hasn't stayed the same
+        assert email_shown == "notamanda@gmail.com"  # Check that it has changed
         
         # Logout
         self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
+
+
+    def test_password_updates(self):
+        """
+        GIVEN a user has an account
+        WHEN the user goes to change his password on the my account page
+        THEN the password should be changed and updated to the new one
+        """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click login button
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "sp@email.com"
+        password = "azerty"
+        new_password = "qsdfgh"
+
+        # Fill in login form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Goto my account page for amanda
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/spo'
+
+        # Go to change password
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my-account-changepass-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/change/password/11'
+
+        # Fill in update profile form, changing ONLY username
+        self.driver.find_element(By.ID, "new_pass1").send_keys(new_password)
+        self.driver.find_element(By.ID, "new_pass2").send_keys(new_password)
+        self.driver.find_element(By.ID, "changepass-btn").click()
+
+        # Test that the username was changed
+        # Goto my account page for amanda, checking that the URL is different
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/spo'
+
+        # Check username element on my account has updated
+        password_account = self.driver.find_element(By.ID, "password").text
+        assert password_account != "azerty"  # Check that password is no longer the old password
+        assert password_account == "qsdfgh"  # Check that it has changed to the new password entered
+
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
 
 def document_initialised(driver):
     return driver.execute_script("return initialised")
