@@ -172,6 +172,52 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
+    def test_user_cant_access_others_account(self):
+        """
+        Test that a user can create an account using the signup form if all fields are filled out correctly,
+        and that they are redirected to the index page.
+        """
+        # Check if user is loged in
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/home')
+
+        # Click signup menu link
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-signup-btn").click()
+
+        # Test person data
+        email = "evil.pepe@pepe.scam"
+        username = "evil_pepe_haha"
+        password1 = "GetRekt"
+        password2 = "GetRekt"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "username").send_keys(username)
+        self.driver.find_element(By.ID, "password1").send_keys(password1)
+        self.driver.find_element(By.ID, "password2").send_keys(password2)
+        self.driver.find_element(By.ID, "btn-signup").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Assert success message is flashed on the index page
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "User created!" in message
+
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/pepe1')
+        user_card = self.driver.find_element(By.ID, "user_info_card").text
+        assert "pepe1@gmail.com" not in user_card
+
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
+
     def test_signup_errors(self, sign_up_list):
         """
         Test that when a user tryes to sign up with email thats already in use,
