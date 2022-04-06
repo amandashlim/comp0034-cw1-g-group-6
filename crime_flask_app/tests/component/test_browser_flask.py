@@ -488,9 +488,9 @@ class Test1:
         assert self.driver.current_url == 'http://127.0.0.1:5000/notamanda'
 
         # Check username element on my account has updated
-        username_shown = self.driver.find_element(By.ID, "username").text
-        assert username_shown != "amanda"  # Check that username is no longer the old username
-        assert username_shown == "notamanda"  # Check that it has changed to the username entered
+        username_shown = self.driver.find_element(By.ID, "account_user_name").text
+        assert "amanda" not in username_shown  # Check that username is no longer the old username
+        assert "notamanda" in username_shown  # Check that it has changed to the username entered
 
         self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
@@ -544,9 +544,9 @@ class Test1:
         assert self.driver.current_url == 'http://127.0.0.1:5000/amanda'
 
         # Check that email element on my account has updated
-        email_shown = self.driver.find_element(By.ID, "email").text
-        assert email_shown != "amanda@gmail.com"  # Check that it hasn't stayed the same
-        assert email_shown == "notamanda@gmail.com"  # Check that it has changed
+        email_shown = self.driver.find_element(By.ID, "account_user_email").text
+        assert "amanda@gmail.com" not in email_shown # Check that it hasn't stayed the same
+        assert "notamanda@gmail.com" in email_shown # Check that it has changed
         
         # Logout
         self.driver.implicitly_wait(5)
@@ -610,6 +610,7 @@ class Test1:
         self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
+
 
 
 def document_initialised(driver):
