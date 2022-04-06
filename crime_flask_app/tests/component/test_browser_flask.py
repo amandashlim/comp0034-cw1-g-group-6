@@ -465,7 +465,7 @@ class Test1:
     def test_password_updates(self):
         """
         GIVEN a user has an account
-        WHEN the user goes to change his password on the my account page
+        WHEN the user goes to change his password on the account page
         THEN the password should be changed and updated to the new one
         """
         # Go to the home page
@@ -500,13 +500,12 @@ class Test1:
         self.driver.find_element(By.ID, "my-account-changepass-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/change/password/11'
 
-        # Fill in update profile form, changing ONLY username
-        self.driver.find_element(By.ID, "new_pass1").send_keys(new_password)
-        self.driver.find_element(By.ID, "new_pass2").send_keys(new_password)
+        # Fill in change password form with matching new passwords
+        self.driver.find_element(By.ID, "new-pass1").send_keys(new_password)
+        self.driver.find_element(By.ID, "new-pass2").send_keys(new_password)
         self.driver.find_element(By.ID, "changepass-btn").click()
 
-        # Test that the username was changed
-        # Goto my account page for amanda, checking that the URL is different
+        # Test that the password was changed
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my_account-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/spo'
