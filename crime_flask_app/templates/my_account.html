@@ -1,8 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-<!-- If the user is viewing their own profile -->
-{% if id_to_update.id == current_user.id %}
-
 <h1>My Account</h1>
 <br/>
 <!--User information card -->
@@ -34,14 +31,6 @@
 
 <br/>
 <br/>
-
-<!--If the user tries to view someone else's profile via typing in the URL -->
-{% else %}
- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-	 Sorry! You Can't View This User...
-	 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
- </div>
-<h2>Access Denied!</h2>
 
 {% endif %}
 
