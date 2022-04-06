@@ -483,6 +483,7 @@ class Test1:
         # Goto my account page for amanda, checking that the URL is different
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my_account-btn").click()
+        self.driver.implicitly_wait(5)
         assert self.driver.current_url == 'http://127.0.0.1:5000/notamanda'
 
         # Check username element on my account has updated
