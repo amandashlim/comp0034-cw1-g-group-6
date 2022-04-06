@@ -16,16 +16,20 @@
         </p>
 
         <!-- Logout button -->
-        <a href="{{ url_for('auth.logout')}}" class="btn btn-sm btn-secondary">Logout</a>
+        <a href="{{ url_for('auth.logout')}}" class="btn btn-sm btn-secondary"
+           id="my-account-logout-btn">Logout</a>
 
         <!-- Edit profile button -->
-        <a href="{{ url_for('views.update', id=user.id)}}" class="btn btn-sm btn-primary">Update Profile</a>
+        <a href="{{ url_for('views.update', id=user.id)}}" class="btn btn-sm btn-primary"
+           id="my-account-update-btn">Update Profile</a>
 
         <!-- Change password button -->
-        <a href="{{ url_for('views.changepassword', id=user.id)}}" class="btn btn-sm btn-primary">Change Password</a>
+        <a href="{{ url_for('views.changepassword', id=user.id)}}" class="btn btn-sm btn-primary"
+           id="my-account-changepass-btn">Change Password</a>
 
         <!-- Delete profile button -->
-        <a href="{{ url_for('views.delete', id=user.id)}}" class="btn btn-sm btn-danger">Delete Profile</a>
+        <a href="{{ url_for('views.delete', id=user.id)}}" class="btn btn-sm btn-danger"
+           id="my-account-deleteprofile-btn">Delete Profile</a>
     </div>
 </div>
 
