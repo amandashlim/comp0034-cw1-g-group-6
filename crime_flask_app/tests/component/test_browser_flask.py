@@ -501,31 +501,35 @@ class Test1:
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/')
 
-        # Click login button
-        # See https://www.selenium.dev/documentation/webdriver/waits/
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "nav-login-btn").click()
+        self.driver.find_element(By.ID, "nav-signup-btn").click()
 
         # Test person data
-        email = "amanda@gmail.com"
-        username = "amanda"
-        new_email = "notamanda@gmail.com"
-        password = "amanda2"
+        email = "victor.chaos@nft.heaven"
+        username = "Butters"
+        password1 = "FuckThemWithSomeNFTs"
+        password2 = "FuckThemWithSomeNFTs"
+        new_email = "butters.stotch@south.park"
 
-        # Fill in login form
+        # Fill in registration form
         self.driver.find_element(By.ID, "email").send_keys(email)
-        self.driver.find_element(By.ID, "password").send_keys(password)
-        self.driver.find_element(By.ID, "btn-login").click()
+        self.driver.find_element(By.ID, "username").send_keys(username)
+        self.driver.find_element(By.ID, "password1").send_keys(password1)
+        self.driver.find_element(By.ID, "password2").send_keys(password2)
+        self.driver.find_element(By.ID, "btn-signup").click()
 
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
-        print(self.driver.find_element(By.ID, "error-flash").text)
         assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Assert success message is flashed on the index page
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "User created!" in message
 
         # Goto my account page for amanda
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my_account-btn").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/amanda'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/Butters'
 
         # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
@@ -541,12 +545,12 @@ class Test1:
         # Goto my account page for amanda
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my_account-btn").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/amanda'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/Butters'
 
         # Check that email element on my account has updated
         email_shown = self.driver.find_element(By.ID, "account_user_email").text
-        assert "amanda@gmail.com" != email_shown # Check that it hasn't stayed the same
-        assert "notamanda@gmail.com" == email_shown # Check that it has changed
+        assert "victor.chaos@nft.heaven" != email_shown # Check that it hasn't stayed the same
+        assert "butters.stotch@south.park" == email_shown # Check that it has changed
         
         # Logout
         self.driver.implicitly_wait(5)
