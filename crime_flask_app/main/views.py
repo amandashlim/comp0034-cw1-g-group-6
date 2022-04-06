@@ -82,13 +82,13 @@ def update(id):
                                user=current_user)
 
 # Route for changing password
-@views.route("/change/password/<username>", methods=['POST','GET'])
+@views.route("/change/password/<int:id>", methods=['POST','GET'])
 def changepassword(id):
     '''Updates the record for a user. ID refers to the user id'''
     form = UserForm()
     # Define which user to update
     id_to_update = User.query.get_or_404(id)
-    password_to_update = User.query.get_or_404(id)
+    password_to_update = User.query.get_or_404(password)
 
     # If they fill out the form
     if request.method == "POST":
@@ -102,7 +102,7 @@ def changepassword(id):
             flash("The passwords do not match. Please try again.", "danger")
             return render_template("change_password.html",
                                    form=form,
-                                   id=id_to_update,
+                                   id_to_update=id_to_update,
                                    user=current_user)
         # If the new password is entered twice correctly
         elif new == confirm:
