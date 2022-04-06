@@ -63,39 +63,20 @@ def update(id):
         # These variables store the updated username and or email
         id_to_update.username = request.form["username"]
         id_to_update.email = request.form["email"]
-
-        email_exists = User.query.filter_by(email=id_to_update.email).first()
-        username_exists = User.query.filter_by(username=id_to_update.username).first()
-
-        # If the user tries to change their email to another user's email
-        if email_exists and current_user.email != id_to_update.email:
-            flash('Email is already in use.', category='error')
+        # Passing the variables to the database
+        try:
+            db.session.commit()
+            flash("User Updated Successfully!")
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update,
                                    user=current_user)
-        # If the user tries to change their username to another user's username
-        elif username_exists and current_user.username != id_to_update.username:
-            flash('Username is already in use.', category='error')
+        except:
+            flash("Looks like something went wrong... try again!")
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update,
                                    user=current_user)
-        else:
-            # Passing the variables to the database
-            try:
-                db.session.commit()
-                flash("User Updated Successfully!")
-                return render_template("update.html",
-                                       form=form,
-                                       id_to_update=id_to_update,
-                                       user=current_user)
-            except:
-                flash("Looks like something went wrong... try again!")
-                return render_template("update.html",
-                                       form=form,
-                                       id_to_update=id_to_update,
-                                       user=current_user)
     # If they are not posting, just visiting the page
     else:
         return render_template("update.html",
