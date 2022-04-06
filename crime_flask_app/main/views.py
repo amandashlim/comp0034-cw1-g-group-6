@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_required, current_user
 from crime_flask_app.models import Post, User, UserForm, PostForm, Comment, Like, Dislike, Like_Comment
 from crime_flask_app import db
+from werkzeug.security import generate_password_hash
 
 views = Blueprint("views", __name__)
 
@@ -102,12 +103,15 @@ def changepassword(id):
                                    form=form,
                                    id_to_update=id_to_update,
                                    user=current_user)
+        # If the newly entered password is too short
+        elif len(new) < 6:
+            flash('Password is too short.', category='error')
 
         # If the new password is entered twice correctly
         else:
             # Pass the new password in hashed form to the database
             try:
-                db.session.add(current_user.set_password(new))
+                id_to_update.password=generate_password_hash(new)
                 db.session.commit()
                 flash("Password Updated Successfully!")
                 return render_template("change_password.html",
