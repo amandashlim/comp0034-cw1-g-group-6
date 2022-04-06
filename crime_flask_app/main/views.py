@@ -7,6 +7,7 @@ views = Blueprint("views", __name__)
 
 
 @views.route("/")
+# Home page
 @views.route("/home")
 def home():
     if current_user.is_authenticated:
@@ -16,14 +17,14 @@ def home():
     return render_template("home.html", user=current_user, posts=posts)
 
 
-# Route for the my account page
+# My Account page
 @views.route("/<username>")
 @login_required
 def user(username):
     posts = Post.query.all()
     return render_template("my_account.html", user=current_user, posts=posts, username=username)
 
-# Route for deleting a database record
+# Deleting a database record
 @views.route('/delete/<int:id>')
 def delete(id):
     id_to_delete = User.query.get_or_404(id)
@@ -46,7 +47,7 @@ def delete(id):
                                id_to_delete=id_to_delete,
                                user=current_user)
 
-# Route for updating a database record
+# Updating a database record
 @views.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     '''Updates the record for a user. ID refers to the user id'''
@@ -81,14 +82,13 @@ def update(id):
                                id_to_update=id_to_update,
                                user=current_user)
 
-# Route for changing password
+# Changing password
 @views.route("/change/password/<int:id>", methods=['POST','GET'])
 def changepassword(id):
     '''Updates the record for a user. ID refers to the user id'''
     form = UserForm()
     # Define which user to update
     id_to_update = User.query.get_or_404(id)
-    flash(password_to_update)
 
     # If they fill out the form
     if request.method == "POST":
@@ -97,15 +97,17 @@ def changepassword(id):
 
         # If the new password and the new password entered again do not match
         if new != confirm:
-            flash("The passwords do not match. Please try again.", "danger")
+            flash("The passwords do not match. Please try again.", category="error")
             return render_template("change_password.html",
                                    form=form,
                                    id_to_update=id_to_update,
                                    user=current_user)
+
         # If the new password is entered twice correctly
         else:
-            # Passing the variables to the database
+            # Pass the new password in hashed form to the database
             try:
+                db.session.add(current_user.set_password(new))
                 db.session.commit()
                 flash("Password Updated Successfully!")
                 return render_template("change_password.html",
@@ -113,7 +115,7 @@ def changepassword(id):
                                        id_to_update=id_to_update,
                                        user=current_user)
             except:
-                flash("Looks like something went wrong... try again!")
+                flash("Looks like something went wrong... try again!", category="error")
                 return render_template("change_password.html",
                                        form=form,
                                        id_to_update=id_to_update,

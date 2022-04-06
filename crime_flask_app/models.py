@@ -4,6 +4,7 @@ from sqlalchemy.sql import func
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from werkzeug.security import generate_password_hash
 
 # User Class
 class User(db.Model, UserMixin):
@@ -17,6 +18,10 @@ class User(db.Model, UserMixin):
     likes = db.relationship('Like', backref='user', passive_deletes=True)
     dislikes = db.relationship('Dislike', backref='user', passive_deletes=True)
     comment_likes = db.relationship("Like_Comment", backref='user', passive_deletes=True)
+
+    # Below our user model, we will create a hashing function to set a password
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
 
 # Form class to be able to update users in the database
 class UserForm(FlaskForm):
