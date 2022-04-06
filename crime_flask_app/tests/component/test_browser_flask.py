@@ -360,8 +360,11 @@ class Test1:
         self.driver.find_element(By.ID, "nav-login-btn").click()
 
         # Test person data
-        email = "pepe1@gmail.com"
-        password = "123456"
+        email = "amanda@gmail.com"
+        old_username = "amanda"
+        # id = 10
+        new_username = "notamanda"
+        password = "amanda2"
 
         # Fill in login form
         self.driver.find_element(By.ID, "email").send_keys(email)
@@ -372,15 +375,35 @@ class Test1:
         self.driver.implicitly_wait(10)
         assert self.driver.current_url == 'http://127.0.0.1:5000/home'
 
-        # Goto my account page for pepe1
+        # Goto my account page for amanda
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my_account-btn").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/pepe1'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/amanda'
 
-        # Go to update profile page
+        # Go to update profile page for pepe1
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "update-profile-btn").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/update/1'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
+
+        # Fill in update profile form, changing ONLY username
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "username").send_keys(new_username)
+        self.driver.find_element(By.ID, "update-submit-btn").click()
+
+        # Test that the username was changed
+        # Goto my account page for amanda, checking that the URL is different
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/notamanda'
+
+        # Check username element on my account has updated
+        username_shown = self.driver.find_element(By.ID, "username").text
+        assert username_shown is not "amanda" # Check that username is no longer "amanda"
+        assert username_shown is "notamanda" # Check that it is "notamanda"
+
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
 
     # def test_email_updates(self):
         # test test test
