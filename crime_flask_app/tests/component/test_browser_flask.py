@@ -361,7 +361,7 @@ class Test1:
 
         # Test person data
         email = "amanda@gmail.com"
-        old_username = "amanda"
+        # old_username = "amanda"
         # id = 10
         new_username = "notamanda"
         password = "amanda2"
@@ -382,7 +382,7 @@ class Test1:
 
         # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "update-profile-btn").click()
+        self.driver.find_element(By.ID, "my-account-update").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
 
         # Fill in update profile form, changing ONLY username
@@ -438,7 +438,7 @@ class Test1:
 
         # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "update-profile-btn").click()
+        self.driver.find_element(By.ID, "my-account-update").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
 
         # Fill in update profile form, changing ONLY email
