@@ -22,5 +22,8 @@ However, if you wish to run the predictions yourself feel free to uncomment them
 
 ### Link to Video
 
-Here is the link for a video showcasing our dash app:
+Here is the link for a video showcasing our DASH app:
 [https://youtu.be/ufafiY_zjP0](https://youtu.be/ufafiY_zjP0)
+
+Here is the link for a video showcasing our FLASK app:
+[https://youtu.be/add](https://youtu.be/add)
