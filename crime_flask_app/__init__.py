@@ -39,22 +39,10 @@ def create_app():
 
     return app
 
-def create_socketio():
-    app = create_app()
-    socketio = SocketIO(app)
-    return socketio
-
-socketio = create_socketio()
-
-@socketio.on('my event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json))
-    socketio.emit('my response', json, callback=messageReceived)
-
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
-
-
 def create_database(app):
     if not path.exists("crime_flask_app/" + DB_NAME):
         db.create_all(app=app)
+
+
+
+

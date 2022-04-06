@@ -3,7 +3,6 @@ from flask_login import login_required, current_user
 from crime_flask_app.models import Post, User, UserForm, PostForm, Comment, Like, Dislike, Like_Comment
 from crime_flask_app import db
 from werkzeug.security import generate_password_hash
-from crime_flask_app import create_socketio
 
 views = Blueprint("views", __name__)
 
@@ -289,17 +288,7 @@ def comment_like(comment_id):
 
     return redirect(url_for("views.blog"))
 
-@views.route("/chat")
+@views.route("/chat", methods = ["GET", "POST"])
 @login_required
 def chat():
     return render_template("chat.html", user=current_user)
-
-# socketio = create_socketio()
-#
-# @socketio.on('my event')
-# def handle_my_custom_event(json, methods=['GET', 'POST']):
-#     print('received my event: ' + str(json))
-#     socketio.emit('my response', json, callback=messageReceived)
-#
-# def messageReceived(methods=['GET', 'POST']):
-#     print('message was received!!!')
