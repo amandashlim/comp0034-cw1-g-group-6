@@ -64,8 +64,8 @@ def update(id):
         id_to_update.username = request.form["username"]
         id_to_update.email = request.form["email"]
 
-        email_exists = User.query.filter_by(email=email).first()
-        username_exists = User.query.filter_by(username=username).first()
+        email_exists = User.query.filter_by(email=id_to_update.email).first()
+        username_exists = User.query.filter_by(username=id_to_update.username).first()
 
         if email_exists:
             flash('Email is already in use.', category='error')
