@@ -8,3 +8,4 @@ https://flask.palletsprojects.com/en/2.1.x/testing/
 https://flask.palletsprojects.com/en/1.1.x/testing/
 https://codethechange.stanford.edu/guides/guide_flask_unit_testing.html
 https://www.youtube.com/watch?v=OcD52lXq0e8
+https://youtube.com/playlist?list=PLzMcBGfZo4-nK0Pyubp7yIG0RdXp6zklu
