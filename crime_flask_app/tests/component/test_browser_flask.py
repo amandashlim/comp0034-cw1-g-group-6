@@ -380,7 +380,7 @@ class Test1:
         self.driver.find_element(By.ID, "my_account-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/amanda'
 
-        # Go to update profile page for pepe1
+        # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "update-profile-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
@@ -405,7 +405,56 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
-    # def test_email_updates(self):
-        # test test test
+    def test_email_updates(self):
+        """Test that a user can log in, enter in a new email through the form and their email will update"""
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click login button
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "amanda@gmail.com"
+        username = "amanda"
+        # id = 10
+        new_email = "notamanda@gmail.com"
+        password = "amanda2"
+
+        # Fill in login form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Goto my account page for amanda
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/amanda'
+
+        # Go to update profile page for amanda
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "update-profile-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
+
+        # Fill in update profile form, changing ONLY email
+        self.driver.find_element(By.ID, "email").send_keys(new_email)
+        self.driver.find_element(By.ID, "username").send_keys(username)
+        self.driver.find_element(By.ID, "update-submit-btn").click()
+
+        # Check that email element on my account has updated
+        username_shown = self.driver.find_element(By.ID, "email").text
+        assert username_shown is not "amanda@gmail.com"  # Check that it hasn't stayed the same
+        assert username_shown is "notamanda@gmail.com"  # Check that it has changed
+        
+        # Logout
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
 def document_initialised(driver):
     return driver.execute_script("return initialised")
