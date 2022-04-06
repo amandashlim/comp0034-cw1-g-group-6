@@ -32,7 +32,7 @@ def delete(id):
     id_to_delete = User.query.get_or_404(id)
     form = UserForm()
 
-    if current_user.id == id_to_delete:
+    if current_user.id == id_to_delete.id:
         db.session.delete(id_to_delete)
         db.session.commit()
         flash("User deleted successfully!")
