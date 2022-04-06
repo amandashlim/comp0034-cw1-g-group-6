@@ -294,10 +294,12 @@ def comment_like(comment_id):
 def chat():
     return render_template("chat.html", user=current_user)
 
-@create_socketio.on('my event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json))
-    create_socketio.emit('my response', json, callback=messageReceived)
-
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
+# socketio = create_socketio()
+#
+# @socketio.on('my event')
+# def handle_my_custom_event(json, methods=['GET', 'POST']):
+#     print('received my event: ' + str(json))
+#     socketio.emit('my response', json, callback=messageReceived)
+#
+# def messageReceived(methods=['GET', 'POST']):
+#     print('message was received!!!')

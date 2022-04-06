@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager, login_required
 import dash
-from flask_socetio import SocketIO
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -43,6 +43,17 @@ def create_socketio():
     app = create_app()
     socketio = SocketIO(app)
     return socketio
+
+socketio = create_socketio()
+
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)
+
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
+
 
 def create_database(app):
     if not path.exists("crime_flask_app/" + DB_NAME):
