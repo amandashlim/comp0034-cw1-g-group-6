@@ -611,6 +611,88 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
+    def test_delete_another_account(self):
+        """Test that a user can signin and delete only their account"""
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-signup-btn").click()
+
+        # Test person data
+        email = "i.live.in@hot.dog"
+        username = "cartman"
+        password1 = "FuckYouUncleKyle"
+        password2 = "FuckYouUncleKyle"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "username").send_keys(username)
+        self.driver.find_element(By.ID, "password1").send_keys(password1)
+        self.driver.find_element(By.ID, "password2").send_keys(password2)
+        self.driver.find_element(By.ID, "btn-signup").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Assert success message is flashed on the index page
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "User created!" in message
+
+        # Test user cant delete another account
+        self.driver.get('http://127.0.0.1:5000/delete/2')
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/delete/2'
+        message = self.driver.find_element(By.ID,"error-flash").text
+        assert "Oops! You do not have permission to delete this user." in message
+
+        # Logout
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
+    def test_delete_another_account(self):
+        """Test that a user can signin and delete only their account"""
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click login button
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "i.live.in@hot.dog"
+        password = "FuckYouUncleKyle"
+
+        # Fill in login form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+
+        # Test user can delete his own account
+        # Goto my account page
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/cartman'
+
+        # Go to delete account
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my-account-deleteprofile-btn").click()
+        self.driver.implicitly_wait(5)
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "User deleted successfully!" in message
+
+        # Logout
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
 
 
 def document_initialised(driver):

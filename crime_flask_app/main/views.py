@@ -42,7 +42,7 @@ def delete(id):
                                id_to_delete=id_to_delete,
                                user=current_user)
     else:
-        flash("Oops! You do not have permission to delete this user.")
+        flash("Oops! You do not have permission to delete this user.",category="error")
         # Stays on the my account page
         return render_template("my_account.html",
                                form=form,
@@ -66,13 +66,13 @@ def update(id):
         # Passing the variables to the database
         try:
             db.session.commit()
-            flash("User Updated Successfully!")
+            flash("User Updated Successfully",category="success")
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update,
                                    user=current_user)
         except:
-            flash("Looks like something went wrong... try again!")
+            flash("Looks like something went wrong... try again!",category="error")
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update,
