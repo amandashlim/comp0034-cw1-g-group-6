@@ -93,7 +93,7 @@ def changepassword(id):
     # If they fill out the form
     if request.method == "POST":
         new = request.form['new_password']
-        confirm = request.form['confirm_password'
+        confirm = request.form['confirm_password']
 
         # If the new password and the new password entered again do not match
         if new != confirm:
@@ -103,7 +103,7 @@ def changepassword(id):
                                    id_to_update=id_to_update,
                                    user=current_user)
         # If the new password is entered twice correctly
-        elif new == confirm:
+        else:
             # Passing the variables to the database
             try:
                 db.session.commit()
