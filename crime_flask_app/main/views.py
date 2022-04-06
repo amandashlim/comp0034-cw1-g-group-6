@@ -32,7 +32,7 @@ def delete(id):
     id_to_delete = User.query.get_or_404(id)
     form = UserForm()
 
-    try:
+    if current_user.id == id_to_delete:
         db.session.delete(id_to_delete)
         db.session.commit()
         flash("User deleted successfully!")
@@ -41,8 +41,8 @@ def delete(id):
                                form=form,
                                id_to_delete=id_to_delete,
                                user=current_user)
-    except:
-        flash("Oops! There was a problem deleting the user. Please try again.")
+    else:
+        flash("Oops! You do not have permission to delete this user.")
         # Stays on the my account page
         return render_template("my_account.html",
                                form=form,
@@ -109,6 +109,10 @@ def changepassword(id):
         # If the newly entered password is too short
         elif len(new) < 6:
             flash('Password is too short.', category='error')
+            return render_template("change_password.html",
+                                   form=form,
+                                   id_to_update=id_to_update,
+                                   user=current_user)
 
         # If the new password is entered twice correctly
         else:
