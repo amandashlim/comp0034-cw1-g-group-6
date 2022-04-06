@@ -398,8 +398,8 @@ class Test1:
 
         # Check username element on my account has updated
         username_shown = self.driver.find_element(By.ID, "username").text
-        assert username_shown is not "amanda" # Check that username is no longer the old username
-        assert username_shown is "notamanda" # Check that it has changed to the username entered
+        assert username_shown != "amanda"  # Check that username is no longer the old username
+        assert username_shown == "notamanda"  # Check that it has changed to the username entered
 
         self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
@@ -448,8 +448,8 @@ class Test1:
 
         # Check that email element on my account has updated
         email_shown = self.driver.find_element(By.ID, "email").text
-        assert email_shown is not "amanda@gmail.com"  # Check that it hasn't stayed the same
-        assert email_shown is "notamanda@gmail.com"  # Check that it has changed
+        assert email_shown != "amanda@gmail.com"  # Check that it hasn't stayed the same
+        assert email_shown == "notamanda@gmail.com"  # Check that it has changed
         
         # Logout
         self.driver.implicitly_wait(5)
