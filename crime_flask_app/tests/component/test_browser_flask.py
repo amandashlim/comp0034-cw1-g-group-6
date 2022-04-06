@@ -534,7 +534,6 @@ class Test1:
         # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my-account-update-btn").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
 
         # Fill in update profile form, changing ONLY email
         self.driver.find_element(By.ID, "email").clear()
