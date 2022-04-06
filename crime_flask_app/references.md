@@ -25,3 +25,5 @@ www.youtube.com. (n.d.). How To Update A Record In The Database - Flask Fridays 
 www.youtube.com. (n.d.). Testing Flask Applications with pytest - Patrick Kennedy. [online] Available at: https://www.youtube.com/watch?v=OcD52lXq0e8 [Accessed 6 Apr. 2022].
 
 www.youtube.com. (n.d.). User Change Password Flask MySQL Part : 29. [online] Available at: https://www.youtube.com/watch?v=b7BSs4R4eDI&list=PLFeM1LroNOIVmhh8F6kCKgrk1_n5AYzA-&index=25&ab_channel=BestSolutionOnline [Accessed 6 Apr. 2022].
+
+Alla, S. (2018). Building your first Chat Application using Flask in 7 minutes. [online] Medium. Available at: https://codeburst.io/building-your-first-chat-application-using-flask-in-7-minutes-f98de4adfa5d.
