@@ -382,7 +382,7 @@ class Test1:
 
         # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "my-account-update").click()
+        self.driver.find_element(By.ID, "my-account-update-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
 
         # Fill in update profile form, changing ONLY username
@@ -438,13 +438,18 @@ class Test1:
 
         # Go to update profile page for amanda
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "my-account-update").click()
+        self.driver.find_element(By.ID, "my-account-update-btn").click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/update/10'
 
         # Fill in update profile form, changing ONLY email
         self.driver.find_element(By.ID, "email").send_keys(new_email)
         self.driver.find_element(By.ID, "username").send_keys(username)
         self.driver.find_element(By.ID, "update-submit-btn").click()
+
+        # Goto my account page for amanda
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/amanda'
 
         # Check that email element on my account has updated
         email_shown = self.driver.find_element(By.ID, "email").text
