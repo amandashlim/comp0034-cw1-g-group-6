@@ -476,6 +476,7 @@ class Test1:
 
         # Fill in update profile form, changing ONLY username
         self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "username").clear_field()
         self.driver.find_element(By.ID, "username").send_keys(new_username)
         self.driver.find_element(By.ID, "update-submit-btn").click()
 
