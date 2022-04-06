@@ -50,8 +50,8 @@ class Test1:
 
     def test_signup_passwords_not_matching(self):
         """
-        Test that a user can create an account using the signup form if all fields are filled out correctly,
-        and that they are redirected to the index page.
+        Test when a user tries to signup and the inputed passwords dont match
+        theres an error message
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/logout')
@@ -89,8 +89,8 @@ class Test1:
 
     def test_login_succeeds(self):
         """
-        Test that a user can create an account using the signup form if all fields are filled out correctly,
-        and that they are redirected to the index page.
+        Test that when a user logsin with correct credentials the correct success
+        message is displayed and the user is logged in
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/logout')
@@ -115,16 +115,26 @@ class Test1:
         self.driver.implicitly_wait(10)
         assert self.driver.current_url == 'http://127.0.0.1:5000/home'
 
+        # Click on my account to see if logged in
+        self.driver.find_element(By.ID, "my_account-btn").click
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == "http://127.0.0.1:5000/pepe1"
+        user_card = self.driver.find_element(By.ID, "user_info_card").text
+        assert email in user_card
+
         # Assert success message is flashed on the index page
         message = self.driver.find_element(By.ID, "success-flash").text
         assert "Logged in!" in message
+
+
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
     def test_signup_errors(self, sign_up_list):
         """
-        Test that a user can create an account using the signup form if all fields are filled out correctly,
-        and that they are redirected to the index page.
+        Test that when a user tryes to sign up with email thats already in use,
+        or username thats already in use, or has a too short username, or the passwords dont match
+        the website will return the appropriate error message
         """
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/logout')
@@ -237,6 +247,107 @@ class Test1:
         posts = self.driver.find_element(By.ID, "posts").text
         assert "im a noob" in posts
 
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
+    def test_existing_user_edit_post(self):
+        """
+        Test when an existing user: opens the website it loads correctly,
+                           loges in successfully,
+                           views his post
+                           edits his post successfully
+        """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click signup menu link
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "pepe1@gmail.com"
+        password = "123456"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Goto user blog page
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_post-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/posts/pepe1'
+
+        # Edit the post
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/edit-post/1')
+        edit_title = "Pepe Edited a post"
+        edit_text = "Pepe is editing babyyy"
+        self.driver.find_element(By.ID, "title").send_keys(edit_title)
+        self.driver.find_element(By.ID, "text").send_keys(edit_text)
+        self.driver.find_element(By.ID, "edit_submit-btn").click()
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "Post successfully updated" in message
+
+        # Goto user posts and check if the post was edited
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_post-btn").click()
+        post_title = self.driver.find_element(By.ID, "post_1_title").text
+        post_text = self.driver.find_element(By.ID, "post_1_text").text
+        assert edit_title in post_title
+        assert edit_text in post_text
+
+
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
+    def test_existing_user_liking_a_post(self):
+        """Test when an existing user: opens the website it loads correctly,
+                                   loges in successfully,
+                                   views blog posts
+                                   likes the second post
+                                   the like counter changes
+                                   """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click signup menu link
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "pepe1@gmail.com"
+        password = "123456"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Goto user blog page
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-blog-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/blog'
+
+        # Edit the post
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "like-post-2").click()
+        self.driver.implicitly_wait(5)
+        like_counter = self.driver.find_element(By.ID, "like-counter-2").text
+        assert "1" == like_counter
+
+        self.driver.find_element(By.ID, "unlike-post-2").click()
+        self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
