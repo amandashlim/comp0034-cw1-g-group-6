@@ -128,6 +128,50 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
+    def test_logout_succeeds(self):
+        """
+        Test that when a user is logged in he can sucessfully log out
+        """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/home')
+
+        # Click signup menu link
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "pepe1@gmail.com"
+        password = "123456"
+
+        # Fill in registration form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "Logged in!" in message
+
+        # Click on logout button
+        self.driver.find_element(By.ID, "nav-logout-btn").click()
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == "http://127.0.0.1:5000/home"
+
+        # Goto account page to see if you get redirected
+        self.driver.get('http://127.0.0.1:5000/pepe1')
+        self.driver.implicitly_wait(10)
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "Please login in to access this page." in message
+
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
     def test_signup_errors(self, sign_up_list):
         """
         Test that when a user tryes to sign up with email thats already in use,
