@@ -565,49 +565,62 @@ class Test1:
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/')
 
-        # Click login button
-        # See https://www.selenium.dev/documentation/webdriver/waits/
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "nav-login-btn").click()
+        self.driver.find_element(By.ID, "nav-signup-btn").click()
 
         # Test person data
-        email = "sp@email.com"
-        password = "azerty"
-        new_password = "qsdfgh"
+        email = "clintons.killed@kobe.bryant"
+        username = "QAnon"
+        password1 = "BringDownTheDeepState"
+        password2 = "BringDownTheDeepState"
+        new_password = "TheEarthIsFlat"
 
-        # Fill in login form
+        # Fill in registration form
         self.driver.find_element(By.ID, "email").send_keys(email)
-        self.driver.find_element(By.ID, "password").send_keys(password)
-        self.driver.find_element(By.ID, "btn-login").click()
+        self.driver.find_element(By.ID, "username").send_keys(username)
+        self.driver.find_element(By.ID, "password1").send_keys(password1)
+        self.driver.find_element(By.ID, "password2").send_keys(password2)
+        self.driver.find_element(By.ID, "btn-signup").click()
 
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
         assert self.driver.current_url == 'http://127.0.0.1:5000/home'
 
-        # Goto my account page for amanda
+        # Assert success message is flashed on the index page
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "User created!" in message
+
+        # Goto my account page
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my_account-btn").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/spo'
+        assert self.driver.current_url == 'http://127.0.0.1:5000/QAnon'
 
         # Go to change password
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "my-account-changepass-btn").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/change/password/11'
 
         # Fill in change password form with matching new passwords
         self.driver.find_element(By.ID, "new-pass1").send_keys(new_password)
         self.driver.find_element(By.ID, "new-pass2").send_keys(new_password)
         self.driver.find_element(By.ID, "changepass-btn").click()
 
-        # Test that the password was changed
+        # Test that the password was changed by logging out and logging in again
         self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "my_account-btn").click()
-        assert self.driver.current_url == 'http://127.0.0.1:5000/spo'
+        self.driver.get('http://127.0.0.1:5000/logout')
 
-        # Check username element on my account has updated
-        password_account = self.driver.find_element(By.ID, "password").text
-        assert password_account != "azerty"  # Check that password is no longer the old password
-        assert password_account == "qsdfgh"  # Check that it has changed to the new password entered
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Fill in login form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(new_password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+        message = self.driver.find_element(By.ID, "success-flash").text
+        assert "Logged in!" in message
 
         self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
