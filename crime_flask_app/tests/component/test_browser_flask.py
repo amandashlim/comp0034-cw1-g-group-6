@@ -461,5 +461,64 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
+
+    def test_password_updates(self):
+        """
+        GIVEN a user has an account
+        WHEN the user goes to change his password on the account page
+        THEN the password should be changed and updated to the new one
+        """
+        # Go to the home page
+        self.driver.get('http://127.0.0.1:5000/')
+
+        # Click login button
+        # See https://www.selenium.dev/documentation/webdriver/waits/
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-login-btn").click()
+
+        # Test person data
+        email = "sp@email.com"
+        password = "azerty"
+        new_password = "qsdfgh"
+
+        # Fill in login form
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "btn-login").click()
+
+        # Assert that browser redirects to index page
+        self.driver.implicitly_wait(10)
+        assert self.driver.current_url == 'http://127.0.0.1:5000/home'
+
+        # Goto my account page for amanda
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/spo'
+
+        # Go to change password
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my-account-changepass-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/change/password/11'
+
+        # Fill in change password form with matching new passwords
+        self.driver.find_element(By.ID, "new-pass1").send_keys(new_password)
+        self.driver.find_element(By.ID, "new-pass2").send_keys(new_password)
+        self.driver.find_element(By.ID, "changepass-btn").click()
+
+        # Test that the password was changed
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "my_account-btn").click()
+        assert self.driver.current_url == 'http://127.0.0.1:5000/spo'
+
+        # Check username element on my account has updated
+        password_account = self.driver.find_element(By.ID, "password").text
+        assert password_account != "azerty"  # Check that password is no longer the old password
+        assert password_account == "qsdfgh"  # Check that it has changed to the new password entered
+
+        self.driver.implicitly_wait(5)
+        self.driver.get('http://127.0.0.1:5000/logout')
+        self.driver.implicitly_wait(5)
+
+
 def document_initialised(driver):
     return driver.execute_script("return initialised")

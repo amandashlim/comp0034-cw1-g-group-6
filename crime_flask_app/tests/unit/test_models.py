@@ -53,17 +53,3 @@ def test_heading_homepage(client):
     assert b'Visualisations Design Explanations' in response.data
 
 
-'''
-# Move to test_main (btw love the southpark references :))
-
-def test_signup_success(self):
-    info = self.create_user(email='tegridy@ily.coding',username='RandyMarsh',password1='towelie',password2='towelie')
-    self.assertEquals(info.status, "200 OK")
-    assertRedirects(info, '/home')
-
-
-    m_app = create_app()
-    with m_app.test_client() as test_client:
-        response = test_client.get(url_for('login.views'), follow_redirects=True)
-        assert request.path == url_for('home.views')
-'''
