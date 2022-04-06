@@ -88,17 +88,15 @@ def changepassword(id):
     form = UserForm()
     # Define which user to update
     id_to_update = User.query.get_or_404(id)
-    password_to_update = User.query.get_or_404(password)
+    flash(password_to_update)
 
     # If they fill out the form
     if request.method == "POST":
-        old = request.form['old_password']  # Note this is the old password that was entered into the form
         new = request.form['new_password']
-        confirm = request.form['confirm_password']
+        confirm = request.form['confirm_password'
 
-        # If the new password and the new password entered again do not match OR
-        # If the "old password" they entered is incorect
-        if new != confirm or password_to_update != old:
+        # If the new password and the new password entered again do not match
+        if new != confirm:
             flash("The passwords do not match. Please try again.", "danger")
             return render_template("change_password.html",
                                    form=form,
