@@ -6,8 +6,8 @@ from werkzeug.security import generate_password_hash
 
 views = Blueprint("views", __name__)
 
-
 @views.route("/")
+
 # Home page
 @views.route("/home")
 def home():
@@ -27,6 +27,7 @@ def user(username):
 
 # Deleting a database record
 @views.route('/delete/<int:id>')
+@login_required
 def delete(id):
     id_to_delete = User.query.get_or_404(id)
     form = UserForm()
@@ -50,6 +51,7 @@ def delete(id):
 
 # Updating a database record
 @views.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update(id):
     '''Updates the record for a user. ID refers to the user id'''
     form = UserForm()
@@ -85,6 +87,7 @@ def update(id):
 
 # Changing password
 @views.route("/change/password/<int:id>", methods=['POST','GET'])
+@login_required
 def changepassword(id):
     '''Updates the record for a user. ID refers to the user id'''
     form = UserForm()
@@ -131,6 +134,7 @@ def changepassword(id):
                                form=form,
                                id_to_update=id_to_update,
                                user=current_user)
+# User Posts page
 @views.route("/posts/<username>")
 @login_required
 def user_posts(username):
