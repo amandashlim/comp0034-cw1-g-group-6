@@ -655,7 +655,7 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
-    def test_delete_another_account(self):
+    def test_delete_account(self):
         """Test that a user can signin and delete only their account"""
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/')
