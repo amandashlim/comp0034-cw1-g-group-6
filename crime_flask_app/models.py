@@ -4,6 +4,7 @@ from sqlalchemy.sql import func
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from werkzeug.security import generate_password_hash
 
 # User Class
 class User(db.Model, UserMixin):

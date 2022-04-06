@@ -2,11 +2,13 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from flask_login import login_required, current_user
 from crime_flask_app.models import Post, User, UserForm, PostForm, Comment, Like, Dislike, Like_Comment
 from crime_flask_app import db
+from werkzeug.security import generate_password_hash
 
 views = Blueprint("views", __name__)
 
-
 @views.route("/")
+
+# Home page
 @views.route("/home")
 def home():
     if current_user.is_authenticated:
@@ -16,15 +18,16 @@ def home():
     return render_template("home.html", user=current_user, posts=posts)
 
 
-# Route for the my account page
+# My Account page
 @views.route("/<username>")
 @login_required
 def user(username):
     posts = Post.query.all()
     return render_template("my_account.html", user=current_user, posts=posts, username=username)
 
-# Route for deleting a database record
+# Deleting a database record
 @views.route('/delete/<int:id>')
+@login_required
 def delete(id):
     id_to_delete = User.query.get_or_404(id)
     form = UserForm()
@@ -46,8 +49,9 @@ def delete(id):
                                id_to_delete=id_to_delete,
                                user=current_user)
 
-# Route for updating a database record
+# Updating a database record
 @views.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update(id):
     '''Updates the record for a user. ID refers to the user id'''
     form = UserForm()
@@ -81,7 +85,56 @@ def update(id):
                                id_to_update=id_to_update,
                                user=current_user)
 
+# Changing password
+@views.route("/change/password/<int:id>", methods=['POST','GET'])
+@login_required
+def changepassword(id):
+    '''Updates the record for a user. ID refers to the user id'''
+    form = UserForm()
+    # Define which user to update
+    id_to_update = User.query.get_or_404(id)
 
+    # If they fill out the form
+    if request.method == "POST":
+        new = request.form['new_password']
+        confirm = request.form['confirm_password']
+
+        # If the new password and the new password entered again do not match
+        if new != confirm:
+            flash("The passwords do not match. Please try again.", category="error")
+            return render_template("change_password.html",
+                                   form=form,
+                                   id_to_update=id_to_update,
+                                   user=current_user)
+        # If the newly entered password is too short
+        elif len(new) < 6:
+            flash('Password is too short.', category='error')
+
+        # If the new password is entered twice correctly
+        else:
+            # Pass the new password in hashed form to the database
+            try:
+                id_to_update.password=generate_password_hash(new)
+                db.session.commit()
+                flash("Password Updated Successfully!")
+                return render_template("change_password.html",
+                                       form=form,
+                                       id_to_update=id_to_update,
+                                       user=current_user)
+            except:
+                flash("Looks like something went wrong... try again!", category="error")
+                return render_template("change_password.html",
+                                       form=form,
+                                       id_to_update=id_to_update,
+                                       user=current_user)
+
+    # If they are just visiting the page
+    else:
+        return render_template("change_password.html",
+                               form=form,
+                               id_to_update=id_to_update,
+                               user=current_user)
+# User Posts page
 @views.route("/posts/<username>")
 @login_required
 def user_posts(username):
