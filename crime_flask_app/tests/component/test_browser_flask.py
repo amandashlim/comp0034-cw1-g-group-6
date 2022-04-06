@@ -167,7 +167,7 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/pepe1')
         self.driver.implicitly_wait(10)
         message = self.driver.find_element(By.ID, "success-flash").text
-        assert "Please log in in to access this page." in message
+        assert 'Please log in to access this page.' in message
 
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
