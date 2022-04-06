@@ -64,20 +64,36 @@ def update(id):
         id_to_update.username = request.form["username"]
         id_to_update.email = request.form["email"]
 
-        # Passing the variables to the database
-        try:
-            db.session.commit()
-            flash("User Updated Successfully!")
+        email_exists = User.query.filter_by(email=email).first()
+        username_exists = User.query.filter_by(username=username).first()
+
+        if email_exists:
+            flash('Email is already in use.', category='error')
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update,
                                    user=current_user)
-        except:
-            flash("Looks like something went wrong... try again!")
+        elif username_exists:
+            flash('Username is already in use.', category='error')
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update,
                                    user=current_user)
+        else:
+            # Passing the variables to the database
+            try:
+                db.session.commit()
+                flash("User Updated Successfully!")
+                return render_template("update.html",
+                                       form=form,
+                                       id_to_update=id_to_update,
+                                       user=current_user)
+            except:
+                flash("Looks like something went wrong... try again!")
+                return render_template("update.html",
+                                       form=form,
+                                       id_to_update=id_to_update,
+                                       user=current_user)
     # If they are not posting, just visiting the page
     else:
         return render_template("update.html",
