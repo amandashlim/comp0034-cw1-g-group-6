@@ -90,6 +90,15 @@
               {{comment.text}}
                 </div>
               <div>
+                {{comment.comment_likes|length}}
+                {% if user.id in comment.comment_likes|map(attribute="author")|list%}
+                <a href="/comment_like-post/{{comment.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
+                {% else%}
+                <a href="/comment_like-post/{{comment.id}}"><i class="fa-regular fa-thumbs-up"></i></a>
+                {%endif%}
+                <small class="text-muted">{{comment.date_created}}</small>
+              </div>
+              <div>
                 <small class="text-muted">{{comment.date_created}}</small>
               </div>
             </div>
@@ -105,6 +114,15 @@
               <a href="/posts/{{comment.user.username}}">{{comment.user.username}} said:</a>
               {{comment.text}}
                 </div>
+              <div>
+                {{comment.comment_likes|length}}
+                {% if user.id in comment.comment_likes|map(attribute="author")|list%}
+                <a href="/comment_like-post/{{comment.id}}"><i class="fa-solid fa-thumbs-up"></i></a>
+                {% else%}
+                <a href="/comment_like-post/{{comment.id}}"><i class="fa-regular fa-thumbs-up"></i></a>
+                {%endif%}
+                <small class="text-muted">{{comment.date_created}}</small>
+              </div>
               <div>
                 <small class="text-muted">{{comment.date_created}}</small>
               </div>
