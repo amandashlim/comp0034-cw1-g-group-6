@@ -81,7 +81,52 @@ def update(id):
                                id_to_update=id_to_update,
                                user=current_user)
 
+# Route for changing password
+@views.route("/change/password/<username>", methods=['POST','GET'])
+def changepassword(id):
+    '''Updates the record for a user. ID refers to the user id'''
+    form = UserForm()
+    # Define which user to update
+    id_to_update = User.query.get_or_404(id)
+    password_to_update = User.query.get_or_404(id)
 
+    # If they fill out the form
+    if request.method == "POST":
+        old = request.form['old_password']  # Note this is the old password that was entered into the form
+        new = request.form['new_password']
+        confirm = request.form['confirm_password']
+
+        # If the new password and the new password entered again do not match OR
+        # If the "old password" they entered is incorect
+        if new != confirm or password_to_update != old:
+            flash("The passwords do not match. Please try again.", "danger")
+            return render_template("change_password.html",
+                                   form=form,
+                                   id=id_to_update,
+                                   user=current_user)
+        # If the new password is entered twice correctly
+        elif new == confirm:
+            # Passing the variables to the database
+            try:
+                db.session.commit()
+                flash("Password Updated Successfully!")
+                return render_template("change_password.html",
+                                       form=form,
+                                       id_to_update=id_to_update,
+                                       user=current_user)
+            except:
+                flash("Looks like something went wrong... try again!")
+                return render_template("change_password.html",
+                                       form=form,
+                                       id_to_update=id_to_update,
+                                       user=current_user)
+
+    # If they are just visiting the page
+    else:
+        return render_template("change_password.html",
+                               form=form,
+                               id_to_update=id_to_update,
+                               user=current_user)
 @views.route("/posts/<username>")
 @login_required
 def user_posts(username):
