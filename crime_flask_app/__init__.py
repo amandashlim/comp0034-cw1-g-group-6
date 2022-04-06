@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager, login_required
 import dash
+from flask_socetio import SocketIO
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -37,6 +38,11 @@ def create_app():
         return User.query.get(int(id))
 
     return app
+
+def create_socketio():
+    app = create_app()
+    socketio = SocketIO(app)
+    return socketio
 
 def create_database(app):
     if not path.exists("crime_flask_app/" + DB_NAME):
