@@ -67,14 +67,7 @@ def update(id):
         email_exists = User.query.filter_by(email=id_to_update.email).first()
         username_exists = User.query.filter_by(username=id_to_update.username).first()
 
-        # If user just submits the form without changing anything
-        if id_to_update.username == current_user.username and id_to_update.email == current_user.email:
-            flash('Please enter in new details if you would like to update your profile.', category='error')
-            return render_template("update.html",
-                                   form=form,
-                                   id_to_update=id_to_update,
-                                   user=current_user)
-        elif email_exists:
+        if email_exists:
             flash('Email is already in use.', category='error')
             return render_template("update.html",
                                    form=form,
