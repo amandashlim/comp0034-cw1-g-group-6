@@ -447,9 +447,9 @@ class Test1:
         self.driver.find_element(By.ID, "update-submit-btn").click()
 
         # Check that email element on my account has updated
-        username_shown = self.driver.find_element(By.ID, "email").text
-        assert username_shown is not "amanda@gmail.com"  # Check that it hasn't stayed the same
-        assert username_shown is "notamanda@gmail.com"  # Check that it has changed
+        email_shown = self.driver.find_element(By.ID, "email").text
+        assert email_shown is not "amanda@gmail.com"  # Check that it hasn't stayed the same
+        assert email_shown is "notamanda@gmail.com"  # Check that it has changed
         
         # Logout
         self.driver.implicitly_wait(5)
