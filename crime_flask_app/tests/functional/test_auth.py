@@ -52,8 +52,6 @@ def test_login_launch():
         assert b"Email Address" in response.data
         assert b"Password" in response.data
 
-
-
 '''
 def test_login_redirect(client):
     """

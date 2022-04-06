@@ -1,6 +1,8 @@
 import dateutil.utils
 import pytest
 from crime_flask_app.models import User, Post, Comment
+from flask import url_for, request
+from crime_flask_app import create_app
 
 def test_new_user():
     """
@@ -49,3 +51,14 @@ def test_heading_homepage(client):
     """
     response = client.get("/home")
     assert b'Visualisations Design Explanations' in response.data
+
+def test_signup_success(self):
+    info = self.create_user(email='tegridy@ily.coding',username='RandyMarsh',password1='towelie',password2='towelie')
+    self.assertEquals(info.status, "200 OK")
+    assertRedirects(info, '/home')
+
+
+    m_app = create_app()
+    with m_app.test_client() as test_client:
+        response = test_client.get(url_for('login.views'), follow_redirects=True)
+        assert request.path == url_for('home.views')
