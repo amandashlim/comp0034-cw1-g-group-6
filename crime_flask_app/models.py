@@ -1,10 +1,11 @@
-from crime_flask_app import db
 from flask_login import UserMixin
-from sqlalchemy.sql import func
 from flask_wtf import FlaskForm
+from sqlalchemy.sql import func
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
-from werkzeug.security import generate_password_hash
+
+from crime_flask_app import db
+
 
 # User Class
 class User(db.Model, UserMixin):
@@ -13,11 +14,12 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    posts = db.relationship("Post", backref='user',passive_deletes = True)
-    comments = db.relationship("Comment", backref='user',passive_deletes = True)
+    posts = db.relationship("Post", backref='user', passive_deletes=True)
+    comments = db.relationship("Comment", backref='user', passive_deletes=True)
     likes = db.relationship('Like', backref='user', passive_deletes=True)
     dislikes = db.relationship('Dislike', backref='user', passive_deletes=True)
     comment_likes = db.relationship("Like_Comment", backref='user', passive_deletes=True)
+
 
 # Form class to be able to update users in the database
 class UserForm(FlaskForm):
@@ -25,6 +27,7 @@ class UserForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     username = StringField("Username", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
 
 # Post class
 class Post(db.Model):
@@ -43,6 +46,7 @@ class PostForm(FlaskForm):
     text = StringField("Content", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
+
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
@@ -50,6 +54,7 @@ class Comment(db.Model):
     author = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id", ondelete='CASCADE'), nullable=False)
     comment_likes = db.relationship("Like_Comment", backref='comment', passive_deletes=True)
+
 
 class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -59,6 +64,7 @@ class Like(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(
         'post.id', ondelete="CASCADE"), nullable=False)
 
+
 class Dislike(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
@@ -66,6 +72,7 @@ class Dislike(db.Model):
         'user.id', ondelete="CASCADE"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey(
         'post.id', ondelete="CASCADE"), nullable=False)
+
 
 class Like_Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,13 +1,14 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Flask, jsonify
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from crime_flask_app.models import Post, User, UserForm, PostForm, Comment, Like, Dislike, Like_Comment
-from crime_flask_app import db
 from werkzeug.security import generate_password_hash
+
+from crime_flask_app import db
+from crime_flask_app.models import Post, User, UserForm, PostForm, Comment, Like, Dislike, Like_Comment
 
 views = Blueprint("views", __name__)
 
-@views.route("/")
 
+@views.route("/")
 # Home page
 @views.route("/home")
 def home():
@@ -24,6 +25,7 @@ def home():
 def user(username):
     posts = Post.query.all()
     return render_template("my_account.html", user=current_user, posts=posts, username=username)
+
 
 # Deleting a database record
 @views.route('/delete/<int:id>')
@@ -42,12 +44,13 @@ def delete(id):
                                id_to_delete=id_to_delete,
                                user=current_user)
     else:
-        flash("Oops! You do not have permission to delete this user.",category="error")
+        flash("Oops! You do not have permission to delete this user.", category="error")
         # Stays on the my account page
         return render_template("my_account.html",
                                form=form,
                                id_to_delete=id_to_delete,
                                user=current_user)
+
 
 # Updating a database record
 @views.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -66,13 +69,13 @@ def update(id):
         # Passing the variables to the database
         try:
             db.session.commit()
-            flash("User Updated Successfully",category="success")
+            flash("User Updated Successfully", category="success")
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update,
                                    user=current_user)
         except:
-            flash("Looks like something went wrong... try again!",category="error")
+            flash("Looks like something went wrong... try again!", category="error")
             return render_template("update.html",
                                    form=form,
                                    id_to_update=id_to_update,
@@ -84,8 +87,9 @@ def update(id):
                                id_to_update=id_to_update,
                                user=current_user)
 
+
 # Changing password
-@views.route("/change/password/<int:id>", methods=['POST','GET'])
+@views.route("/change/password/<int:id>", methods=['POST', 'GET'])
 @login_required
 def changepassword(id):
     '''Updates the record for a user. ID refers to the user id'''
@@ -117,7 +121,7 @@ def changepassword(id):
         else:
             # Pass the new password in hashed form to the database
             try:
-                id_to_update.password=generate_password_hash(new)
+                id_to_update.password = generate_password_hash(new)
                 db.session.commit()
                 flash("Password Updated Successfully!")
                 return render_template("change_password.html",
@@ -137,6 +141,8 @@ def changepassword(id):
                                form=form,
                                id_to_update=id_to_update,
                                user=current_user)
+
+
 # User Posts page
 @views.route("/posts/<username>")
 @login_required
@@ -204,7 +210,7 @@ def edit_post(id):
         flash("You do not have the permissions to delete this post", category='error')
     else:
         if form.validate_on_submit():
-            post.title  = form.title.data
+            post.title = form.title.data
             post.text = form.text.data
 
             db.session.add(post)
@@ -215,6 +221,7 @@ def edit_post(id):
         form.title.data = post.title
         return render_template("edit_post.html", form=form, user=user)
 
+
 @views.route("/create-comment/<post_id>", methods=["POST"])
 @login_required
 def create_comment(post_id):
@@ -224,11 +231,12 @@ def create_comment(post_id):
     else:
         post = Post.query.filter_by(id=post_id)
         if post:
-            comment = Comment(text = text, author=current_user.id, post_id=post_id)
+            comment = Comment(text=text, author=current_user.id, post_id=post_id)
             db.session.add(comment)
             db.session.commit()
             flash("Comment posted", category='success')
     return redirect(url_for("views.blog"))
+
 
 @views.route("/like-post/<post_id>", methods=['GET'])
 @login_required
@@ -249,6 +257,7 @@ def like(post_id):
 
     return redirect(url_for("views.blog"))
 
+
 @views.route("/dislike-post/<post_id>", methods=['GET'])
 @login_required
 def dislike(post_id):
@@ -267,6 +276,7 @@ def dislike(post_id):
         db.session.commit()
 
     return redirect(url_for("views.blog"))
+
 
 @views.route("/comment_like-post/<comment_id>", methods=['GET'])
 @login_required
@@ -287,7 +297,8 @@ def comment_like(comment_id):
 
     return redirect(url_for("views.blog"))
 
-@views.route("/chat", methods = ["GET", "POST"])
+
+@views.route("/chat", methods=["GET", "POST"])
 @login_required
 def chat():
     return render_template("chat.html", user=current_user)

@@ -1,12 +1,12 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from os import path
-from flask_login import LoginManager, login_required
-import dash
-from flask_socketio import SocketIO
+
+from flask import Flask
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
 
 def create_app():
     app = Flask(__name__)
@@ -39,10 +39,7 @@ def create_app():
 
     return app
 
+
 def create_database(app):
     if not path.exists("crime_flask_app/" + DB_NAME):
         db.create_all(app=app)
-
-
-
-

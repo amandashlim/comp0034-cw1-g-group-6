@@ -3,7 +3,7 @@ from crime_flask_app import db
 from crime_flask_app.models import User
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-#from . import
+
 
 auth = Blueprint("auth", __name__)
 
@@ -60,7 +60,7 @@ def sign_up():
             flash('User created!', category='success')
             return redirect(url_for('views.home'))
 
-    return render_template("signup.html",user=current_user)
+    return render_template("signup.html", user=current_user)
 
 
 @auth.route("/logout")

@@ -27,7 +27,7 @@ def test_no_login_page_invalid(test_client, app_paths_login):
     """
     for i in app_paths_login:
         response = test_client.get(i)
-        assert response.status_code in [302,308]
+        assert response.status_code in [302, 308]
 
 
 def test_dashboard_dash_render(client):
@@ -38,8 +38,9 @@ def test_dashboard_dash_render(client):
     """
     with client:
         client.post('/login',
-                    data = dict(email='pepe1@gmail.com', password='123456'),
+                    data=dict(email='pepe1@gmail.com', password='123456'),
                     follow_redirects=True)
         access_dashboard = client.get("/dashboard/")
         html = access_dashboard.data.decode()
-        assert '<script id="_dash-renderer" type="application/javascript">var renderer = new DashRenderer();</script>' in html
+        assert '<script id="_dash-renderer" type="application/javascript">var renderer = new DashRenderer();</script>' \
+               in html

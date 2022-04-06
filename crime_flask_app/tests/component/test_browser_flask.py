@@ -1,7 +1,6 @@
-from time import sleep
 import pytest
 from selenium.webdriver.common.by import By
-from flask_login import current_user
+
 
 @pytest.mark.usefixtures('chrome_driver', 'run_app')
 class Test1:
@@ -14,7 +13,7 @@ class Test1:
         Test that a user can create an account using the signup form if all fields are filled out correctly,
         and that they are redirected to the index page.
         """
-        #Check if user is loged in
+        # Check if user is loged in
         # Go to the home page
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
@@ -62,7 +61,6 @@ class Test1:
         # See https://www.selenium.dev/documentation/webdriver/waits/
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.ID, "nav-signup-btn").click()
-
 
         # Test person data
         email = "lana.kane@isis.com"
@@ -215,7 +213,6 @@ class Test1:
 
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
-
 
     def test_signup_errors(self, sign_up_list):
         """
@@ -389,7 +386,6 @@ class Test1:
         assert edit_title in post_title
         assert edit_text in post_text
 
-
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
 
@@ -547,14 +543,13 @@ class Test1:
 
         # Check that email element on my account has updated
         email_shown = self.driver.find_element(By.ID, "account_user_email").text
-        assert "victor.chaos@nft.heaven" != email_shown # Check that it hasn't stayed the same
-        assert "butters.stotch@south.park" == email_shown # Check that it has changed
-        
+        assert "victor.chaos@nft.heaven" != email_shown  # Check that it hasn't stayed the same
+        assert "butters.stotch@south.park" == email_shown  # Check that it has changed
+
         # Logout
         self.driver.implicitly_wait(5)
         self.driver.get('http://127.0.0.1:5000/logout')
         self.driver.implicitly_wait(5)
-
 
     def test_password_updates(self):
         """
@@ -659,7 +654,7 @@ class Test1:
         self.driver.get('http://127.0.0.1:5000/delete/2')
         self.driver.implicitly_wait(10)
         assert self.driver.current_url == 'http://127.0.0.1:5000/delete/2'
-        message = self.driver.find_element(By.ID,"error-flash").text
+        message = self.driver.find_element(By.ID, "error-flash").text
         assert "Oops! You do not have permission to delete this user." in message
 
         # Logout
@@ -689,7 +684,6 @@ class Test1:
         # Assert that browser redirects to index page
         self.driver.implicitly_wait(10)
         assert self.driver.current_url == 'http://127.0.0.1:5000/home'
-
 
         # Test user can delete his own account
         # Goto my account page
