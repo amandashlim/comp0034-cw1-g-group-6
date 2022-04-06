@@ -54,7 +54,7 @@ def test_heading_homepage(client):
 
 
 '''
-# Move to test_main
+# Move to test_main (btw love the southpark references :))
 
 def test_signup_success(self):
     info = self.create_user(email='tegridy@ily.coding',username='RandyMarsh',password1='towelie',password2='towelie')
