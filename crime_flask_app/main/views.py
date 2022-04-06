@@ -287,3 +287,8 @@ def comment_like(comment_id):
         db.session.commit()
 
     return redirect(url_for("views.blog"))
+
+@views.route("/chat", methods = ["GET", "POST"])
+@login_required
+def chat():
+    return render_template("chat.html", user=current_user)
